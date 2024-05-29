@@ -1,9 +1,14 @@
+import VideoItem from "../videoItem/VideoItem";
+
+
 function VideoListResults({ videos }) {
+  const videoList = videos.map((video, key) => {
+    return <VideoItem {...video} key={key} />
+  });
+
   return (
-    <div>
-      {videos.map((video) => (
-        <VideoCard key={video.id} video={video} />
-      ))}
+    <div className="row gx-3">
+      {videoList}
     </div>
   );
 }

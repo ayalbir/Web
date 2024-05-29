@@ -1,11 +1,11 @@
 import { useRef } from "react";
 
-function Search({setSearchQuery}) {
+function Search({doSearch}) {
 
     const searchBox = useRef(null);
 
     const search = function() {
-        setSearchQuery(searchBox.current.value);
+        doSearch(searchBox.current.value);
     }
 
     return (
