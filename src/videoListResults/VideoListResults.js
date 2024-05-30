@@ -1,16 +1,18 @@
-import VideoItem from "../videoItem/VideoItem";
+import React from 'react';
+import VideoItem from '../videoItem/VideoItem';
 
-
-function VideoListResults({ videos }) {
-  const videoList = videos.map((video, key) => {
-    return <VideoItem {...video} key={key} />
-  });
+const VideoListResults = ({ videos }) => {
+  if (!videos || videos.length === 0) {
+    return <div>No videos available</div>;
+  }
 
   return (
-    <div className="row gx-3">
-      {videoList}
+    <div className="row">
+      {videos.map(video => (
+        <VideoItem key={video.id} video={video} />
+      ))}
     </div>
   );
-}
+};
 
 export default VideoListResults;
