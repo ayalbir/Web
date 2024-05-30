@@ -1,22 +1,25 @@
-import './LeftMenu.css';
-function LeftMenu({ menuItems}) {
-  if (!menuItems) {
-    return null; // or return a default component
-  }
+import React, { useState } from 'react';
+import './LeftMenu.css'; // Assuming you have additional styles here
+import items from './menuItems/MenuItems.json';
+
+const LeftMenu = () => {
+  const [expanded, setExpanded] = useState(true);
+
   return (
-    <div className='col-2 bg-dark text-white'>
-      <ul className='nav flex-column'>
-        {menuItems.map((item) => (
-          <li key={item.id} className='nav-item'>
-            <a className='nav-link' href={item.link}>
-              <i className={`bi bi-${item.icon}`}></i>
-              {item.name}
-            </a>
+    <div className={`left-menu ${expanded ? 'expanded' : 'collapsed'} bg-light`}>
+      <button onClick={() => setExpanded(!expanded)} className="toggle-menu-btn btn btn-secondary">
+        {expanded ? '≡' : '≡'}
+      </button>
+      <ul className="list-group list-group-flush">
+        {items.map((item, index) => (
+          <li key={index} className="list-group-item d-flex align-items-center">
+            <i className={`bi bi ${item.icon} menu-icon`}></i>
+            {expanded && <span className="menu-text ms-3">{item.name}</span>}
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default LeftMenu;
