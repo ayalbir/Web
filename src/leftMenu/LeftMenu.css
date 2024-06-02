@@ -1,29 +1,33 @@
 .left-menu {
-    height: 100vh;
-    transition: width 0.3s;
-  }
-  
-  .left-menu.expanded {
-    width: 240px;
-  }
-  
-  .left-menu.collapsed {
-    width: 80px;
-  }
-  
-  .toggle-menu-btn {
-    width: 100%;
-  }
-  
-  .menu-item {
-    cursor: pointer;
-  }
-  
-  .menu-item:hover {
-    background-color: #e2e2e2;
-  }
-  
-  .menu-icon {
-    font-size: 1.4em;
-  }
-  
+  height: 100vh;
+  transition: width 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.left-menu.expanded {
+  width: 240px;
+}
+
+.left-menu.collapsed {
+  width: 80px;
+}
+
+.toggle-menu-btn {
+  width: 100%;
+}
+
+.menu-item {
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #e2e2e2;
+}
+
+.menu-icon {
+  font-size: 1.4em;
+}

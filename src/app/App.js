@@ -6,11 +6,12 @@ import videos from '../videoItem/Videos';
 import Search from '../search/Search';
 import VideoListResults from '../videoListResults/VideoListResults';
 import items from '../leftMenu/menuItems/MenuItems.json';
+import Tags from '../tags/Tags'; // Import the new Tags component
 import VideoDetails from '../videoDetails/VideoDetails';
-import tags from '../tags/Tags.json';
 
 function App() {
   const [videoList, setVideoList] = useState(videos);
+  const [expanded, setExpanded] = useState(true); // Add state for sidebar expansion
 
   const doSearch = (q) => {
     const query = q.toLowerCase();
@@ -21,17 +22,20 @@ function App() {
     <Router>
       <div className="container-fluid">
         <div className="row">
-          <LeftMenu menuItems={items} />
-          <div className="col main-content">
+          <LeftMenu menuItems={items} expanded={expanded} setExpanded={setExpanded} />
+          <div className={`col main-content ${expanded ? 'offset-md-3' : 'offset-md-1'}`}>
             <Routes>
               <Route path="/" element={
                 <>
-                  <Search doSearch={doSearch} />
-                  <div className="row bg-white">
-                    {tags.map((tag, index) => (
-                      <tag key={index} type="button" className={tag.className}>{tag.text}</tag>
-                    ))}
+                  <div className="row align-items-center mb-3">
+                    <div className="col">
+                      <Search doSearch={doSearch} />
+                    </div>
+                    <div className="col-auto">
+                      <button type="button" className="btn btn-primary">Sign in</button>
+                    </div>
                   </div>
+                  <Tags />
                   <VideoListResults videos={videoList} />
                 </>
               } />
