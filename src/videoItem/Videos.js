@@ -1,3 +1,5 @@
+//rather be json, something with the pics didn't work
+
 import pic from '../images/logo.svg';
 const videos = [
     { title: 'something', author : 'generic name', views: 100, date: '1 day ago', pic: pic},

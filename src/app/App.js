@@ -7,6 +7,7 @@ import Search from '../search/Search';
 import VideoListResults from '../videoListResults/VideoListResults';
 import items from '../leftMenu/menuItems/MenuItems.json';
 import VideoDetails from '../videoDetails/VideoDetails';
+import tags from '../tags/Tags.json';
 
 function App() {
   const [videoList, setVideoList] = useState(videos);
@@ -27,9 +28,9 @@ function App() {
                 <>
                   <Search doSearch={doSearch} />
                   <div className="row bg-white">
-                    <button type="button" className="btn btn-light col m-3 tag">Light</button>
-                    <button type="button" className="btn btn-light col m-3 tag">Lot</button>
-                    <button type="button" className="btn btn-light col m-3 tag">Button</button>
+                    {tags.map((tag, index) => (
+                      <tag key={index} type="button" className={tag.className}>{tag.text}</tag>
+                    ))}
                   </div>
                   <VideoListResults videos={videoList} />
                 </>

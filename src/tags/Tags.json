@@ -1,0 +1,7 @@
+[
+    { "text": "Light", "className": "btn btn-light col m-3 tag" },
+    { "text": "Lot", "className": "btn btn-light col m-3 tag" },
+    { "text": "Button", "className": "btn btn-light col m-3 tag" },
+    { "text": "Dark", "className": "btn btn-light col m-3 tag"},
+    { "text": "History", "className": "btn btn-light col m-3 tag"}
+  ]
