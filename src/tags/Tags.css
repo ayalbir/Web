@@ -1,45 +1,49 @@
-.tags-row {
+.tags-container {
     display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
+    overflow-x: auto; /* Changed from hidden to auto */
     white-space: nowrap;
-  }
-  
-  .tags-container {
-    display: flex;
-    overflow-x: auto;
-    flex-grow: 1;
-    margin: 0 20px;
+    padding: 0.5rem 0;
+    margin: 0 2rem; /* Adjust margin to make space for scroll buttons */
     scroll-behavior: smooth;
   }
   
-  .tags-container::-webkit-scrollbar {
-    display: none;
+  
+  .tags-inner {
+    display: inline-flex;
+  }
+  
+  .tag {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 0 5px;
+    font-size: 14px;
+    color: #606060;
+    border: 1px solid #d0d0d0;
+    cursor: pointer;
   }
   
   .scroll-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
-    background-color: rgba(255, 255, 255, 0.8);
+    background: none;
     border: none;
-    padding: 0 10px;
+    font-size: 20px;
+    color: #606060;
     cursor: pointer;
-    height: 100%;
+    padding: 5px;
+  }
+  
+  .scroll-btn:focus {
+    outline: none;
   }
   
   .scroll-btn.left {
-    left: 0;
+    left: 5px;
   }
   
   .scroll-btn.right {
-    right: 0;
-  }
-  
-  .tag {
-    white-space: nowrap;
-    margin: 5px;
+    right: 5px;
   }
   
