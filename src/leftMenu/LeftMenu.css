@@ -1,11 +1,18 @@
+/* src/leftMenu/LeftMenu.css */
+
 .left-menu {
   height: 100vh;
   transition: width 0.3s;
   position: fixed;
-  top: 10px;
+  padding-top: 10px;
   left: 0;
   overflow: hidden;
   z-index: 1000;
+}
+
+.dark-mode .left-menu {
+  background-color: #121212 !important;
+  color: #fff;
 }
 
 .left-menu.expanded {
@@ -23,20 +30,41 @@
 .list-group-item {
   cursor: pointer;
   border-radius: 12px;
-}
-
-.list-group-item:hover {
-  background-color: #e2e2e2; /* Change background color on hover */
+  margin-bottom: 5px;
 }
 
 .menu-link {
   display: flex;
   align-items: center;
-  text-decoration: none; /* Remove default underline */
-  color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  color: inherit;
 }
 
 .menu-icon {
   font-size: 1.4em;
-  margin-right: 10px; /* Add margin between icon and text */
+  margin-right: 10px;
+}
+
+/* Light Mode Styles */
+body:not(.dark-mode) .left-menu {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+body:not(.dark-mode) .toggle-menu-btn {
+  color: #000;
+  background-color: #e9ecef;
+}
+
+body:not(.dark-mode) .toggle-menu-btn:hover {
+  background-color: #ced4da;
+}
+
+body:not(.dark-mode) .list-group-item {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+body:not(.dark-mode) .list-group-item:hover {
+  background-color: #ced4da;
 }

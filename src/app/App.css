@@ -5,8 +5,14 @@
 }
 
 .app-logo {
-  height: 40px; /* Adjust the logo size  */
+  height: 40px;
+  margin: 0 20px; /* Add some margin to create space around the logo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -40,35 +46,92 @@
 
 /* Main content adjustments */
 .main-content {
-  margin-left: 240px; /* Same width as the expanded sidebar */
+  margin-left: 240px;
   padding: 10px;
   overflow-y: auto;
   height: 100vh;
   transition: margin-left 0.3s;
 }
 
-/* Adjust margin when the sidebar is collapsed */
 .left-menu.collapsed + .main-content {
-  margin-left: 80px; /* Same width as the collapsed sidebar */
+  margin-left: 80px;
 }
 
 /* Flexbox container for search and sign-in button */
 .search-signin-container {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 20px 0;
+  justify-content: space-between;
+  padding: 10px 0;
   margin-bottom: 20px;
 }
 
+.search-signin-container .search-bar {
+  flex: 1; /* Allow the search bar to take up the available space */
+}
+
+.search-signin-container .app-logo-link {
+  flex-shrink: 0; /* Prevent the logo from shrinking */
+}
+
 .search-signin-container .btn {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
-
-/* Add space between the icon and the text in the sign-in button */
 .bi-person-circle {
-  margin-right: 5px; /* Adjust the margin as needed */
+  margin-right: 5px;
 }
 
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
 
+.dark-mode .App-header {
+  background-color: #121212;
+}
+
+.dark-mode .main-content {
+  background-color: #121212;
+}
+
+.dark-mode .search-input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+.dark-mode .btn {
+  background-color: #555;
+  color: #fff;
+}
+
+.dark-mode .list-group-item {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .list-group-item:hover {
+  background-color: #444;
+}
+
+/* Light Mode Styles */
+body:not(.dark-mode) .search-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+body:not(.dark-mode) .btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+body:not(.dark-mode) .list-group-item {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+body:not(.dark-mode) .list-group-item:hover {
+  background-color: #ced4da;
+}
