@@ -14,7 +14,8 @@ function App() {
 
   const doSearch = (q) => {
     const query = q.toLowerCase();
-    setVideoList(videos.filter(video => video.title.toLowerCase().includes(query)));
+    // Filter based on title or author
+    setVideoList(videos.filter(video => video.title.toLowerCase().includes(query) || video.author.toLowerCase().includes(query)));
   };
 
   return (
