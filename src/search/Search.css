@@ -1,0 +1,24 @@
+/* src/search/Search.css */
+
+.search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .search-form .btn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  

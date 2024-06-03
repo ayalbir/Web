@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import LeftMenu from '../leftMenu/LeftMenu';
-import videos from '../videoItem/Videos';
+import videosData from '../videoItem/Videos';
 import Search from '../search/Search';
 import VideoListResults from '../videoListResults/VideoListResults';
 import items from '../leftMenu/menuItems/MenuItems.json';
 import VideoDetails from '../videoDetails/VideoDetails';
+import SearchResults from '../search/SearchResults'; // Import the new component
 
 function App() {
-  const [videoList, setVideoList] = useState(videos);
-  const [expanded, setExpanded] = useState(true); // Add state for sidebar expansion
+  const [videoList, setVideoList] = useState([]);
+  const [expanded, setExpanded] = useState(true);
 
-  const doSearch = (q) => {
-    const query = q.toLowerCase();
-    // Filter based on title or author
-    setVideoList(videos.filter(video => video.title.toLowerCase().includes(query) || video.author.toLowerCase().includes(query)));
-  };
+  useEffect(() => {
+    setVideoList(videosData);
+  }, []);
 
   return (
     <Router>
@@ -27,18 +26,15 @@ function App() {
             <Routes>
               <Route path="/" element={
                 <>
-                  <div className="row align-items-center mb-3">
-                    <div className="col">
-                      <Search doSearch={doSearch} />
-                    </div>
-                    <div className="col-auto">
-                      <button type="button" className="btn btn-primary">Sign in</button>
-                    </div>
+                  <div className="search-signin-container">
+                    <Search />
+                    <button type="button" className="btn btn-primary">Sign in</button>
                   </div>
                   <VideoListResults videos={videoList} />
                 </>
               } />
               <Route path="/video/:id" element={<VideoDetails />} />
+              <Route path="/search" element={<SearchResults videos={videoList} />} /> {/* New route */}
             </Routes>
           </div>
         </div>
