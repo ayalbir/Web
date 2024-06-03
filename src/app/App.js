@@ -6,7 +6,6 @@ import videos from '../videoItem/Videos';
 import Search from '../search/Search';
 import VideoListResults from '../videoListResults/VideoListResults';
 import items from '../leftMenu/menuItems/MenuItems.json';
-import Tags from '../tags/Tags'; // Import the new Tags component
 import VideoDetails from '../videoDetails/VideoDetails';
 
 function App() {
@@ -35,7 +34,6 @@ function App() {
                       <button type="button" className="btn btn-primary">Sign in</button>
                     </div>
                   </div>
-                  <Tags />
                   <VideoListResults videos={videoList} />
                 </>
               } />
