@@ -1,23 +1,31 @@
-import { useRef } from "react";
+// src/search/Search.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Search.css';
 
-function Search({doSearch}) {
+const Search = () => {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
-    const searchBox = useRef(null);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search?q=${query}`);
+  };
 
-    const search = function() {
-        doSearch(searchBox.current.value);
-    }
-
-    return (
-        <div className="row bg-white justify-content-center">
-            <div className="col-10">
-                <div className="input-group mb-3 p-2">
-                    <input ref={searchBox} onKeyUp={search} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2"></input>
-                    <button className="btn btn-outline-secondary" type="button" id="button-addon2"><i className="bi bi-search me-3"></i></button>
-                </div>
-            </div>
-        </div>
-    );
-}
+  return (
+    <form className="search-form" onSubmit={handleSearch}>
+      <input
+        type="text"
+        className="search-input"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <button type="submit" className="btn btn-secondary">
+        <i className="bi bi-search"></i>
+      </button>
+    </form>
+  );
+};
 
 export default Search;

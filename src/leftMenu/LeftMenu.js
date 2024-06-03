@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './LeftMenu.css'; // Assuming you have additional styles here
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './LeftMenu.css';
 import items from './menuItems/MenuItems.json';
 
 const LeftMenu = () => {
@@ -13,8 +14,10 @@ const LeftMenu = () => {
       <ul className="list-group list-group-flush">
         {items.map((item, index) => (
           <li key={index} className="list-group-item d-flex align-items-center">
-            <i className={`bi bi ${item.icon} menu-icon`}></i>
-            {expanded && <span className="menu-text ms-3">{item.name}</span>}
+            <Link to={item.link} className="menu-link">
+              <i className={`bi bi ${item.icon} menu-icon`}></i>
+              {expanded && <span className="menu-text ms-3">{item.name}</span>}
+            </Link>
           </li>
         ))}
       </ul>
