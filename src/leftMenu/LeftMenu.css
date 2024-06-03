@@ -2,14 +2,14 @@
   height: 100vh;
   transition: width 0.3s;
   position: fixed;
-  top: 0;
+  top: 10px;
   left: 0;
   overflow: hidden;
   z-index: 1000;
 }
 
 .left-menu.expanded {
-  width: 240px;
+  width: 200px;
 }
 
 .left-menu.collapsed {
@@ -20,14 +20,23 @@
   width: 100%;
 }
 
-.menu-item {
+.list-group-item {
   cursor: pointer;
+  border-radius: 12px;
 }
 
-.menu-item:hover {
-  background-color: #e2e2e2;
+.list-group-item:hover {
+  background-color: #e2e2e2; /* Change background color on hover */
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove default underline */
+  color: inherit; /* Inherit color from parent */
 }
 
 .menu-icon {
   font-size: 1.4em;
+  margin-right: 10px; /* Add margin between icon and text */
 }

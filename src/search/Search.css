@@ -3,7 +3,8 @@
 .search-form {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 60%;
+    margin: 0;
   }
   
   .search-input {

@@ -4,9 +4,8 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-logo {
+  height: 40px; /* Adjust the logo size  */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -42,7 +41,7 @@
 /* Main content adjustments */
 .main-content {
   margin-left: 240px; /* Same width as the expanded sidebar */
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
   height: 100vh;
   transition: margin-left 0.3s;
@@ -57,10 +56,19 @@
 .search-signin-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 .search-signin-container .btn {
   margin-left: 20px;
 }
+
+
+/* Add space between the icon and the text in the sign-in button */
+.bi-person-circle {
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
+
