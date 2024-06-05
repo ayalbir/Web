@@ -1,11 +1,12 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import LeftMenu from '../leftMenu/LeftMenu';
-import videosData from '../videoItem/Videos.json';
+import videosData from '../videoLogic/videoItem/Videos.json';
 import Search from '../search/Search';
-import VideoListResults from '../videoListResults/VideoListResults';
-import VideoDetails from '../videoDetails/VideoDetails';
+import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
+import VideoMain from '../videoLogic/videoMain/VideoMain';
 import SearchResults from '../search/SearchResults';
 import DarkModeButton from '../darkMode/DarkModeButton';
 
@@ -44,7 +45,7 @@ function App() {
             </div>
             <Routes>
               <Route path="/" element={<VideoListResults videos={videoList} />} />
-              <Route path="/video/:id" element={<VideoDetails />} />
+              <Route path="/video/:id" element={<VideoMain />} />
               <Route path="/search" element={<SearchResults videos={videoList} />} />
             </Routes>
           </div>

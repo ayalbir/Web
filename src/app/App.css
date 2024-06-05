@@ -6,13 +6,12 @@
 
 .app-logo {
   height: 40px;
-  margin: 0 20px; /* Add some margin to create space around the logo */
+  margin: 0 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 10px;
 }
-
 
 .App-header {
   background-color: #282c34;
@@ -29,8 +28,6 @@
   color: #61dafb;
 }
 
-
-/* Main content adjustments */
 .main-content {
   margin-left: 240px;
   padding: 10px;
@@ -43,7 +40,6 @@
   margin-left: 80px;
 }
 
-/* Flexbox container for search and sign-in button */
 .search-signin-container {
   display: flex;
   align-items: center;
@@ -61,6 +57,7 @@
 }
 
 .search-signin-container .btn {
+  border: none;
   margin-left: 10px;
 }
 
@@ -101,7 +98,6 @@
   background-color: #444;
 }
 
-/* Light Mode Styles */
 body:not(.dark-mode) .search-input {
   background-color: #fff;
   color: #000;
@@ -113,11 +109,3 @@ body:not(.dark-mode) .btn {
   color: #fff;
 }
 
-body:not(.dark-mode) .list-group-item {
-  background-color: #e9ecef;
-  color: #000;
-}
-
-body:not(.dark-mode) .list-group-item:hover {
-  background-color: #ced4da;
-}

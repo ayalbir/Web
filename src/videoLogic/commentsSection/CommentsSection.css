@@ -1,0 +1,50 @@
+/* src/videoDetails/CommentsSection.css */
+.comment-section {
+    margin-top: 20px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-form .form-control {
+    resize: vertical;
+}
+
+
+.dark-mode .comment-form .form-control {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode .comment-form .form-control::placeholder {
+    color: #ffffff; /* White placeholder in dark mode */
+}
+
+
+.comment-button {
+    border: none; /* No borders for the comment button */
+    background-color: #929292;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comments-list {
+    margin-top: 20px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment-user {
+    font-weight: bold;
+}
+
+.comment-text {
+    margin-left: 10px;
+}

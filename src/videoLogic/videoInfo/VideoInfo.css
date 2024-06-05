@@ -1,0 +1,26 @@
+/* src/VideoMain/VideoInfo.css */
+.video-info-container {
+    padding: 10px;
+}
+
+.video-header {
+    margin-bottom: 10px;
+}
+
+.video-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.video-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.video-actions {
+    margin: 10px 0;
+}
+
+.video-description {
+    margin: 20px 0;
+}
