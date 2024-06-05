@@ -8,6 +8,7 @@
 
 .video-card:hover {
   transform: scale(1.05);
+  .card-body {background-color: #ced4da;};
 }
 
 .video-card img {
@@ -23,6 +24,10 @@
 .dark-mode .video-card .card-body {
   background-color: #121212;
 }
+
+.dark-mode .video-card:hover {
+  .card-body {background-color: #202020e9;};
+} 
 
 .video-card .card-title {
   font-size: 1rem;

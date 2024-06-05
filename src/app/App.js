@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import LeftMenu from '../leftMenu/LeftMenu';
-import videosData from '../videoItem/Videos';
+import videosData from '../videoItem/Videos.json';
 import Search from '../search/Search';
 import VideoListResults from '../videoListResults/VideoListResults';
 import VideoDetails from '../videoDetails/VideoDetails';
