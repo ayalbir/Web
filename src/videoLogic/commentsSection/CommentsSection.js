@@ -1,23 +1,36 @@
-// src/VideoMain/CommentsSection.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './CommentsSection.css';
 
-const CommentsSection = ({ videoId }) => {
-  const [comments, setComments] = useState([]);
+const CommentsSection = ({ videoId, comments, addComment, deleteComment, editComment }) => {
   const [newComment, setNewComment] = useState('');
-
-  useEffect(() => {
-    const savedComments = JSON.parse(localStorage.getItem(`comments-${videoId}`)) || [];
-    setComments(savedComments);
-  }, [videoId]);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedComment, setEditedComment] = useState('');
 
   const handleAddComment = () => {
     if (newComment.trim() === '') return;
 
-    const updatedComments = [...comments, { user: 'User', text: newComment }];
-    setComments(updatedComments);
+    addComment(videoId, { user: 'User', text: newComment });
     setNewComment('');
-    localStorage.setItem(`comments-${videoId}`, JSON.stringify(updatedComments));
+  };
+
+  const handleDeleteComment = (index) => {
+    deleteComment(videoId, index);
+  };
+
+  const handleEditComment = (index) => {
+    setEditingIndex(index);
+    setEditedComment(comments[videoId][index].text);
+  };
+
+  const handleSaveEdit = (index) => {
+    editComment(videoId, index, editedComment);
+    setEditingIndex(null);
+    setEditedComment('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingIndex(null);
+    setEditedComment('');
   };
 
   return (
@@ -33,10 +46,30 @@ const CommentsSection = ({ videoId }) => {
         <button className="comment-button" onClick={handleAddComment}>Comment</button>
       </div>
       <div className="comments-list">
-        {comments.map((comment, index) => (
+        {(comments[videoId] || []).map((comment, index) => (
           <div className="comment" key={index}>
-            <div className="comment-user">{comment.user}</div>
-            <div className="comment-text">{comment.text}</div>
+            <div className="comment-header">
+              <div className="comment-user">{comment.user}</div>
+              <div className="comment-actions">
+                <button onClick={() => handleEditComment(index)}><i className="bi bi-pencil icon"></i> Edit</button>
+                <button onClick={() => handleDeleteComment(index)}><i className="bi bi-trash icon"></i> Delete</button>
+              </div>
+            </div>
+            <div className="comment-body">
+              {editingIndex === index ? (
+                <div className="edit-comment-form">
+                  <textarea
+                    className="form-control"
+                    value={editedComment}
+                    onChange={(e) => setEditedComment(e.target.value)}
+                  />
+                  <button className="save-button" onClick={() => handleSaveEdit(index)}>Save</button>
+                  <button className="cancel-button" onClick={handleCancelEdit}>Cancel</button>
+                </div>
+              ) : (
+                <div className="comment-text">{comment.text}</div>
+              )}
+            </div>
           </div>
         ))}
       </div>

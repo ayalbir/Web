@@ -1,50 +1,128 @@
 /* src/videoDetails/CommentsSection.css */
 .comment-section {
     margin-top: 20px;
-}
-
-.comment-form {
+  }
+  
+  .comment-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.comment-form .form-control {
+  }
+  
+  .comment-form .form-control {
     resize: vertical;
-}
-
-
-.dark-mode .comment-form .form-control {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  .dark-mode .comment-form .form-control {
     background-color: #333;
     color: white;
-}
-
-.dark-mode .comment-form .form-control::placeholder {
+  }
+  
+  .dark-mode .comment-form .form-control::placeholder {
     color: #ffffff; /* White placeholder in dark mode */
-}
-
-
-.comment-button {
+  }
+  
+  .comment-button {
     border: none; /* No borders for the comment button */
     background-color: #929292;
     color: white;
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.comments-list {
+    align-self: flex-end;
+  }
+  
+  .comments-list {
     margin-top: 20px;
-}
-
-.comment {
-    margin-bottom: 10px;
-}
-
-.comment-user {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .comment {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .comment-user {
     font-weight: bold;
-}
-
-.comment-text {
+  }
+  
+  .comment-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .comment-text {
     margin-left: 10px;
-}
+    margin-bottom: 10px;
+  }
+  
+  .comment-actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .comment-actions button {
+    border: none;
+    background: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .comment-actions button:hover {
+    text-decoration: underline;
+  }
+  
+  .comment-actions .icon {
+    font-size: 1.2em;
+  }
+  
+  .edit-comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .edit-comment-form .form-control {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  .save-button {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  
+  .cancel-button {
+    border: none;
+    background-color: #929292;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  

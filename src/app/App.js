@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
@@ -14,6 +13,7 @@ function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     setVideoList(videosData);
@@ -22,6 +22,29 @@ function App() {
   const toggleDarkMode = () => {
     setIsDarkMode(prevMode => !prevMode);
     document.body.classList.toggle('dark-mode');
+  };
+
+  const addComment = (videoId, comment) => {
+    setComments((prevComments) => ({
+      ...prevComments,
+      [videoId]: [...(prevComments[videoId] || []), comment],
+    }));
+  };
+
+  const deleteComment = (videoId, index) => {
+    setComments((prevComments) => ({
+      ...prevComments,
+      [videoId]: prevComments[videoId].filter((_, i) => i !== index),
+    }));
+  };
+
+  const editComment = (videoId, index, newText) => {
+    setComments((prevComments) => ({
+      ...prevComments,
+      [videoId]: prevComments[videoId].map((comment, i) =>
+        i === index ? { ...comment, text: newText } : comment
+      ),
+    }));
   };
 
   return (
@@ -45,7 +68,14 @@ function App() {
             </div>
             <Routes>
               <Route path="/" element={<VideoListResults videos={videoList} />} />
-              <Route path="/video/:id" element={<VideoMain />} />
+              <Route path="/video/:id" element={
+                <VideoMain
+                  comments={comments}
+                  addComment={addComment}
+                  deleteComment={deleteComment}
+                  editComment={editComment}
+                />
+              } />
               <Route path="/search" element={<SearchResults videos={videoList} />} />
             </Routes>
           </div>
