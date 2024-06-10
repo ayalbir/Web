@@ -6,7 +6,7 @@ import SuggestedVideos from '../suggestedVideos/SuggestedVideos';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment }) => {
+const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user }) => {
   const { id } = useParams();
   const video = videos.find(v => v.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);
@@ -65,6 +65,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment })
           addComment={addComment}
           deleteComment={deleteComment}
           editComment={editComment}
+          user={user}
         />
       </div>
       <div className="suggested-videos-section">

@@ -98,6 +98,7 @@ function App() {
                   addComment={addComment}
                   deleteComment={deleteComment}
                   editComment={editComment}
+                  user={user}
                 />
               } />
               <Route path="/search" element={<SearchResults videos={videoList} />} />

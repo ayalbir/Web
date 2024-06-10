@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './CommentsSection.css';
 
-const CommentsSection = ({ videoId, comments, addComment, deleteComment, editComment }) => {
+const CommentsSection = ({ videoId, comments, addComment, deleteComment, editComment, user }) => {
   const [newComment, setNewComment] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedComment, setEditedComment] = useState('');
+  const navigate = useNavigate();
 
   const handleAddComment = () => {
+    if (!user.signedIn) {
+      // Redirect to sign-in page if user is not signed in
+      navigate("/signin");
+      return;
+    }
+
     if (newComment.trim() === '') return;
 
-    addComment(videoId, { user: 'User', text: newComment });
+    addComment(videoId, { user: user.name, text: newComment }); // Use user's name for comment
     setNewComment('');
   };
 
