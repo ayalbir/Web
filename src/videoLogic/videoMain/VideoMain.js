@@ -54,6 +54,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment })
               <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
             </div>
             <div className="video-description">
+              <p>Uploaded by: {video.author}</p> {/* Display the uploader's name */}
               <p>{video.description}</p>
             </div>
           </div>

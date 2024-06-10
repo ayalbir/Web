@@ -25,17 +25,16 @@ const CreateVideo = ({ setVideoList, user }) => {
     const videoUrl = URL.createObjectURL(video); // Convert video file to URL
   
     const newVideo = {
-      id: Date.now(), // Using current timestamp as a unique id
+      id: Date.now(),
       title,
-      pic: URL.createObjectURL(image), // Store the image file directly
-      url: videoUrl, // Store the video URL
+      pic: URL.createObjectURL(image),
+      url: URL.createObjectURL(video),
       author: user.name, // Assuming user's name is the author
-      views: 0, // Initial views
-      date: new Date().toLocaleDateString(), // Current date
-      description: "", // Empty description for now
+      views: 0,
+      date: new Date().toLocaleDateString(),
+      description: "",
     };
-  
-    console.log(newVideo); // Check if the newVideo object contains the url property
+    
   
     setVideoList((prevList) => [...prevList, newVideo]);
     navigate("/");
@@ -69,7 +68,7 @@ const CreateVideo = ({ setVideoList, user }) => {
         Video:
         <input
           type="file"
-          accept="video/*" // Allow all video types
+          accept="video/*" 
           onChange={(e) => setVideo(e.target.files[0])}
           required
         />

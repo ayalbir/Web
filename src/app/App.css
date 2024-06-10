@@ -114,8 +114,10 @@ body:not(.dark-mode) .btn {
   color: white;
   border-radius: 50%;
   font-size: 1.2em;
+  align-items: center !important;
 }
 
 .create-button:hover {
   background-color: #0056b3;
+  
 }
