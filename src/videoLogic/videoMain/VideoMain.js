@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import videos from '../videoItem/Videos.json';
 import VideoPlayer from '../videoPlayer/VideoPlayer';
 import VideoInfo from '../videoInfo/VideoInfo';
 import SuggestedVideos from '../suggestedVideos/SuggestedVideos';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ comments, addComment, deleteComment, editComment }) => {
+const VideoMain = ({ videos, comments, addComment, deleteComment, editComment }) => {
   const { id } = useParams();
   const video = videos.find(v => v.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);

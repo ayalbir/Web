@@ -109,3 +109,13 @@ body:not(.dark-mode) .btn {
   color: #fff;
 }
 
+.create-button {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}

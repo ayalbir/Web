@@ -24,6 +24,11 @@
   .dark-mode .comment-form .form-control::placeholder {
     color: #ffffff; /* White placeholder in dark mode */
   }
+
+  .dark-mode .comment{
+    background-color: #333;
+    color: white;
+  }
   
   .comment-button {
     border: none; /* No borders for the comment button */
