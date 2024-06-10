@@ -1,7 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './signIn.css';
 
 function Register() {
+  const navigate = useNavigate();
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    navigate('/setup-email-password');
+  };
+
   return (
     <div className="signin-container">
       <div className="signin-box">
@@ -12,7 +20,7 @@ function Register() {
         />
         <h1>Create a Google Account</h1>
         <p>Enter your name</p>
-        <form>
+        <form onSubmit={handleNext}>
           <input type="text" placeholder="First name" required />
           <input type="text" placeholder="Last name (optional)" />
           

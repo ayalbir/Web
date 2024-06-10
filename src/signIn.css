@@ -13,6 +13,16 @@
     border-radius: 8px;
     text-align: left;
     width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .setup-box {
+    width: 500px;
+  }
+  
+  .upload-box {
+    width: 500px;
+    height: 400px; /* Adjusted height */
   }
   
   .google-logo {
@@ -22,7 +32,12 @@
   
   .signin-box h1 {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .signin-box h2 {
+    font-size: 18px;
+    margin: 30px 0 20px;
   }
   
   .signin-box p {
@@ -39,12 +54,24 @@
   .signin-box input[type="password"],
   .signin-box input[type="text"],
   .signin-box input[type="number"],
-  .signin-box select {
+  .signin-box select,
+  .signin-box input[type="file"] {
     padding: 12px;
     font-size: 16px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+  
+  small {
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  a {
+    color: #1a73e8;
+    text-decoration: none;
+    margin-bottom: 30px;
   }
   
   .show-password {
@@ -95,5 +122,10 @@
   .create-account a {
     color: #1a73e8;
     text-decoration: none;
+  }
+  
+  .error {
+    color: red;
+    margin-bottom: 20px;
   }
   
