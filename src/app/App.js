@@ -14,17 +14,26 @@ const demoUser = {
   id: 1,
   name: "Demo User",
   signedIn: true,
+  profilePicture: "/images/logo.svg"
 };
+
 
 function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [comments, setComments] = useState({});
+  const [userInteractions, setUserInteractions] = useState({});
   const [user, setUser] = useState(demoUser);
+  const [likesDislikes, setLikesDislikes] = useState({});
 
   useEffect(() => {
+    const initialLikesDislikes = videosData.reduce((acc, video) => {
+      acc[video.id] = { likes: 0, dislikes: 0 };
+      return acc;
+    }, {});
     setVideoList(videosData);
+    setLikesDislikes(initialLikesDislikes);
   }, []);
 
   const toggleDarkMode = () => {
@@ -55,9 +64,109 @@ function App() {
     }));
   };
 
+  const handleLike = (videoId) => {
+    setUserInteractions(prevInteractions => {
+      const currentInteraction = prevInteractions[videoId] || {};
+      const alreadyLiked = currentInteraction.like;
+
+      // If the user already liked the video, remove the like
+      if (alreadyLiked) {
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes - 1,
+            dislikes: prevLikesDislikes[videoId].dislikes,
+          }
+        }));
+        return {
+          ...prevInteractions,
+          [videoId]: { like: false, dislike: false }
+        };
+      }
+
+      // If the user already disliked the video, remove the dislike and add like
+      if (currentInteraction.dislike) {
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes + 1,
+            dislikes: prevLikesDislikes[videoId].dislikes - 1,
+          }
+        }));
+      } else {
+        // Otherwise, simply add the like
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes + 1,
+            dislikes: prevLikesDislikes[videoId].dislikes,
+          }
+        }));
+      }
+
+      return {
+        ...prevInteractions,
+        [videoId]: { like: true, dislike: false }
+      };
+    });
+  };
+
+  const handleDislike = (videoId) => {
+    setUserInteractions(prevInteractions => {
+      const currentInteraction = prevInteractions[videoId] || {};
+      const alreadyDisliked = currentInteraction.dislike;
+
+      // If the user already disliked the video, remove the dislike
+      if (alreadyDisliked) {
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes,
+            dislikes: prevLikesDislikes[videoId].dislikes - 1,
+          }
+        }));
+        return {
+          ...prevInteractions,
+          [videoId]: { like: false, dislike: false }
+        };
+      }
+
+      // If the user already liked the video, remove the like and add dislike
+      if (currentInteraction.like) {
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes - 1,
+            dislikes: prevLikesDislikes[videoId].dislikes + 1,
+          }
+        }));
+      } else {
+        // Otherwise, simply add the dislike
+        setLikesDislikes(prevLikesDislikes => ({
+          ...prevLikesDislikes,
+          [videoId]: {
+            likes: prevLikesDislikes[videoId].likes,
+            dislikes: prevLikesDislikes[videoId].dislikes + 1,
+          }
+        }));
+      }
+
+      return {
+        ...prevInteractions,
+        [videoId]: { like: false, dislike: true }
+      };
+    });
+  };
+
+
+
+
+
+
+
+
   const handleSignOut = () => {
     setUser({ ...user, signedIn: false });
-    // You can handle navigation here or pass down a prop to handle it in child components
   };
 
   return (
@@ -77,7 +186,7 @@ function App() {
               <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
               {user.signedIn ? (
                 <button type="button" className="btn btn-primary" onClick={handleSignOut}>
-                  <span className="bi bi-person-circle" aria-hidden="true"></span>
+                  <img src={user.profilePicture} alt="Profile" className="profile-picture" />
                   <span className="signin-text">Sign out</span>
                 </button>
               ) : (
@@ -93,12 +202,16 @@ function App() {
               <Route path="/" element={<VideoListResults videos={videoList} />} />
               <Route path="/video/:id" element={
                 <VideoMain
-                  videos={videoList} // Pass the videoList state
+                  videos={videoList}
                   comments={comments}
                   addComment={addComment}
                   deleteComment={deleteComment}
                   editComment={editComment}
                   user={user}
+                  userInteractions={userInteractions}
+                  handleLike={handleLike}
+                  handleDislike={handleDislike}
+                  likesDislikes={likesDislikes}
                 />
               } />
               <Route path="/search" element={<SearchResults videos={videoList} />} />

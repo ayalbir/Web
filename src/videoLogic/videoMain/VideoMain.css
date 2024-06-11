@@ -1,20 +1,19 @@
-/* src/videoDetails/VideoMain.css */
 .video-details-container {
     display: flex;
     gap: 20px;
     margin: 20px;
     position: relative;
-}
-
-.video-content {
+  }
+  
+  .video-content {
     flex: 3;
-}
-
-.suggested-videos-section {
+  }
+  
+  .suggested-videos-section {
     flex: 1;
-}
-
-.share-modal-overlay {
+  }
+  
+  .share-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -25,139 +24,139 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-.share-modal {
+  }
+  
+  .share-modal {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
     z-index: 1001;
-}
-
-.share-modal-header {
+  }
+  
+  .share-modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.share-modal-title {
+  }
+  
+  .share-modal-title {
     margin: 0;
-}
-
-.share-modal-body {
+  }
+  
+  .share-modal-body {
     margin-top: 10px;
-}
-
-.input-group {
+  }
+  
+  .input-group {
     display: flex;
     margin-bottom: 10px;
-}
-
-.input-group input {
+  }
+  
+  .input-group input {
     flex: 1;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px;
-}
-
-.input-group button {
+  }
+  
+  .input-group button {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px 10px;
-}
-
-.social-buttons {
+  }
+  
+  .social-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-}
-
-.social-buttons .btn {
+  }
+  
+  .social-buttons .btn {
     flex: 1;
     margin-right: 5px;
-}
-
-.social-buttons .btn:last-child {
+  }
+  
+  .social-buttons .btn:last-child {
     margin-right: 0;
-}
-
-.video-player-container {
+  }
+  
+  .video-player-container {
     margin-bottom: 20px;
-}
-
-.video-player {
+  }
+  
+  .video-player {
     width: 100%;
     height: auto;
-}
-
-.video-info-container {
+  }
+  
+  .video-info-container {
     padding: 10px;
-}
-
-.video-header {
+  }
+  
+  .video-header {
     margin-bottom: 10px;
-}
-
-.video-title {
+  }
+  
+  .video-title {
     font-size: 24px;
     font-weight: bold;
-}
-
-.video-stats {
+  }
+  
+  .video-stats {
     display: flex;
     gap: 10px;
-}
-
-.video-actions {
+  }
+  
+  .video-actions {
     margin: 10px 0;
     display: flex;
     gap: 10px; /* Add space between buttons */
-}
-
-.video-actions .btn {
+  }
+  
+  .video-actions .btn {
     margin-right: 10px; /* Add space between buttons */
-}
-
-.video-actions .btn:last-child {
+  }
+  
+  .video-actions .btn:last-child {
     margin-right: 0; /* Remove margin from the last button */
-}
-
-.video-description {
+  }
+  
+  .video-description {
     margin: 20px 0;
-}
-
-.suggested-videos-list {
+  }
+  
+  .suggested-videos-list {
     list-style: none;
     padding: 0;
-}
-
-.suggested-video-item {
+  }
+  
+  .suggested-video-item {
     margin-bottom: 10px;
-}
-
-.suggested-video-link {
+  }
+  
+  .suggested-video-link {
     display: flex;
     text-decoration: none;
     color: inherit;
-}
-
-.suggested-video-thumbnail {
+  }
+  
+  .suggested-video-thumbnail {
     width: 40%;
     margin-right: 10px;
-}
-
-.suggested-video-info {
+  }
+  
+  .suggested-video-info {
     width: 60%;
-}
-
-.suggested-video-title {
+  }
+  
+  .suggested-video-title {
     font-size: 16px;
     margin: 0;
-}
-
-.suggested-video-author,
-.suggested-video-views {
+  }
+  
+  .suggested-video-author,
+  .suggested-video-views {
     font-size: 14px;
     margin: 0;
-}
+  }

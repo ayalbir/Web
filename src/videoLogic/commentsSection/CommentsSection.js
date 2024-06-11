@@ -57,6 +57,7 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
         {(comments[videoId] || []).map((comment, index) => (
           <div className="comment" key={index}>
             <div className="comment-header">
+              <img src={user.profilePicture} alt="Profile" className="profile-picture" />
               <div className="comment-user">{comment.user}</div>
               <div className="comment-actions">
                 <button onClick={() => handleEditComment(index)}><i className="bi bi-pencil icon"></i> Edit</button>

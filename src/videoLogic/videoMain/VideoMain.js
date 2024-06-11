@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import VideoPlayer from '../videoPlayer/VideoPlayer';
-import VideoInfo from '../videoInfo/VideoInfo';
-import SuggestedVideos from '../suggestedVideos/SuggestedVideos';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user }) => {
+const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes }) => {
   const { id } = useParams();
   const video = videos.find(v => v.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);
@@ -30,6 +27,31 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
     alert('Link copied to clipboard!');
   };
 
+  const handleLikeClick = () => {
+    if (user.signedIn) {
+      handleLike(video.id);
+    } else {
+      // Redirect to sign-in page
+      return <Navigate to="/signin" />;
+    }
+  };
+
+  const handleDislikeClick = () => {
+    if (user.signedIn) {
+      handleDislike(video.id);
+    } else {
+      // Redirect to sign-in page
+      return <Navigate to="/signin" />;
+    }
+  };
+
+  const interaction = userInteractions[video.id] || {};
+  const isLiked = interaction.like || false;
+  const isDisliked = interaction.dislike || false;
+
+  const likesCount = likesDislikes[video.id]?.likes || 0;
+  const dislikesCount = likesDislikes[video.id]?.dislikes || 0;
+
   return (
     <div className="video-details-container">
       <div className="video-content">
@@ -49,12 +71,24 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
               </div>
             </div>
             <div className="video-actions">
-              <button className="btn btn-light"><i className="bi bi-hand-thumbs-up"></i> Like</button>
-              <button className="btn btn-light"><i className="bi bi-hand-thumbs-down"></i> Dislike</button>
+              <button
+                className={`btn btn-light ${isLiked ? 'liked' : ''}`}
+                onClick={handleLikeClick}
+                disabled={!user.signedIn}
+              >
+                <i className="bi bi-hand-thumbs-up"></i> {likesCount}
+              </button>
+              <button
+                className={`btn btn-light ${isDisliked ? 'disliked' : ''}`}
+                onClick={handleDislikeClick}
+                disabled={!user.signedIn}
+              >
+                <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
+              </button>
               <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
             </div>
             <div className="video-description">
-              <p>Uploaded by: {video.author}</p> {/* Display the uploader's name */}
+              <p>Uploaded by: {video.author}</p>
               <p>{video.description}</p>
             </div>
           </div>
