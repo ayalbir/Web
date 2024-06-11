@@ -1,5 +1,3 @@
 [
-    {"name": "home", "id": "home", "link": "/", "icon": "bi-house"},
-    {"name": "shorts", "id": "about", "link": "/about", "icon": "bi-info"},
-    {"name": "subs", "id": "contact", "link": "/contact", "icon": "bi-collection-play"}
+    {"name": "home", "id": "home", "link": "/", "icon": "bi-house"}
 ]

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './signIn.css';
+import './SignIn.css';
 
-function SetupEmailPassword() {
+function SetupEmailPassword({ updateUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -42,8 +42,9 @@ function SetupEmailPassword() {
     const user = {
       email,
       password,
+      signedIn: true,
     };
-    localStorage.setItem(email, JSON.stringify(user));
+    updateUser(user); // Update the user in the state
     navigate('/upload-image', { state: { email } });
   };
 

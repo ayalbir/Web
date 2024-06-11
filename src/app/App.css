@@ -121,3 +121,20 @@ body:not(.dark-mode) .btn {
   background-color: #0056b3;
   
 }
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-left: 10px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.profile-picture {
+  height: 40px;
+  border-radius: 50%; /* Make the profile picture round */
+}

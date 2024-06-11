@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './signIn.css';
+import './SignIn.css';
 
 function Register() {
   const navigate = useNavigate();
