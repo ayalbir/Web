@@ -1,6 +1,5 @@
-// SignInLayout.js
-
 import React from 'react';
+import './SignInLayout.css'; // Ensure you have styles for this layout
 
 function SignInLayout({ children }) {
   return (
