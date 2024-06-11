@@ -1,0 +1,9 @@
+/* src/VideoMain/VideoPlayer.css */
+.video-player-container {
+    margin-bottom: 20px;
+}
+
+.video-player {
+    width: 100%;
+    height: auto;
+}

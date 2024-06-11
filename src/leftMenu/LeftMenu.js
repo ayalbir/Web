@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import './LeftMenu.css';
 import items from './menuItems/MenuItems.json';
 
-const LeftMenu = () => {
-  const [expanded, setExpanded] = useState(true);
+const LeftMenu = ({ expanded, setExpanded }) => {
+  const handleToggle = () => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <div className={`left-menu ${expanded ? 'expanded' : 'collapsed'} bg-light`}>
-      <button onClick={() => setExpanded(!expanded)} className="toggle-menu-btn btn btn-secondary">
+    <div className={`left-menu ${expanded ? 'expanded' : 'collapsed'}`}>
+      <button onClick={handleToggle} className="toggle-menu-btn">
         {expanded ? '≡' : '≡'}
       </button>
-      <ul className="list-group list-group-flush">
+      <ul className="menu-list">
         {items.map((item, index) => (
-          <li key={index} className="list-group-item d-flex align-items-center">
+          <li key={index} className="menu-item">
             <Link to={item.link} className="menu-link">
               <i className={`bi bi ${item.icon} menu-icon`}></i>
-              {expanded && <span className="menu-text ms-3">{item.name}</span>}
+              <span className={expanded ? 'menu-text' : 'menu-text-collapsed'}>
+                {item.name}
+              </span>
             </Link>
           </li>
         ))}

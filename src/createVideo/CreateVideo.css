@@ -1,0 +1,41 @@
+/* CreateVideo.css */
+
+.create-video-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+    margin: auto;
+  }
+  
+  .create-video-form h2 {
+    text-align: center;
+  }
+  
+  .create-video-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2em;
+  }
+  
+  .create-video-form input {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .create-video-form button {
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-video-form button:hover {
+    background-color: #0056b3;
+  }
+  

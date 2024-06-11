@@ -1,42 +1,112 @@
+/* LeftMenu.css */
 .left-menu {
   height: 100vh;
+  width: 200px;
   transition: width 0.3s;
   position: fixed;
-  top: 10px;
+  padding-top: 10px;
   left: 0;
-  overflow: hidden;
+  background-color: #f8f9fa;
+  /* Set background color */
   z-index: 1000;
 }
 
-.left-menu.expanded {
-  width: 200px;
-}
-
-.left-menu.collapsed {
+.collapsed {
   width: 80px;
 }
 
 .toggle-menu-btn {
   width: 100%;
-}
-
-.list-group-item {
+  border: none;
+  background: none;
+  font-size: 20px;
   cursor: pointer;
-  border-radius: 12px;
+  outline: none;
+  /* Remove outline */
 }
 
-.list-group-item:hover {
-  background-color: #e2e2e2; /* Change background color on hover */
+.toggle-menu-btn:hover {
+  border-radius: 12px;
+  background-color: #ced4da;
+}
+
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  margin-top: 10px;
 }
 
 .menu-link {
   display: flex;
   align-items: center;
-  text-decoration: none; /* Remove default underline */
-  color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  color: inherit;
+  padding: 10px;
+  border-radius: 12px;
+  /* Add outline */
+}
+
+.menu-link:hover {
+  background-color: #ced4da;
+  /* Hover background color */
+}
+
+.menu-text {
+  margin-left: 10px;
 }
 
 .menu-icon {
-  font-size: 1.4em;
-  margin-right: 10px; /* Add margin between icon and text */
+  font-size: 1.5em;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .left-menu {
+  background-color: #333;
+  /* Dark mode background color */
+  color: #fff;
+  /* Dark mode text color */
+}
+
+body.dark-mode .menu-link:hover {
+  background-color: #555;
+}
+
+body.dark-mode .toggle-menu-btn {
+  color: #fff;
+}
+
+body.dark-mode .toggle-menu-btn:hover{
+  background-color: #555;
+}
+
+
+.collapsed .menu-link {
+  flex-direction: column;
+  /* Change flex direction to column */
+  align-items: center !important;
+  /* Center items horizontally */
+  justify-content: center;
+}
+
+.menu-text {
+  margin-left: 10px;
+}
+
+.collapsed .menu-text {
+  display: block;
+  /* Display as block element */
+  text-align: center;
+  /* Center text horizontally */
+  margin-top: 5px;
+  /* Add margin to separate text from icons */
+}
+
+.collapsed .menu-link .menu-item {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
 }
