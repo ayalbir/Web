@@ -1,0 +1,37 @@
+/* UploadProfilePictureLayout.css */
+
+/* Styles for the upload profile picture layout */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-input {
+    margin-bottom: 1rem;
+}
+
+.upload-button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+.upload-button:active {
+    background-color: #004080;
+}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './signIn.css';
+import './SignIn.css';
 
-function UploadImage() {
+function UploadImage({ updateUserImage }) {
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -28,24 +28,13 @@ function UploadImage() {
       setError('Please upload an image');
       return;
     }
-    const user = JSON.parse(localStorage.getItem(email));
-    if (user) {
-      user.image = image;
-      localStorage.setItem(email, JSON.stringify(user));
-      navigate('/');
-    } else {
-      setError('User not found');
-    }
+    updateUserImage(image); // Update user state with the uploaded image
+    navigate('/signin'); // Navigate to the sign-in page
   };
 
   return (
     <div className="signin-container">
       <div className="signin-box upload-box">
-        <img
-          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
-          alt="Google Logo"
-          className="google-logo"
-        />
         <h1>Upload your profile image</h1>
         <form onSubmit={handleSubmit}>
           <input
@@ -56,7 +45,7 @@ function UploadImage() {
             style={{ marginBottom: '20px' }}
           />
           {error && <p className="error">{error}</p>}
-          <button type="submit" className="next-button">Login</button>
+          <button type="submit" className="next-button">Upload</button>
         </form>
       </div>
     </div>

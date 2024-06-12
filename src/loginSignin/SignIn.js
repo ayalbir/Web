@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './signIn.css';
+import './SignIn.css';
 
-function SignIn() {
+function SignIn({ setSignedIn, setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -12,10 +12,13 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const storedUser = JSON.parse(localStorage.getItem(email));
-
+  
     if (storedUser && storedUser.password === password) {
       setError('');
-      navigate('/'); // successful login navigate to the home page or another protected route
+      const userWithProfilePicture = { ...storedUser, signedIn: true };
+      setSignedIn(true);
+      setUser(userWithProfilePicture);
+      navigate('/'); // Navigate to the home page
     } else {
       setError('Username or password is incorrect');
     }

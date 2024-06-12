@@ -1,0 +1,75 @@
+/* RegisterLayout.css */
+
+.register-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  max-width: 100%; /* Set maximum width to fill the screen */
+  padding: 20px; /* Adjusted padding */
+}
+
+.register-box {
+  background: white;
+  padding: 20px; /* Reduced padding */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: left;
+  width: 100%; /* Reduced width */
+  margin-bottom: 20px;
+}
+
+.register-box h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.register-box p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.register-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-box input[type="text"],
+.register-box input[type="number"],
+.register-box select {
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.register-box select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000' width='24px' height='24px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+  background-position: right 12px top 50%;
+  background-repeat: no-repeat;
+  padding-right: 35px;
+}
+
+.register-box button[type="submit"] {
+  background-color: #1a73e8;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.register-box button[type="submit"]:hover {
+  background-color: #1358b5;
+}
+
+.register-box .error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+/* Additional styling can be added as needed */
