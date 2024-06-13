@@ -17,7 +17,7 @@
     "date": "3 days ago",
     "pic": "/images/temp_pic.jpg",
     "description": "Description for video 2",
-    "url": "/videos/subscribe.mp4"
+    "url": "/videos/walking.mp4"
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "date": "4 days ago",
     "pic": "/images/temp_pic.jpg",
     "description": "Description for video 3",
-    "url": "/videos/subscribe.mp4"
+    "url": "/videos/sand.mp4"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "date": "5 days ago",
     "pic": "/images/temp_pic.jpg",
     "description": "Description for video 4",
-    "url": "/videos/subscribe.mp4"
+    "url": "/videos/dog.mp4"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "date": "6 days ago",
     "pic": "/images/temp_pic.jpg",
     "description": "Description for video 5",
-    "url": "/videos/subscribe.mp4"
+    "url": "/videos/sandals.mp4"
   },
   {
     "id": 6,

@@ -1,162 +1,172 @@
 .video-details-container {
-    display: flex;
-    gap: 20px;
-    margin: 20px;
-    position: relative;
-  }
-  
-  .video-content {
-    flex: 3;
-  }
-  
-  .suggested-videos-section {
-    flex: 1;
-  }
-  
-  .share-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .share-modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    z-index: 1001;
-  }
-  
-  .share-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .share-modal-title {
-    margin: 0;
-  }
-  
-  .share-modal-body {
-    margin-top: 10px;
-  }
-  
-  .input-group {
-    display: flex;
-    margin-bottom: 10px;
-  }
-  
-  .input-group input {
-    flex: 1;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px;
-  }
-  
-  .input-group button {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-  }
-  
-  .social-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  .social-buttons .btn {
-    flex: 1;
-    margin-right: 5px;
-  }
-  
-  .social-buttons .btn:last-child {
-    margin-right: 0;
-  }
-  
-  .video-player-container {
-    margin-bottom: 20px;
-  }
-  
-  .video-player {
-    width: 100%;
-    height: auto;
-  }
-  
-  .video-info-container {
-    padding: 10px;
-  }
-  
-  .video-header {
-    margin-bottom: 10px;
-  }
-  
-  .video-title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .video-stats {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .video-actions {
-    margin: 10px 0;
-    display: flex;
-    gap: 10px; /* Add space between buttons */
-  }
-  
-  .video-actions .btn {
-    margin-right: 10px; /* Add space between buttons */
-  }
-  
-  .video-actions .btn:last-child {
-    margin-right: 0; /* Remove margin from the last button */
-  }
-  
-  .video-description {
-    margin: 20px 0;
-  }
-  
-  .suggested-videos-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .suggested-video-item {
-    margin-bottom: 10px;
-  }
-  
-  .suggested-video-link {
-    display: flex;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .suggested-video-thumbnail {
-    width: 40%;
-    margin-right: 10px;
-  }
-  
-  .suggested-video-info {
-    width: 60%;
-  }
-  
-  .suggested-video-title {
-    font-size: 16px;
-    margin: 0;
-  }
-  
-  .suggested-video-author,
-  .suggested-video-views {
-    font-size: 14px;
-    margin: 0;
-  }
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+  position: relative;
+}
+
+.video-content {
+  flex: 3;
+}
+
+.suggested-videos-section {
+  flex: 1;
+}
+
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.share-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  z-index: 1001;
+}
+
+.share-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.share-modal-title {
+  margin: 0;
+}
+
+.share-modal-body {
+  margin-top: 10px;
+}
+
+.input-group {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.input-group button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.social-buttons .btn {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.social-buttons .btn:last-child {
+  margin-right: 0;
+}
+
+.video-player-container {
+  margin-bottom: 20px;
+}
+
+.video-player {
+  width: 100%;
+  height: auto;
+}
+
+.video-info-container {
+  padding: 10px;
+}
+
+.video-header {
+  margin-bottom: 10px;
+}
+
+.video-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.video-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.video-actions {
+  margin: 10px 0;
+  display: flex;
+  gap: 10px; /* Add space between buttons */
+}
+
+.video-actions .btn {
+  margin-right: 10px; /* Add space between buttons */
+}
+
+.video-actions .btn:last-child {
+  margin-right: 0; /* Remove margin from the last button */
+}
+
+.video-description {
+  margin: 20px 0;
+}
+
+.suggested-videos-list {
+  list-style: none;
+  padding: 0;
+}
+
+.suggested-video-item {
+  margin-bottom: 10px;
+}
+
+.suggested-video-link {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+}
+
+.suggested-video-thumbnail {
+  width: 40%;
+  margin-right: 10px;
+}
+
+.suggested-video-info {
+  width: 60%;
+}
+
+.suggested-video-title {
+  font-size: 16px;
+  margin: 0;
+}
+
+.suggested-video-author,
+.suggested-video-views {
+  font-size: 14px;
+  margin: 0;
+}
+
+.edit-title-input,
+.edit-description-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+

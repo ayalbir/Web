@@ -1,12 +1,18 @@
+// src/videoLogic/videoMain/VideoMain.js
 import React, { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes }) => {
+const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo }) => {
   const { id } = useParams();
   const video = videos.find(v => v.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(video ? video.title : '');
+  const [editedDescription, setEditedDescription] = useState(video ? video.description : '');
+  const [editedFile, setEditedFile] = useState(null);
+  const navigate = useNavigate();
 
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
@@ -45,6 +51,23 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
     }
   };
 
+  const handleDeleteVideo = () => {
+    deleteVideo(video.id);
+    navigate('/');
+  };
+
+  const handleEditVideo = () => {
+    if (editMode) {
+      const newUrl = editedFile ? URL.createObjectURL(editedFile) : video.url;
+      editVideo(video.id, editedTitle, editedDescription, newUrl);
+    }
+    setEditMode(!editMode);
+  };
+
+  const handleFileChange = (e) => {
+    setEditedFile(e.target.files[0]);
+  };
+
   const interaction = userInteractions[video.id] || {};
   const isLiked = interaction.like || false;
   const isDisliked = interaction.dislike || false;
@@ -57,14 +80,34 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
       <div className="video-content">
         <div className="main-video-section">
           <div className="video-player-container">
-            <video className="video-player" controls>
-              <source src={video.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {editMode ? (
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+                className="edit-file-input"
+              />
+            ) : (
+              <video className="video-player" controls>
+                <source src={video.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
           <div className="video-info-container">
             <div className="video-header">
-              <h2 className="video-title">{video.title}</h2>
+              {editMode ? (
+                <>
+                  <input
+                    type="text"
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                    className="edit-title-input"
+                  />
+                </>
+              ) : (
+                <h2 className="video-title">{video.title}</h2>
+              )}
               <div className="video-stats">
                 <p className="video-views">{video.views} views</p>
                 <p className="video-date">{video.date}</p>
@@ -84,10 +127,30 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
               </button>
               <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
+              {user.email === video.uploaderEmail && (
+                <>
+                  <button className="btn btn-warning" onClick={handleEditVideo}>
+                    {editMode ? 'Save' : 'Edit'}
+                  </button>
+                  <button className="btn btn-danger" onClick={handleDeleteVideo}>Delete</button>
+                </>
+              )}
             </div>
             <div className="video-description">
-              <p>Uploaded by: {video.author}</p>
-              <p>{video.description}</p>
+              {editMode ? (
+                <>
+                  <textarea
+                    value={editedDescription}
+                    onChange={(e) => setEditedDescription(e.target.value)}
+                    className="edit-description-input"
+                  />
+                </>
+              ) : (
+                <>
+                  <p>Uploaded by: {video.author}</p>
+                  <p>{video.description}</p>
+                </>
+              )}
             </div>
           </div>
         </div>

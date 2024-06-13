@@ -65,6 +65,7 @@ const SignUp = ({ setFirstName }) => {
           <input
             type="text"
             name="firstName"
+            placeholder='Enter your first name'
             value={formData.firstName}
             onChange={handleChange}
           />
@@ -75,6 +76,7 @@ const SignUp = ({ setFirstName }) => {
           <input
             type="text"
             name="lastName"
+            placeholder='Enter your last name'
             value={formData.lastName}
             onChange={handleChange}
           />
