@@ -27,7 +27,9 @@ const UploadProfileImage = ({ setProfileImage }) => {
     <div className="upload-container">
       <h2>Upload your profile image</h2>
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleImageChange} />
+        <input type="file"
+          accept="image/*"
+          onChange={handleImageChange} />
         <button type="submit">Upload</button>
       </form>
     </div>

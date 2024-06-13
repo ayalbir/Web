@@ -87,6 +87,18 @@ function App() {
     setUser({ ...user, signedIn: false });
   };
 
+  const deleteVideo = (id) => {
+    setVideoList((prevList) => prevList.filter(video => video.id !== id));
+  };
+
+  const editVideo = (id, newTitle, newDescription) => {
+    setVideoList((prevList) =>
+      prevList.map(video =>
+        video.id === id ? { ...video, title: newTitle, description: newDescription } : video
+      )
+    );
+  };
+
   return (
     <Router>
       <Routes>
@@ -145,6 +157,8 @@ function App() {
                         handleLike={handleLike}
                         handleDislike={handleDislike}
                         likesDislikes={likesDislikes}
+                        deleteVideo={deleteVideo}
+                        editVideo={editVideo}
                       />
                     } />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
