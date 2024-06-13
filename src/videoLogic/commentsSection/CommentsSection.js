@@ -10,14 +10,13 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
 
   const handleAddComment = () => {
     if (!user.signedIn) {
-      // Redirect to sign-in page if user is not signed in
       navigate("/signin");
       return;
     }
 
     if (newComment.trim() === '') return;
 
-    addComment(videoId, { user: user.name, text: newComment }); // Use user's name for comment
+    addComment(videoId, { user: user.name, text: newComment, profilePicture: user.profileImage, firstName: user.firstName });
     setNewComment('');
   };
 
@@ -57,8 +56,8 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
         {(comments[videoId] || []).map((comment, index) => (
           <div className="comment" key={index}>
             <div className="comment-header">
-              <img src={user.profilePicture} alt="Profile" className="profile-picture" />
-              <div className="comment-user">{comment.user}</div>
+              <img src={comment.profilePicture} alt="Profile" className="profile-picture" />
+              <div className="comment-user">{comment.firstName}</div>
               <div className="comment-actions">
                 <button onClick={() => handleEditComment(index)}><i className="bi bi-pencil icon"></i> Edit</button>
                 <button onClick={() => handleDeleteComment(index)}><i className="bi bi-trash icon"></i> Delete</button>

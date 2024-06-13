@@ -11,23 +11,23 @@
 .comment-form .form-control {
   resize: vertical;
   padding: 10px;
-  border: 1px solid #ced4da; /* Light mode border color */
+  border: 1px solid #ced4da;
   border-radius: 4px;
 }
 
 .dark-mode .comment-form .form-control {
-  background-color: #333; /* Dark mode background color */
-  color: white; /* Dark mode text color */
-  border: 1px solid #555; /* Dark mode border color */
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
 }
 
 .dark-mode .comment-form .form-control::placeholder {
-  color: #ffffff; /* White placeholder in dark mode */
+  color: #ffffff;
 }
 
 .comment-button {
   border: none;
-  background-color: #007bff; /* Light mode button background color */
+  background-color: #007bff;
   color: white;
   padding: 10px;
   border-radius: 4px;
@@ -36,7 +36,7 @@
 }
 
 .dark-mode .comment-button {
-  background-color: #555; /* Dark mode button background color */
+  background-color: #555;
 }
 
 .comments-list {
@@ -48,19 +48,19 @@
 
 .comment {
   padding: 10px;
-  border: 1px solid #ced4da; /* Light mode border color */
+  border: 1px solid #ced4da;
   border-radius: 4px;
-  background-color: #f8f9fa; /* Light mode background color */
+  background-color: #f8f9fa;
 }
 
 .dark-mode .comment {
-  background-color: #333; /* Dark mode background color */
-  border: 1px solid #555; /* Dark mode border color */
+  background-color: #333;
+  border: 1px solid #555;
 }
 
 .comment-header {
   display: flex;
-  justify-content: start;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -73,6 +73,7 @@
 
 .comment-user {
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .comment-body {
@@ -82,12 +83,12 @@
 }
 
 .comment-text {
-  margin-left: 10px;
+  margin-left: 40px;
   margin-bottom: 10px;
 }
 
 .comment-actions {
-  margin-left: 60%;
+  margin-left: auto;
   display: flex;
   gap: 15px;
 }
@@ -95,7 +96,7 @@
 .comment-actions button {
   border: none;
   background: none;
-  color: black; /* Light mode icon color */
+  color: black;
   cursor: pointer;
   padding: 0;
   display: flex;
@@ -103,10 +104,8 @@
   gap: 5px;
 }
 
-
-
 .dark-mode .comment-actions button {
-  color: white; /* Dark mode icon color */
+  color: white;
 }
 
 .comment-actions button:hover {
@@ -130,20 +129,20 @@
 
 .edit-comment-form .form-control {
   padding: 10px;
-  border: 1px solid #ced4da; /* Light mode border color */
+  border: 1px solid #ced4da;
   border-radius: 4px;
 }
 
 .dark-mode .edit-comment-form .form-control {
-  background-color: #333; /* Dark mode background color */
-  color: white; /* Dark mode text color */
-  border: 1px solid #555; /* Dark mode border color */
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
 }
 
 .save-button,
 .cancel-button {
   border: none;
-  background-color: #007bff; /* Light mode button background color */
+  background-color: #007bff;
   color: white;
   padding: 10px;
   border-radius: 4px;
@@ -153,9 +152,9 @@
 
 .dark-mode .save-button,
 .dark-mode .cancel-button {
-  background-color: #555; /* Dark mode button background color */
+  background-color: #555;
 }
 
 .cancel-button {
-  background-color: #929292; /* Light mode button background color */
+  background-color: #929292;
 }

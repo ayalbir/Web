@@ -1,0 +1,67 @@
+/* src/SignIn.css */
+.signin-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+  }
+  
+  .google-logo {
+    font-size: 48px;
+    color: #4285f4;
+  }
+  
+  .signin-container h2 {
+    margin-top: 0;
+  }
+  
+  .signin-container form {
+    margin: 20px 0;
+  }
+  
+  .signin-container form div {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .signin-container form input[type="text"],
+  .signin-container form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signin-container form input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .signin-container button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .signin-container button[type="button"]:hover {
+    background-color: #357ae8;
+  }
+  
+  .signin-container a {
+    color: #4285f4;
+    text-decoration: none;
+  }
+  
+  .signin-container a:hover {
+    text-decoration: underline;
+  }
+  
