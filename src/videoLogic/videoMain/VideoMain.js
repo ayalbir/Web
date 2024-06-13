@@ -11,6 +11,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState(video ? video.title : '');
   const [editedDescription, setEditedDescription] = useState(video ? video.description : '');
+  const [editedFile, setEditedFile] = useState(null);
   const navigate = useNavigate();
 
   if (!video) {
@@ -57,9 +58,14 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
 
   const handleEditVideo = () => {
     if (editMode) {
-      editVideo(video.id, editedTitle, editedDescription);
+      const newUrl = editedFile ? URL.createObjectURL(editedFile) : video.url;
+      editVideo(video.id, editedTitle, editedDescription, newUrl);
     }
     setEditMode(!editMode);
+  };
+
+  const handleFileChange = (e) => {
+    setEditedFile(e.target.files[0]);
   };
 
   const interaction = userInteractions[video.id] || {};
@@ -74,10 +80,19 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
       <div className="video-content">
         <div className="main-video-section">
           <div className="video-player-container">
-            <video className="video-player" controls>
-              <source src={video.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {editMode ? (
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+                className="edit-file-input"
+              />
+            ) : (
+              <video className="video-player" controls>
+                <source src={video.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
           <div className="video-info-container">
             <div className="video-header">
@@ -88,7 +103,6 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                     value={editedTitle}
                     onChange={(e) => setEditedTitle(e.target.value)}
                     className="edit-title-input"
-                    placeholder='Add a title...'
                   />
                 </>
               ) : (
@@ -129,7 +143,6 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                     value={editedDescription}
                     onChange={(e) => setEditedDescription(e.target.value)}
                     className="edit-description-input"
-                    placeholder='Add a description...'
                   />
                 </>
               ) : (

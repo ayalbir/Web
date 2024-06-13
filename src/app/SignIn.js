@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignIn.css';
 
-const SignIn = ({ setUser, email, password }) => {
+const SignIn = ({ setUser, registeredUsers }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -21,8 +21,12 @@ const SignIn = ({ setUser, email, password }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (formData.email !== email) newErrors.email = 'Email not found';
-    if (formData.password !== password) newErrors.password = 'Incorrect password';
+    const user = registeredUsers.find(user => user.email === formData.email);
+    if (!user) {
+      newErrors.email = 'Email not found';
+    } else if (user.password !== formData.password) {
+      newErrors.password = 'Incorrect password';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -30,7 +34,8 @@ const SignIn = ({ setUser, email, password }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setUser({ id: 1, name: "Demo User", signedIn: true });
+      const user = registeredUsers.find(user => user.email === formData.email);
+      setUser({ ...user, signedIn: true });
       navigate('/');
     }
   };
@@ -47,6 +52,7 @@ const SignIn = ({ setUser, email, password }) => {
             <input
               type="text"
               name="email"
+              placeholder='Enter your email'
               value={formData.email}
               onChange={handleChange}
             />
@@ -57,6 +63,7 @@ const SignIn = ({ setUser, email, password }) => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
+              placeholder='Enter your password'
               value={formData.password}
               onChange={handleChange}
             />

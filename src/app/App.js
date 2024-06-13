@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
@@ -14,18 +15,17 @@ import SignUpStepTwo from './SignUpStepTwo';
 import UploadProfileImage from './UploadProfileImage';
 import SignIn from './SignIn';
 
-
-
 function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [comments, setComments] = useState({});
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [profileImage, setProfileImage] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
   const [userInteractions, setUserInteractions] = useState({});
   const [likesDislikes, setLikesDislikes] = useState({});
 
@@ -84,32 +84,37 @@ function App() {
   };
 
   const handleSignOut = () => {
-    setUser({ ...user, signedIn: false });
+    setUser(null);
   };
 
   const deleteVideo = (id) => {
     setVideoList((prevList) => prevList.filter(video => video.id !== id));
   };
 
-  const editVideo = (id, newTitle, newDescription) => {
+  const editVideo = (id, newTitle, newDescription, newUrl) => {
     setVideoList((prevList) =>
       prevList.map(video =>
-        video.id === id ? { ...video, title: newTitle, description: newDescription } : video
+        video.id === id ? { ...video, title: newTitle, description: newDescription, url: newUrl } : video
       )
     );
+  };
+
+  const handleRegisterUser = (userData) => {
+    setRegisteredUsers((prevUsers) => [...prevUsers, userData]);
+    setUser({ ...userData, signedIn: true });
   };
 
   return (
     <Router>
       <Routes>
-        <Route path="/signin" element={<SignIn setUser={setUser} email={email} password={password} />} />
+        <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
         <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
-        <Route path="/signup-step-two" element={<SignUpStepTwo email={email} firstName={firstName} setEmail={setEmail} setPassword={setPassword} />} />
+        <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} />} />
         <Route path="/upload-profile-image" element={<UploadProfileImage setProfileImage={setProfileImage} />} />
         <Route
           path="*"
           element={
-            <div className="container-fluid">
+            <div className={`container-fluid ${isDarkMode ? 'dark-mode' : ''}`}>
               <div className="row">
                 <LeftMenu expanded={expanded} setExpanded={setExpanded} />
                 <div className={`col main-content ${expanded ? 'offset-md-3' : 'offset-md-1'}`}>
@@ -122,11 +127,11 @@ function App() {
                       <img src={isDarkMode ? "/images/logo-dark.svg" : "/images/logo-light.svg"} alt="Logo" className="app-logo" />
                     </Link>
                     <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-                    {user.signedIn ? (
+                    {user ? (
                       <div className="user-info">
                         {profileImage && <img src={profileImage} alt="Profile" className="profile-image" />}
-                        <span className="user-details">{firstName}</span>
-                        <span className="user-details">{email}</span>
+                        <span className="user-details">{user.firstName}</span>
+                        <span className="user-details">{user.email}</span>
                         <Link to="/signin" className="signin-link">
                           <button type="button" className="btn btn-primary" onClick={handleSignOut}>
                             <span className="bi bi-person-circle" aria-hidden="true"></span>
@@ -152,7 +157,7 @@ function App() {
                         addComment={addComment}
                         deleteComment={deleteComment}
                         editComment={editComment}
-                        user={{ ...user, firstName, profileImage }}
+                        user={user}
                         userInteractions={userInteractions}
                         handleLike={handleLike}
                         handleDislike={handleDislike}

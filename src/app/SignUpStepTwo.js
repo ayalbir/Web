@@ -55,6 +55,7 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
           <input
             type="text"
             name="email"
+            placeholder='Enter your email'
             value={formData.email}
             onChange={handleChange}
           />
@@ -65,6 +66,7 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
           <input
             type={showPassword ? "text" : "password"}
             name="password"
+            placeholder='Enter your password'
             value={formData.password}
             onChange={handleChange}
           />
@@ -75,6 +77,7 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
           <input
             type={showPassword ? "text" : "password"}
             name="confirmPassword"
+            placeholder='Enter your password'
             value={formData.confirmPassword}
             onChange={handleChange}
           />
@@ -84,6 +87,7 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
           <input
             type="checkbox"
             name="showPassword"
+            placeholder='Enter your password'
             checked={showPassword}
             onChange={handleShowPasswordChange}
           />
