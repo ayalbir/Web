@@ -74,14 +74,12 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
               <button
                 className={`btn btn-light ${isLiked ? 'liked' : ''}`}
                 onClick={handleLikeClick}
-                disabled={!user.signedIn}
               >
                 <i className="bi bi-hand-thumbs-up"></i> {likesCount}
               </button>
               <button
                 className={`btn btn-light ${isDisliked ? 'disliked' : ''}`}
                 onClick={handleDislikeClick}
-                disabled={!user.signedIn}
               >
                 <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
               </button>

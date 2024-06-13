@@ -9,50 +9,32 @@ import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../videoLogic/videoMain/VideoMain';
 import SearchResults from '../search/SearchResults';
 import DarkModeButton from '../darkMode/DarkModeButton';
-import SignIn from '../loginSignin/SignIn';
-import Register from '../loginSignin/Register';
-import SetUp from '../loginSignin/SetupEmailPassword';
-import UploadImage from '../loginSignin/UploadImage';
-import SetUpLayout from '../loginSignin/SetUpLayout';
-import SignInLayout from '../loginSignin/SignInLayout';
-import ProtectedRoute from './ProtectedRoute';
-import RegisterLayout from '../loginSignin/RegisterLayout';
-import UploadImageLayout from '../loginSignin/UploadImageLayout';
+import SignUp from './SignUp';
+import SignUpStepTwo from './SignUpStepTwo';
+import UploadProfileImage from './UploadProfileImage';
+import SignIn from './SignIn';
+
+const demoUser = {
+  id: 1,
+  name: "Demo User",
+  signedIn: false,
+};
 
 function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [comments, setComments] = useState({});
+  const [user, setUser] = useState(demoUser);
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const [userInteractions, setUserInteractions] = useState({});
   const [likesDislikes, setLikesDislikes] = useState({});
-  const [user, setUser] = useState(null);
-  const [signedIn, setSignedIn] = useState(false);
-
-  const updateUser = (newUser) => {
-    setUser(newUser);
-    setSignedIn(true);
-  };
-
-  const handleSignOut = () => {
-    setUser(null);
-    setSignedIn(false);
-  };
-
-  const updateUserImage = (image) => {
-    setUser(prevUser => ({
-      ...prevUser,
-      profilePicture: image
-    }));
-  };
 
   useEffect(() => {
-    const initialLikesDislikes = videosData.reduce((acc, video) => {
-      acc[video.id] = { likes: 0, dislikes: 0 };
-      return acc;
-    }, {});
     setVideoList(videosData);
-    setLikesDislikes(initialLikesDislikes);
   }, []);
 
   const toggleDarkMode = () => {
@@ -67,6 +49,13 @@ function App() {
     }));
   };
 
+  const deleteComment = (videoId, index) => {
+    setComments(prevComments => ({
+      ...prevComments,
+      [videoId]: prevComments[videoId].filter((_, i) => i !== index),
+    }));
+  };
+
   const editComment = (videoId, index, newText) => {
     setComments(prevComments => ({
       ...prevComments,
@@ -76,165 +65,99 @@ function App() {
     }));
   };
 
-  const deleteComment = (videoId, index) => {
-    setComments(prevComments => ({
-      ...prevComments,
-      [videoId]: prevComments[videoId].filter((_, i) => i !== index),
+  const handleLike = (videoId) => {
+    setUserInteractions(prev => ({
+      ...prev,
+      [videoId]: { ...prev[videoId], like: !prev[videoId]?.like }
+    }));
+    setLikesDislikes(prev => ({
+      ...prev,
+      [videoId]: { ...prev[videoId], likes: (prev[videoId]?.likes || 0) + (userInteractions[videoId]?.like ? -1 : 1) }
     }));
   };
 
-  const handleLike = (videoId) => {
-    setUserInteractions(prevInteractions => {
-      const currentInteraction = prevInteractions[videoId] || {};
-      const alreadyLiked = currentInteraction.like;
-
-      if (alreadyLiked) {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes - 1,
-            dislikes: prevLikesDislikes[videoId].dislikes,
-          }
-        }));
-        return {
-          ...prevInteractions,
-          [videoId]: { like: false, dislike: false }
-        };
-      }
-
-      if (currentInteraction.dislike) {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes + 1,
-            dislikes: prevLikesDislikes[videoId].dislikes - 1,
-          }
-        }));
-      } else {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes + 1,
-            dislikes: prevLikesDislikes[videoId].dislikes,
-          }
-        }));
-      }
-
-      return {
-        ...prevInteractions,
-        [videoId]: { like: true, dislike: false }
-      };
-    });
+  const handleDislike = (videoId) => {
+    setUserInteractions(prev => ({
+      ...prev,
+      [videoId]: { ...prev[videoId], dislike: !prev[videoId]?.dislike }
+    }));
+    setLikesDislikes(prev => ({
+      ...prev,
+      [videoId]: { ...prev[videoId], dislikes: (prev[videoId]?.dislikes || 0) + (userInteractions[videoId]?.dislike ? -1 : 1) }
+    }));
   };
 
-  const handleDislike = (videoId) => {
-    setUserInteractions(prevInteractions => {
-      const currentInteraction = prevInteractions[videoId] || {};
-      const alreadyDisliked = currentInteraction.dislike;
-
-      if (alreadyDisliked) {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes,
-            dislikes: prevLikesDislikes[videoId].dislikes - 1,
-          }
-        }));
-        return {
-          ...prevInteractions,
-          [videoId]: { like: false, dislike: false }
-        };
-      }
-
-      if (currentInteraction.like) {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes - 1,
-            dislikes: prevLikesDislikes[videoId].dislikes + 1,
-          }
-        }));
-      } else {
-        setLikesDislikes(prevLikesDislikes => ({
-          ...prevLikesDislikes,
-          [videoId]: {
-            likes: prevLikesDislikes[videoId].likes,
-            dislikes: prevLikesDislikes[videoId].dislikes + 1,
-          }
-        }));
-      }
-
-      return {
-        ...prevInteractions,
-        [videoId]: { like: false, dislike: true }
-      };
-    });
+  const handleSignOut = () => {
+    setUser({ ...user, signedIn: false });
   };
 
   return (
     <Router>
-      <div className="container-fluid">
-        <Routes>
-          <Route
-            path="/signin"
-            element={<SignInLayout><SignIn setSignedIn={setSignedIn} setUser={setUser} /></SignInLayout>}
-          />
-          <Route path="/register" element={<RegisterLayout><Register /></RegisterLayout>} />
-          <Route path="/setup-email-password" element={<SetUpLayout><SetUp updateUser={updateUser} /></SetUpLayout>} />
-          <Route path="/upload-image" element={<UploadImageLayout><UploadImage updateUserImage={updateUserImage} /></UploadImageLayout>} />
-
-          <Route path="*" element={
-            <div className="row">
-              <LeftMenu expanded={expanded} setExpanded={setExpanded} />
-              <div className={`col main-content ${expanded ? 'offset-md-3' : 'offset-md-1'}`}>
-                <div className="search-signin-container">
-                  <Link to="/create" className="btn create-button">
-                    <i className="bi bi-patch-plus"></i>
-                  </Link>
-                  <Search className="search-bar" />
-                  <Link to="/" className="app-logo-link">
-                    <img src={isDarkMode ? "/images/logo-dark.svg" : "/images/logo-light.svg"} alt="Logo" className="app-logo" />
-                  </Link>
-                  <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-                  {user && signedIn ? (
-                    <button type="button" className="btn btn-primary" onClick={handleSignOut}>
-                      {user.profilePicture && <img src={user.profilePicture} alt="Profile" className="profile-picture" />}
-                      {user.name && <span className="username">{user.name}</span>}
-                      <span className="signin-text">Sign out</span>
-                    </button>
-                  ) : (
-                    <Link to="/signin" className="signin-link">
-                      <button type="button" className="btn btn-primary">
-                        <span className="bi bi-person-circle" aria-hidden="true"></span>
-                        <span className="signin-text">Sign in</span>
-                      </button>
+      <Routes>
+        <Route path="/signin" element={<SignIn setUser={setUser} email={email} password={password} />} />
+        <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
+        <Route path="/signup-step-two" element={<SignUpStepTwo email={email} firstName={firstName} setEmail={setEmail} setPassword={setPassword} />} />
+        <Route path="/upload-profile-image" element={<UploadProfileImage setProfileImage={setProfileImage} />} />
+        <Route
+          path="*"
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <LeftMenu expanded={expanded} setExpanded={setExpanded} />
+                <div className={`col main-content ${expanded ? 'offset-md-3' : 'offset-md-1'}`}>
+                  <div className="search-signin-container">
+                    <Link to="/create" className="btn create-button">
+                      <i className="bi bi-patch-plus"></i>
                     </Link>
-                  )}
+                    <Search className="search-bar" />
+                    <Link to="/" className="app-logo-link">
+                      <img src={isDarkMode ? "/images/logo-dark.svg" : "/images/logo-light.svg"} alt="Logo" className="app-logo" />
+                    </Link>
+                    <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+                    {user.signedIn ? (
+                      <div className="user-info">
+                        {profileImage && <img src={profileImage} alt="Profile" className="profile-image" />}
+                        <span className="user-details">{firstName}</span>
+                        <span className="user-details">{email}</span>
+                        <button type="button" className="btn btn-primary" onClick={handleSignOut}>
+                          <span className="bi bi-person-circle" aria-hidden="true"></span>
+                          <span className="signin-text">Sign out</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <Link to="/signin" className="signin-link">
+                        <button type="button" className="btn btn-primary">
+                          <span className="bi bi-person-circle" aria-hidden="true"></span>
+                          <span className="signin-text">Sign in</span>
+                        </button>
+                      </Link>
+                    )}
+                  </div>
+                  <Routes>
+                    <Route path="/" element={<VideoListResults videos={videoList} />} />
+                    <Route path="/video/:id" element={
+                      <VideoMain
+                        videos={videoList}
+                        comments={comments}
+                        addComment={addComment}
+                        deleteComment={deleteComment}
+                        editComment={editComment}
+                        user={{ ...user, firstName, profileImage }}
+                        userInteractions={userInteractions}
+                        handleLike={handleLike}
+                        handleDislike={handleDislike}
+                        likesDislikes={likesDislikes}
+                      />
+                    } />
+                    <Route path="/search" element={<SearchResults videos={videoList} />} />
+                    <Route path="/create" element={<CreateVideo setVideoList={setVideoList} user={user} />} />
+                  </Routes>
                 </div>
-                <Routes>
-                  <Route path="/" element={<VideoListResults videos={videoList} />} />
-                  <Route path="/video/:id" element={
-                    <VideoMain
-                      videos={videoList}
-                      comments={comments}
-                      addComment={addComment}
-                      deleteComment={deleteComment}
-                      editComment={editComment}
-                      user={user || { signedIn: false }} // Initialize user if it's null
-                      userInteractions={userInteractions}
-                      handleLike={handleLike}
-                      handleDislike={handleDislike}
-                      likesDislikes={likesDislikes}
-                    />
-                  } />
-                  <Route path="/search" element={<SearchResults videos={videoList} />} />
-                  <Route path="/create" element={<ProtectedRoute user={user}><CreateVideo setVideoList={setVideoList} user={user} /></ProtectedRoute>} />
-                </Routes>
               </div>
             </div>
-          } />
-        </Routes>
-      </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

@@ -1,0 +1,59 @@
+/* src/SignIn.css */
+.minimal-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  .signin-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .google-logo {
+    font-family: 'Product Sans', Arial, sans-serif;
+    color: #4285f4;
+    margin-bottom: 10px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.875em;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-container input {
+    margin-right: 5px;
+  }
+  
+  .button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #357ae8;
+  }
+  
+  .additional-links {
+    margin-top: 10px;
+  }
+  
