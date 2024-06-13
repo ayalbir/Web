@@ -14,18 +14,14 @@ import SignUpStepTwo from './SignUpStepTwo';
 import UploadProfileImage from './UploadProfileImage';
 import SignIn from './SignIn';
 
-const demoUser = {
-  id: 1,
-  name: "Demo User",
-  signedIn: false,
-};
+
 
 function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [comments, setComments] = useState({});
-  const [user, setUser] = useState(demoUser);
+  const [user, setUser] = useState("");
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -119,10 +115,12 @@ function App() {
                         {profileImage && <img src={profileImage} alt="Profile" className="profile-image" />}
                         <span className="user-details">{firstName}</span>
                         <span className="user-details">{email}</span>
-                        <button type="button" className="btn btn-primary" onClick={handleSignOut}>
-                          <span className="bi bi-person-circle" aria-hidden="true"></span>
-                          <span className="signin-text">Sign out</span>
-                        </button>
+                        <Link to="/signin" className="signin-link">
+                          <button type="button" className="btn btn-primary" onClick={handleSignOut}>
+                            <span className="bi bi-person-circle" aria-hidden="true"></span>
+                            <span className="signin-text">Sign out</span>
+                          </button>
+                        </Link>
                       </div>
                     ) : (
                       <Link to="/signin" className="signin-link">
