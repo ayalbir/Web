@@ -147,14 +147,13 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 </>
               ) : (
                 <>
-                  <p>Uploaded by: {video.author}</p>
+                  <p>Uploaded by: {video.uploaderName}</p>
                   <p>{video.description}</p>
                 </>
               )}
             </div>
           </div>
         </div>
-        {console.log(user)}
         <CommentsSection
           videoId={video.id}
           comments={comments}
