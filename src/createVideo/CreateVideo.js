@@ -9,10 +9,10 @@ const CreateVideo = ({ setVideoList, user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.signedIn) {
+    if (!user || !user.signedIn) {
       navigate("/signin");
     }
-  }, [navigate, user.signedIn]);
+  }, [navigate, user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,21 +28,17 @@ const CreateVideo = ({ setVideoList, user }) => {
       id: Date.now(),
       title,
       pic: URL.createObjectURL(image),
-      url: URL.createObjectURL(video),
-      author: user.name, // Assuming user's name is the author
+      url: videoUrl,
+      author: user ? user.name : "Anonymous", // Default to "Anonymous" if user is not defined
       views: 0,
       date: new Date().toLocaleDateString(),
       description: "",
     };
-    
   
     setVideoList((prevList) => [...prevList, newVideo]);
     navigate("/");
   };
   
-  
-  
-
   return (
     <form className="create-video-form" onSubmit={handleSubmit}>
       <h2>Create a Video</h2>

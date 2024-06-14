@@ -154,6 +154,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
             </div>
           </div>
         </div>
+        {console.log(user)}
         <CommentsSection
           videoId={video.id}
           comments={comments}

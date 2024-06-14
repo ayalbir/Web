@@ -167,7 +167,7 @@ function App() {
                       />
                     } />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
-                    <Route path="/create" element={<CreateVideo setVideoList={setVideoList} user={user} />} />
+                    <Route path="/create" element={<CreateVideo setVideoList={setVideoList} user={user}/>} />
                   </Routes>
                 </div>
               </div>
