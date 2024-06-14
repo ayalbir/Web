@@ -127,7 +127,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
               </button>
               <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
-              {user.email === video.uploaderEmail && (
+              {user && (
                 <>
                   <button className="btn btn-warning" onClick={handleEditVideo}>
                     {editMode ? 'Save' : 'Edit'}

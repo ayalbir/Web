@@ -52,7 +52,7 @@ const SignIn = ({ setUser, registeredUsers }) => {
             <input
               type="text"
               name="email"
-              placeholder='Enter your email'
+              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
             />

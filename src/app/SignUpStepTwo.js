@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUpStepTwo.css';
 
-const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
+const SignUpStepTwo = ({ email, firstName, setEmail, setPassword, registerUser }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -42,59 +42,61 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword }) => {
     if (validateForm()) {
       setEmail(formData.email);
       setPassword(formData.password);
+      registerUser({ email: formData.email, password: formData.password, firstName });
       navigate('/upload-profile-image');
     }
   };
 
   return (
-    <div className="signup-container">
-      <h2>Use your existing email</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email address</label>
-          <input
-            type="text"
-            name="email"
-            placeholder='Enter your email'
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-        <div>
-          <label>Create your password</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder='Enter your password'
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <span className="error">{errors.password}</span>}
-        </div>
-        <div>
-          <label>Confirm password</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="confirmPassword"
-            placeholder='Enter your password'
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
-        </div>
-        <div className="checkbox-container">
-          <input
-            type="checkbox"
-            name="showPassword"
-            placeholder='Enter your password'
-            checked={showPassword}
-            onChange={handleShowPasswordChange}
-          />
-          <label>Show password</label>
-        </div>
-        <button type="submit">Next</button>
-      </form>
+    <div className="minimal-layout">
+      <div className="signup-container">
+        <h2>Use your existing email</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Email address</label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+          <div>
+            <label>Create your password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <span className="error">{errors.password}</span>}
+          </div>
+          <div>
+            <label>Confirm password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Enter your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
+          </div>
+          <div className="checkbox-container">
+            <input
+              type="checkbox"
+              name="showPassword"
+              checked={showPassword}
+              onChange={handleShowPasswordChange}
+            />
+            <label>Show password</label>
+          </div>
+          <button type="submit" className="button">Next</button>
+        </form>
+      </div>
     </div>
   );
 };
