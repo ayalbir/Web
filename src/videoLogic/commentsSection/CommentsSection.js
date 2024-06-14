@@ -9,14 +9,19 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
   const navigate = useNavigate();
 
   const handleAddComment = () => {
-    if (!user.signedIn) {
+    if (!user || !user.signedIn) {
       navigate("/signin");
       return;
     }
 
     if (newComment.trim() === '') return;
 
-    addComment(videoId, { user: user.name, text: newComment, profilePicture: user.profileImage, firstName: user.firstName });
+    addComment(videoId, { 
+      user: user.name, 
+      text: newComment, 
+      profilePicture: user.profileImage, 
+      firstName: user.firstName 
+    });
     setNewComment('');
   };
 

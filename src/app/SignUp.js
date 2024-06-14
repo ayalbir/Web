@@ -57,72 +57,74 @@ const SignUp = ({ setFirstName }) => {
   ];
 
   return (
-    <div className="signup-container">
-      <h2>Create a Google Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First name</label>
-          <input
-            type="text"
-            name="firstName"
-            placeholder='Enter your first name'
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-          {errors.firstName && <span className="error">{errors.firstName}</span>}
-        </div>
-        <div>
-          <label>Last name (optional)</label>
-          <input
-            type="text"
-            name="lastName"
-            placeholder='Enter your last name'
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Birthdate</label>
+    <div className="minimal-layout">
+      <div className="signup-container">
+        <h2>Create a Google Account</h2>
+        <form onSubmit={handleSubmit}>
           <div>
-            <select name="month" value={formData.month} onChange={handleChange}>
-              <option value="">Month</option>
-              {months.map((month) => (
-                <option key={month.value} value={month.value}>
-                  {month.label}
-                </option>
-              ))}
-            </select>
-            {errors.month && <span className="error">{errors.month}</span>}
+            <label>First name</label>
             <input
               type="text"
-              name="day"
-              value={formData.day}
+              name="firstName"
+              placeholder="Enter your first name"
+              value={formData.firstName}
               onChange={handleChange}
-              placeholder="Day"
             />
-            {errors.day && <span className="error">{errors.day}</span>}
-            <input
-              type="text"
-              name="year"
-              value={formData.year}
-              onChange={handleChange}
-              placeholder="Year"
-            />
-            {errors.year && <span className="error">{errors.year}</span>}
+            {errors.firstName && <span className="error">{errors.firstName}</span>}
           </div>
-        </div>
-        <div>
-          <label>Gender</label>
-          <select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-          {errors.gender && <span className="error">{errors.gender}</span>}
-        </div>
-        <button type="submit">Next</button>
-      </form>
+          <div>
+            <label>Last name (optional)</label>
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Enter your last name"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Birthdate</label>
+            <div>
+              <select name="month" value={formData.month} onChange={handleChange}>
+                <option value="">Month</option>
+                {months.map((month) => (
+                  <option key={month.value} value={month.value}>
+                    {month.label}
+                  </option>
+                ))}
+              </select>
+              {errors.month && <span className="error">{errors.month}</span>}
+              <input
+                type="text"
+                name="day"
+                value={formData.day}
+                onChange={handleChange}
+                placeholder="Day"
+              />
+              {errors.day && <span className="error">{errors.day}</span>}
+              <input
+                type="text"
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                placeholder="Year"
+              />
+              {errors.year && <span className="error">{errors.year}</span>}
+            </div>
+          </div>
+          <div>
+            <label>Gender</label>
+            <select name="gender" value={formData.gender} onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            {errors.gender && <span className="error">{errors.gender}</span>}
+          </div>
+          <button type="submit">Next</button>
+        </form>
+      </div>
     </div>
   );
 };

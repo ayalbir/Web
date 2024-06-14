@@ -1,4 +1,12 @@
 /* src/SignUpStepTwo.css */
+.minimal-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+}
+
 .signup-container {
   max-width: 400px;
   width: 100%;
@@ -6,15 +14,16 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;
-  margin: auto;
-  margin-top: 100px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .signup-container h2 {
-  text-align: center;
+  margin-top: 0;
   margin-bottom: 20px;
+}
+
+.signup-container form {
+  width: 100%;
 }
 
 .signup-container form div {
@@ -27,40 +36,42 @@
   margin-bottom: 5px;
 }
 
-.signup-container form input,
-.signup-container form select {
+.signup-container form input[type="text"],
+.signup-container form input[type="password"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.signup-container .error {
-  color: red;
-  font-size: 12px;
-}
-
 .signup-container .checkbox-container {
   display: flex;
   align-items: center;
+  justify-content: start;
   margin-bottom: 15px;
   text-align: left;
 }
 
-.signup-container .checkbox-container input[type="checkbox"] {
-  margin-right: 10px;
+.signup-container .checkbox-container input {
+  margin-right: 5px;
 }
 
-.signup-container button {
+.signup-container .button {
   width: 100%;
   padding: 10px;
-  background-color: #4285F4;
+  background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.signup-container button:hover {
+.signup-container .button:hover {
   background-color: #357ae8;
+}
+
+.signup-container .error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
 }
