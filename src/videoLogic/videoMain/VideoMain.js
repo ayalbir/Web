@@ -147,7 +147,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 </>
               ) : (
                 <>
-                  <p>Uploaded by: {video.uploaderName}</p>
+                  <p>Uploaded by: {video.uploaderName || video.author ||'Unknown'}</p>
                   <p>{video.description}</p>
                 </>
               )}

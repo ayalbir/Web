@@ -16,29 +16,30 @@ const CreateVideo = ({ setVideoList, user }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     if (!image || !video) {
       alert("Please upload both an image and a video.");
       return;
     }
-  
+
     const videoUrl = URL.createObjectURL(video); // Convert video file to URL
-  
+
     const newVideo = {
       id: Date.now(),
       title,
       pic: URL.createObjectURL(image),
       url: videoUrl,
-      author: user ? user.name : "Anonymous", // Default to "Anonymous" if user is not defined
+      author: user ? user.firstName : "Anonymous", // Use first name of the user
       views: 0,
       date: new Date().toLocaleDateString(),
       description: "",
+      uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
     };
-  
+
     setVideoList((prevList) => [...prevList, newVideo]);
     navigate("/");
   };
-  
+
   return (
     <form className="create-video-form" onSubmit={handleSubmit}>
       <h2>Create a Video</h2>
@@ -64,7 +65,7 @@ const CreateVideo = ({ setVideoList, user }) => {
         Video:
         <input
           type="file"
-          accept="video/*" 
+          accept="video/*"
           onChange={(e) => setVideo(e.target.files[0])}
           required
         />
