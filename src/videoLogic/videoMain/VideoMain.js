@@ -1,18 +1,28 @@
-// src/videoLogic/videoMain/VideoMain.js
-import React, { useState } from 'react';
-import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
 const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo }) => {
   const { id } = useParams();
-  const video = videos.find(v => v.id === parseInt(id));
+  const [video, setVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(video ? video.title : '');
-  const [editedDescription, setEditedDescription] = useState(video ? video.description : '');
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
   const [editedFile, setEditedFile] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const foundVideo = videos.find(v => v.id === parseInt(id));
+    if (foundVideo) {
+      setVideo(foundVideo);
+      setEditedTitle(foundVideo.title);
+      setEditedDescription(foundVideo.description);
+    } else {
+      setVideo(null);
+    }
+  }, [id, videos]);
 
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
@@ -37,8 +47,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
     if (user.signedIn) {
       handleLike(video.id);
     } else {
-      // Redirect to sign-in page
-      return <Navigate to="/signin" />;
+      navigate("/signin");
     }
   };
 
@@ -46,8 +55,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
     if (user.signedIn) {
       handleDislike(video.id);
     } else {
-      // Redirect to sign-in page
-      return <Navigate to="/signin" />;
+      navigate("/signin");
     }
   };
 
@@ -88,7 +96,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 className="edit-file-input"
               />
             ) : (
-              <video className="video-player" controls>
+              <video key={video.url} className="video-player" controls>
                 <source src={video.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -101,6 +109,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                   <input
                     type="text"
                     value={editedTitle}
+                    placeholder='Title'
                     onChange={(e) => setEditedTitle(e.target.value)}
                     className="edit-title-input"
                   />
@@ -141,13 +150,14 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 <>
                   <textarea
                     value={editedDescription}
+                    placeholder='Description'
                     onChange={(e) => setEditedDescription(e.target.value)}
                     className="edit-description-input"
                   />
                 </>
               ) : (
                 <>
-                  <p>Uploaded by: {video.uploaderName || video.author ||'Unknown'}</p>
+                  <p>Uploaded by: {video.uploaderName || video.author || 'Unknown'}</p>
                   <p>{video.description}</p>
                 </>
               )}
