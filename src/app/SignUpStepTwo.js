@@ -1,4 +1,5 @@
 // src/SignUpStepTwo.js
+// src/SignUpStepTwo.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUpStepTwo.css';
@@ -7,7 +8,8 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword, registerUser }
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    profileImage: '' // Add profileImage to formData
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -42,7 +44,12 @@ const SignUpStepTwo = ({ email, firstName, setEmail, setPassword, registerUser }
     if (validateForm()) {
       setEmail(formData.email);
       setPassword(formData.password);
-      registerUser({ email: formData.email, password: formData.password, firstName });
+      registerUser({
+        email: formData.email,
+        password: formData.password,
+        firstName,
+        profileImage: formData.profileImage // Include profileImage
+      });
       navigate('/upload-profile-image');
     }
   };

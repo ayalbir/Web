@@ -109,7 +109,7 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
         <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
-        <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} />} />
+        <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} firstName={firstName} />} />
         <Route path="/upload-profile-image" element={<UploadProfileImage setProfileImage={setProfileImage} />} />
         <Route
           path="*"
