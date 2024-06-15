@@ -44,7 +44,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
   };
 
   const handleLikeClick = () => {
-    if (user.signedIn) {
+    if (user !== null && user.signedIn) {
       handleLike(video.id);
     } else {
       navigate("/signin");
@@ -52,7 +52,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
   };
 
   const handleDislikeClick = () => {
-    if (user.signedIn) {
+    if (user !== null && user.signedIn) {
       handleDislike(video.id);
     } else {
       navigate("/signin");
