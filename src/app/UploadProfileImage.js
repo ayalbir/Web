@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UploadProfileImage.css';
 
-const UploadProfileImage = ({ setProfileImage }) => {
+const UploadProfileImage = ({ email, registeredUsers }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
@@ -16,7 +16,8 @@ const UploadProfileImage = ({ setProfileImage }) => {
     if (selectedImage) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result);
+        const user = registeredUsers.find(user => user.email === email);
+        user.profileImage = reader.result;
         navigate('/signin');
       };
       reader.readAsDataURL(selectedImage);

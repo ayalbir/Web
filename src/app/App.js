@@ -110,7 +110,7 @@ function App() {
         <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
         <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
         <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} firstName={firstName} />} />
-        <Route path="/upload-profile-image" element={<UploadProfileImage setProfileImage={setProfileImage} />} />
+        <Route path="/upload-profile-image" element={<UploadProfileImage email={email} registeredUsers={registeredUsers} />} />
         <Route
           path="*"
           element={
@@ -129,7 +129,7 @@ function App() {
                     <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
                     {user ? (
                       <div className="user-info">
-                        {profileImage && <img src={profileImage} alt="Profile" className="profile-image" />}
+                        {user.profileImage && <img src={user.profileImage} alt="Profile" className="profile-image" />}
                         <span className="user-details">{user.firstName}</span>
                         <span className="user-details">{user.email}</span>
                         <Link to="/signin" className="signin-link">
