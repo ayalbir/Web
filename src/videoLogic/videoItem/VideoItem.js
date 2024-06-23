@@ -15,7 +15,9 @@ function VideoItem({ video }) {
           <h5 className="card-title">{video.title}</h5>
           <div className="author-details">
             <Link to={`/user/${video.author}`} className="author-link">
-              <img src={video.profileImage} alt={video.author} className="author-profile-image" />
+              {video.profileImage && (
+                <img src={video.profileImage} alt={video.author} className="author-profile-image" />
+              )}
               {video.author}
             </Link>
           </div>

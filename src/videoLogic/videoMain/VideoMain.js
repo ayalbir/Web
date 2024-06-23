@@ -157,7 +157,12 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 </>
               ) : (
                 <>
-                  <p>Uploaded by: {video.uploaderName || video.author || 'Unknown'}</p>
+                  <div className="author-details">
+                    <Link to={`/user/${video.author}`} className="author-link">
+                      <img src={video.profileImage} alt={video.author} className="author-profile-image" />
+                      {video.uploaderName || video.author || 'Unknown'}
+                    </Link>
+                  </div>
                   <p>{video.description}</p>
                 </>
               )}

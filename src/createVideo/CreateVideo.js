@@ -1,3 +1,4 @@
+// src/createVideo/CreateVideo.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateVideo.css";
@@ -34,6 +35,7 @@ const CreateVideo = ({ setVideoList, user }) => {
       date: new Date().toLocaleDateString(),
       description: "",
       uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
+      profileImage: user ? user.profileImage : null // Add the user's profile image
     };
 
     setVideoList((prevList) => [...prevList, newVideo]);
