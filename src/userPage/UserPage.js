@@ -1,30 +1,34 @@
+// src/UserPage.js
 import React, { useEffect, useState } from 'react';
-
-//this will currently be unlivable, because we are waiting for the server to be up and running
-// in the meantime, we can use the mock data to test the functionality of the page
-// in this page, will be the user's videos, if using get, and added videos, if using post
+import { useParams } from 'react-router-dom';
+import videosData from '../videoLogic/videoItem/Videos.json';
+import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 
 const UserPage = () => {
-    const [videos, setVideos] = useState([]);
+  const { author } = useParams();
+  const [videos, setVideos] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
 
-    useEffect(() => {
-        // Fetch user's videos from the server
-        fetch('/api/videos')
-            .then(response => response.json())
-            .then(data => setVideos(data))
-            .catch(error => console.error(error));
-    }, []);
+  useEffect(() => {
+    // Filter videos by the author
+    const userVideos = videosData.filter(video => video.author === author);
+    setVideos(userVideos);
 
-    return (
-        <div>
-            <h1>User Page</h1>
-            <ul>
-                {videos.map(video => (
-                    <li key={video.id}>{video.title}</li>
-                ))}
-            </ul>
-        </div>
-    );
+    // Assuming all videos from the same author have the same profile image
+    if (userVideos.length > 0) {
+      setProfileImage(userVideos[0].profileImage);
+    }
+  }, [author]);
+
+  return (
+    <div>
+      <div className="author-info">
+        {profileImage && <img src={profileImage} alt={`${author}'s profile`} className="profile-image" />}
+        <h1>{author}'s Videos</h1>
+      </div>
+      <VideoListResults videos={videos} />
+    </div>
+  );
 };
 
 export default UserPage;

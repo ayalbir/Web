@@ -1,3 +1,4 @@
+// src/videoItem/VideoItem.js
 import './VideoItem.css';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +13,12 @@ function VideoItem({ video }) {
         <img src={video.pic} className="card-img-top" alt={video.title} /> {/* Ensure pic property exists */}
         <div className="card-body">
           <h5 className="card-title">{video.title}</h5>
-          <p className="card-text">{video.author}</p>
+          <div className="author-details">
+            <Link to={`/user/${video.author}`} className="author-link">
+              <img src={video.profileImage} alt={video.author} className="author-profile-image" />
+              {video.author}
+            </Link>
+          </div>
           <p className="card-text">{video.views} views • {video.date}</p>
         </div>
       </Link>

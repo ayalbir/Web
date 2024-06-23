@@ -6,6 +6,7 @@
     "views": 200,
     "date": "2 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 1",
     "url": "/videos/subscribe.mp4"
   },
@@ -16,6 +17,7 @@
     "views": 300,
     "date": "3 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 2",
     "url": "/videos/walking.mp4"
   },
@@ -26,6 +28,7 @@
     "views": 400,
     "date": "4 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 3",
     "url": "/videos/sand.mp4"
   },
@@ -36,6 +39,7 @@
     "views": 500,
     "date": "5 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 4",
     "url": "/videos/dog.mp4"
   },
@@ -46,6 +50,7 @@
     "views": 600,
     "date": "6 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 5",
     "url": "/videos/sandals.mp4"
   },
@@ -56,6 +61,7 @@
     "views": 700,
     "date": "7 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 6",
     "url": "/videos/subscribe.mp4"
   },
@@ -66,6 +72,7 @@
     "views": 800,
     "date": "8 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 7",
     "url": "/videos/subscribe.mp4"
   },
@@ -76,6 +83,7 @@
     "views": 900,
     "date": "9 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 8",
     "url": "/videos/subscribe.mp4"
   },
@@ -86,6 +94,7 @@
     "views": 1000,
     "date": "10 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 9",
     "url": "/videos/subscribe.mp4"
   },
@@ -96,6 +105,7 @@
     "views": 1100,
     "date": "11 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 10",
     "url": "/videos/subscribe.mp4"
   },
@@ -106,6 +116,7 @@
     "views": 1200,
     "date": "12 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 11",
     "url": "/videos/subscribe.mp4"
   },
@@ -116,6 +127,7 @@
     "views": 1300,
     "date": "13 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 12",
     "url": "/videos/subscribe.mp4"
   },
@@ -126,6 +138,7 @@
     "views": 1400,
     "date": "14 days ago",
     "pic": "/images/temp_pic.jpg",
+    "profileImage": "/images/img_avatar2.png",
     "description": "Description for video 13",
     "url": "/videos/subscribe.mp4"
   }

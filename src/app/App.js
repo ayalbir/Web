@@ -14,6 +14,7 @@ import SignUp from './SignUp';
 import SignUpStepTwo from './SignUpStepTwo';
 import UploadProfileImage from './UploadProfileImage';
 import SignIn from './SignIn';
+import UserPage from '../userPage/UserPage';
 
 function App() {
   const [videoList, setVideoList] = useState([]);
@@ -168,6 +169,7 @@ function App() {
                     } />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
                     <Route path="/create" element={<CreateVideo setVideoList={setVideoList} user={user}/>} />
+                    <Route path="/user/:author" element={<UserPage />} />
                   </Routes>
                 </div>
               </div>
