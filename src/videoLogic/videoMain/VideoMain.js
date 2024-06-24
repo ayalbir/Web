@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo }) => {
+const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo, getUserByEmail }) => {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -158,10 +158,12 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
               ) : (
                 <>
                   <div className="author-details">
-                    <Link to={`/user/${video.author}`} className="author-link">
-                      <img src={video.profileImage} alt={video.author} className="author-profile-image" />
-                      {video.uploaderName || video.author || 'Unknown'}
-                    </Link>
+                    {getUserByEmail && video.author && (
+                      <Link to={`/user/${getUserByEmail(video.author)?.firstName}`} className="author-link">
+                        <img src={getUserByEmail(video.author)?.profileImage} alt={getUserByEmail(video.author)?.firstName} className="author-profile-image" />
+                        {getUserByEmail(video.author)?.firstName || video.uploaderName || 'Unknown'}
+                      </Link>
+                    )}
                   </div>
                   <p>{video.description}</p>
                 </>
@@ -187,7 +189,14 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
                 <div className="suggested-video-info">
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
-                  <p className="suggested-video-author">{suggestedVideo.author}</p>
+                  <div className="author-details">
+                    {getUserByEmail && suggestedVideo.author && (
+                      <Link to={`/user/${getUserByEmail(suggestedVideo.author)?.firstName}`} className="author-link">
+                        <img src={getUserByEmail(suggestedVideo.author)?.profileImage} alt={getUserByEmail(suggestedVideo.author)?.firstName} className="author-profile-image" />
+                        {getUserByEmail(suggestedVideo.author)?.firstName || suggestedVideo.author || 'Unknown'}
+                      </Link>
+                    )}
+                  </div>
                   <p className="suggested-video-views">{suggestedVideo.views} views</p>
                 </div>
               </Link>

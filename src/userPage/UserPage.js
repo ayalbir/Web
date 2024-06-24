@@ -1,32 +1,26 @@
-// src/UserPage.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import videosData from '../videoLogic/videoItem/Videos.json';
 import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 
-const UserPage = () => {
-  const { author } = useParams();
-  const [videos, setVideos] = useState([]);
-  const [profileImage, setProfileImage] = useState(null);
+const UserPage = ({ videos, getUserByEmail }) => {
+  const { name } = useParams(); // Get the uploader's name from the route parameters
+  const [userVideos, setUserVideos] = useState([]);
 
   useEffect(() => {
-    // Filter videos by the author
-    const userVideos = videosData.filter(video => video.author === author);
-    setVideos(userVideos);
-
-    // Assuming all videos from the same author have the same profile image
-    if (userVideos.length > 0) {
-      setProfileImage(userVideos[0].profileImage);
+    if (name && videos) {
+      // Filter videos based on the uploader's name using getUserByEmail
+      const filteredVideos = videos.filter(video => {
+        const uploader = getUserByEmail(video.author);
+        return uploader && uploader.firstName === name;
+      });
+      setUserVideos(filteredVideos);
     }
-  }, [author]);
+  }, [name, videos, getUserByEmail]);
 
   return (
-    <div>
-      <div className="author-info">
-        {profileImage && <img src={profileImage} alt={`${author}'s profile`} className="profile-image" />}
-        <h1>{author}'s Videos</h1>
-      </div>
-      <VideoListResults videos={videos} />
+    <div className="user-page">
+      <h2>Videos uploaded by {name}</h2>
+      <VideoListResults videos={userVideos} getUserByEmail={getUserByEmail} /> {/* Pass getUserByEmail to VideoListResults */}
     </div>
   );
 };

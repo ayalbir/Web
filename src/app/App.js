@@ -25,13 +25,44 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [userInteractions, setUserInteractions] = useState({});
   const [likesDislikes, setLikesDislikes] = useState({});
 
+  const demoUsers = [{
+    firstName: 'John',
+    email: 'john@example.com',
+    password: 'password123',
+    profileImage: '/images/img_avatar2.png',
+    signedIn: false
+  },
+  {
+    firstName: 'Jane',
+    email: 'jane@example.com',
+    password: 'password123',
+    profileImage: '/images/img_avatar3.png',
+    signedIn: false
+  },
+  {
+    firstName: 'Doe',
+    email: 'doe@example.com',
+    password: 'password123',
+    profileImage: '/images/FooTube_logo.jpg',
+    signedIn: false
+  }
+  ];
+
+  const getUserByEmail = (email) => {
+    return registeredUsers.find(user => user.email === email);
+  };
+
+  const addVideo = (newVideo) => {
+    setVideoList((prevList) => [...prevList, newVideo]);
+  };
+
   useEffect(() => {
     setVideoList(videosData);
+    setRegisteredUsers(demoUsers); // Initialize registered users with demo users
   }, []);
 
   const toggleDarkMode = () => {
@@ -150,7 +181,7 @@ function App() {
                     )}
                   </div>
                   <Routes>
-                    <Route path="/" element={<VideoListResults videos={videoList} />} />
+                    <Route path="/" element={<VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />} />
                     <Route path="/video/:id" element={
                       <VideoMain
                         videos={videoList}
@@ -165,11 +196,12 @@ function App() {
                         likesDislikes={likesDislikes}
                         deleteVideo={deleteVideo}
                         editVideo={editVideo}
+                        getUserByEmail={getUserByEmail}
                       />
                     } />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
-                    <Route path="/create" element={<CreateVideo setVideoList={setVideoList} user={user}/>} />
-                    <Route path="/user/:author" element={<UserPage />} />
+                    <Route path="/create" element={<CreateVideo addVideo={addVideo} user={user} />} />
+                    <Route path="/user/:name" element={<UserPage videos={videoList}getUserByEmail = {getUserByEmail} />} />
                   </Routes>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateVideo.css";
 
-const CreateVideo = ({ setVideoList, user }) => {
+const CreateVideo = ({ addVideo, user }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null); // State to store the video file
@@ -38,7 +38,7 @@ const CreateVideo = ({ setVideoList, user }) => {
       profileImage: user ? user.profileImage : null // Add the user's profile image
     };
 
-    setVideoList((prevList) => [...prevList, newVideo]);
+    addVideo(newVideo); 
     navigate("/");
   };
 
