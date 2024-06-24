@@ -1,4 +1,5 @@
 // src/App.js
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
@@ -15,6 +16,7 @@ import SignUpStepTwo from '../loginLogic/SignUpStepTwo';
 import UploadProfileImage from '../loginLogic/UploadProfileImage';
 import SignIn from '../loginLogic/SignIn';
 import UserPage from '../userPage/UserPage';
+import UpdateProfile from '../updateProfile/UpdateProfile';
 
 function App() {
   const [videoList, setVideoList] = useState([]);
@@ -22,12 +24,12 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [comments, setComments] = useState({});
   const [user, setUser] = useState(null);
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [userInteractions, setUserInteractions] = useState({});
   const [likesDislikes, setLikesDislikes] = useState({});
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const demoUsers = [{
     firstName: 'John',
@@ -51,6 +53,15 @@ function App() {
     signedIn: false
   }
   ];
+
+  const updateUser = (updatedUserData) => {
+    // Assuming updateUser receives updatedUserData with profileImage
+    const updatedUser = { ...user, ...updatedUserData };
+    setUser(updatedUser);
+    // You might want to update registeredUsers as well, depending on your setup
+    const updatedRegisteredUsers = registeredUsers.map(u => u.email === updatedUser.email ? updatedUser : u);
+    setRegisteredUsers(updatedRegisteredUsers);
+  };
 
   const getUserByEmail = (email) => {
     return registeredUsers.find(user => user.email === email);
@@ -142,7 +153,7 @@ function App() {
         <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
         <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
         <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} firstName={firstName} />} />
-        <Route path="/upload-profile-image" element={<UploadProfileImage email={email} registeredUsers={registeredUsers} />} />
+        <Route path="/upload-profile-image" element={<UploadProfileImage email={user?.email} registeredUsers={registeredUsers} />} />
         <Route
           path="*"
           element={
@@ -161,9 +172,10 @@ function App() {
                     <DarkModeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
                     {user ? (
                       <div className="user-info">
-                        {user.profileImage && <img src={user.profileImage} alt="Profile" className="profile-image" />}
-                        <span className="user-details">{user.firstName}</span>
-                        <span className="user-details">{user.email}</span>
+                        <Link to="/update-profile" className="update-profile-link">
+                          {user.profileImage && <img src={user.profileImage} alt="Profile" className="profile-image" />}
+                          <span className="user-details">{user.firstName}</span>
+                        </Link>
                         <Link to="/signin" className="signin-link">
                           <button type="button" className="btn btn-primary" onClick={handleSignOut}>
                             <span className="bi bi-person-circle" aria-hidden="true"></span>
@@ -171,6 +183,9 @@ function App() {
                           </button>
                         </Link>
                       </div>
+
+
+
                     ) : (
                       <Link to="/signin" className="signin-link">
                         <button type="button" className="btn btn-primary">
@@ -201,7 +216,11 @@ function App() {
                     } />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
                     <Route path="/create" element={<CreateVideo addVideo={addVideo} user={user} />} />
-                    <Route path="/user/:name" element={<UserPage videos={videoList}getUserByEmail = {getUserByEmail} />} />
+                    <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />
+                    <Route
+                      path="/update-profile"
+                      element={<UpdateProfile user={user} updateUser={updateUser} />}
+                    />
                   </Routes>
                 </div>
               </div>

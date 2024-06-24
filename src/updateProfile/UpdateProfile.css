@@ -1,0 +1,139 @@
+/* UpdateProfile.css */
+
+.update-profile-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-profile-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+    width: calc(100% - 38px);
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.password-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input[type="password"] {
+    flex: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.password-input-container .checkbox-input {
+    margin-left: 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.checkbox-label {
+    margin-left: 5px;
+    font-size: small;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+/* now style for the dark mode */
+
+.dark-mode .update-profile-container {
+    background-color: #333;
+    color: #fff;
+    border-color: #666;
+}
+
+.dark-mode .form-group input[type="text"],
+.dark-mode .form-group input[type="email"],
+.dark-mode .form-group input[type="password"],
+.dark-mode .form-group input[type="file"] {
+    background-color: #444;
+    color: #fff;
+    border-color: #666;
+}
+
+.dark-mode .form-group input[type="text"]:focus,
+.dark-mode .form-group input[type="email"]:focus,
+.dark-mode .form-group input[type="password"]:focus,
+.dark-mode .form-group input[type="file"]:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.dark-mode .checkbox-label {
+    color: #fff;
+}
+
+.dark-mode .btn-primary {
+    color: #fff;
+}
+
+.dark-mode .btn-primary:hover {
+    background-color: #0069d9;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .update-profile-container {
+        width: 100%;
+        padding: 10px;
+    }
+}
