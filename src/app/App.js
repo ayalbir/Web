@@ -10,10 +10,10 @@ import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../videoLogic/videoMain/VideoMain';
 import SearchResults from '../search/SearchResults';
 import DarkModeButton from '../darkMode/DarkModeButton';
-import SignUp from './SignUp';
-import SignUpStepTwo from './SignUpStepTwo';
-import UploadProfileImage from './UploadProfileImage';
-import SignIn from './SignIn';
+import SignUp from '../loginLogic/SignUp';
+import SignUpStepTwo from '../loginLogic/SignUpStepTwo';
+import UploadProfileImage from '../loginLogic/UploadProfileImage';
+import SignIn from '../loginLogic/SignIn';
 import UserPage from '../userPage/UserPage';
 
 function App() {
