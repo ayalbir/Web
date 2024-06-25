@@ -1,0 +1,42 @@
+<html>
+<body>
+<script>
+  async function foo() {
+    const data = {
+      username: 'dvir@gmail.com',
+      password: '123456',
+      privateName: 'dvir',
+      familyName: 'yazdi',
+      birthdate: '1995-12-12',
+      gender: "male",
+      email: 'dvir@gmail.com',
+      image: 'https://www.google.com'
+    };
+
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR2aXJAZ21haWwuY29tIiwiaWF0IjoxNzE5MzE1MjQ0LCJleHAiOjE3MTkzMTg4NDR9.EHetbnDRoCcAMizaGVaA-LBQxgjojWNH5joGuRC1XTE";
+    console.log("data:" + data);
+    /*const res = await fetch('http://127.0.0.1:8080/api/Tokens', {
+      'method': 'post',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      'body': JSON.stringify(data)
+    });*/
+    const res = await fetch('http://127.0.0.1:8080/api/users/dvir@gmail.com', {
+      'method': 'get',
+      'headers': {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      } /*,
+      'body': JSON.stringify(data)*/
+    });
+    
+  }
+
+ 
+
+
+  foo();
+</script>
+</body>
+</html>
