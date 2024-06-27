@@ -2,33 +2,42 @@
 <body>
 <script>
   async function foo() {
-    const data = {
+    const data1 = {
       username: 'dvir@gmail.com',
-      password: '123456',
-      privateName: 'dvir',
-      familyName: 'yazdi',
-      birthdate: '1995-12-12',
+      password: '456780',
+      privateName: 'dvir123',
+      familyName: 'yazdi456',
+      birthdate: '1996-12-12',
       gender: "male",
-      email: 'dvir@gmail.com',
       image: 'https://www.google.com'
     };
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR2aXJAZ21haWwuY29tIiwiaWF0IjoxNzE5MzE1MjQ0LCJleHAiOjE3MTkzMTg4NDR9.EHetbnDRoCcAMizaGVaA-LBQxgjojWNH5joGuRC1XTE";
-    console.log("data:" + data);
+/*
+username: { type: string, ref: 'User', required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    url: { type: String, required: true },
+    createdAt: 
+    */
+    const data2 = {  
+        title: 'euro2024',
+        description: 'euro2024',
+        url: 'https://www.google.com'
+    };
+
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR2aXJAZ21haWwuY29tIiwiaWF0IjoxNzE5NDI1NDMyLCJleHAiOjE3MTk0MjkwMzJ9.nat4udk2moIbLL3-TQbqYAwqRO8rB2F8OE_Y4UYSHDY";
+    console.log("data:" + data2);
     /*const res = await fetch('http://127.0.0.1:8080/api/Tokens', {
-      'method': 'post',
-      'headers': {
-        'Content-Type': 'application/json'
-      },
-      'body': JSON.stringify(data)
-    });*/
-    const res = await fetch('http://127.0.0.1:8080/api/users/dvir@gmail.com', {
-      'method': 'get',
+      'method': 'post',*/
+    
+    //const res = await fetch('http://127.0.0.1:8080/api/users', {    // /dvir@gmail.com
+    const res = await fetch('http://127.0.0.1:8080/api/users/dvir@gmail.com/videos', {    
+        'method': 'POST',
       'headers': {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
-      } /*,
-      'body': JSON.stringify(data)*/
+      }, 
+      'body': JSON.stringify(data2)
     });
     
   }

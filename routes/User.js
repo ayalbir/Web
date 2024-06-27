@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const authJWT = require('../models/auth.js');
 const User = require('../models/usersdb.js');
+
 router.post('/api/users', async (req, res) => {
     try {
         
@@ -19,6 +20,7 @@ router.post('/api/users', async (req, res) => {
     console.log('POST /users');
     res.json( User);
 });
+
 router.post('/api/tokens', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username, password: req.body.password});
@@ -37,8 +39,6 @@ router.post('/api/tokens', async (req, res) => {
 
 });
 
-
-
 router.get('/api/users/:id', authJWT, async (req, res) => {
     try {
         console.log("req param:"+ req.params.id);
@@ -54,11 +54,13 @@ router.get('/api/users/:id', authJWT, async (req, res) => {
     }
     console.log('GET /api/users/:id');
 });
+
 router.put('/api/users/:id', authJWT, async (req, res) => {
     try {
-        console.log("req param:"+ req.params);
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        console.log("user:"+ user);
+        console.log("req param:"+ req.body);
+        const user = await User.updateOne({ username: req.params.id}, req.body, {new: true } );//filter, req.body
+        //findByIdAndUpdate(req.params.id, req.body, { new: true });
+        console.log("user:" + user);
         if (!user) {
             console.log('User not found');
             return res.status(404).send('User not found');
@@ -70,22 +72,28 @@ router.put('/api/users/:id', authJWT, async (req, res) => {
     }
     console.log('PUT /api/users/:id');
 });
+
 router.patch('/api/users/:id', authJWT, async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id , req.body , { new: true });
+        console.log("req param:"+ + req.params.id + ':' + req.body);
+        const user = await User.updateOne({ username: req.params.id}, req.body, {new: true } );//filter, req.body
+        //findByIdAndUpdate(req.params.id , req.body , { new: true });
         if (!user) {
             return res.status(404).send('User not found');
         }
         res.send(user);
     } catch (err) {
+        console.log('err:' + err);
         res.status(400).send(err);
     }
     console.log('PATCH /api/users/:id');
     
 });
+
 router.delete('/api/users/:id', authJWT, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
+        const user = await User.findOneAndDelete({ username: req.params.id });
+        //findByIdAndDelete(req.params.id);
         if (!user) {
             return res.status(404).send('User not found');
         }
@@ -96,7 +104,5 @@ router.delete('/api/users/:id', authJWT, async (req, res) => {
     console.log('DELETE /api/users/:id');
     
 });
-
-
 
 module.exports = router;
