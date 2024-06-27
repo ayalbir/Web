@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
@@ -26,8 +26,8 @@ const VideoMain = ({
   const [editedTitle, setEditedTitle] = useState('');
   const [editedDescription, setEditedDescription] = useState('');
   const [editedFile, setEditedFile] = useState(null);
-  const [viewsUpdated, setViewsUpdated] = useState(false); // State to track if views have been updated
   const navigate = useNavigate();
+  const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
     const foundVideo = videos.find(v => v.id === parseInt(id));
@@ -35,17 +35,15 @@ const VideoMain = ({
       setVideo(foundVideo);
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
-      console.log('viewsUpdated', viewsUpdated);
-      if (!viewsUpdated) {
+      if (!hasUpdatedViews.current) {
         updateVideoViews(foundVideo.id);
-        setViewsUpdated(true);
+        hasUpdatedViews.current = true;
       }
     } else {
       setVideo(null);
     }
-  }, [id, videos, updateVideoViews, viewsUpdated]);
+  }, [id, videos, updateVideoViews]);
 
-  
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
   }
@@ -104,6 +102,10 @@ const VideoMain = ({
 
   const likesCount = likesDislikes[video.id]?.likes || 0;
   const dislikesCount = likesDislikes[video.id]?.dislikes || 0;
+
+  const handleVideoClick = (clickedVideoId) => {
+    updateVideoViews(clickedVideoId);
+  };
 
   return (
     <div className="video-details-container">
@@ -207,7 +209,11 @@ const VideoMain = ({
         <ul className="suggested-videos-list">
           {suggestedVideos.map(suggestedVideo => (
             <li key={suggestedVideo.id} className="suggested-video-item">
-              <Link to={`/video/${suggestedVideo.id}`} className="suggested-video-link">
+              <Link
+                to={`/video/${suggestedVideo.id}`}
+                className="suggested-video-link"
+                onClick={() => handleVideoClick(suggestedVideo.id)}
+              >
                 <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
                 <div className="suggested-video-info">
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>

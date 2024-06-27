@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // No longer need Link here
+import { Link, useNavigate } from 'react-router-dom';
 import './SuggestedVideos.css';
 
-const SuggestedVideos = ({ videos, getUserByEmail }) => {
+function SuggestedVideos({ videos, getUserByEmail }) {
   const navigate = useNavigate();
 
   const handleAuthorClick = (authorEmail) => {
@@ -38,6 +38,6 @@ const SuggestedVideos = ({ videos, getUserByEmail }) => {
       </ul>
     </div>
   );
-};
+}
 
 export default SuggestedVideos;
