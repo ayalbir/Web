@@ -147,6 +147,14 @@ function App() {
     setUser({ ...userData, signedIn: true });
   };
 
+  const updateVideoViews = (id) => {
+    setVideoList(prevList =>
+      prevList.map(video =>
+        video.id === id ? { ...video, views: video.views + 1 } : video
+      )
+    );
+  };
+
   return (
     <Router>
       <Routes>
@@ -197,23 +205,27 @@ function App() {
                   </div>
                   <Routes>
                     <Route path="/" element={<VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />} />
-                    <Route path="/video/:id" element={
-                      <VideoMain
-                        videos={videoList}
-                        comments={comments}
-                        addComment={addComment}
-                        deleteComment={deleteComment}
-                        editComment={editComment}
-                        user={user}
-                        userInteractions={userInteractions}
-                        handleLike={handleLike}
-                        handleDislike={handleDislike}
-                        likesDislikes={likesDislikes}
-                        deleteVideo={deleteVideo}
-                        editVideo={editVideo}
-                        getUserByEmail={getUserByEmail}
-                      />
-                    } />
+                    <Route
+                      path="/video/:id"
+                      element={
+                        <VideoMain
+                          videos={videoList}
+                          comments={comments}
+                          addComment={addComment}
+                          deleteComment={deleteComment}
+                          editComment={editComment}
+                          user={user}
+                          userInteractions={userInteractions}
+                          handleLike={handleLike}
+                          handleDislike={handleDislike}
+                          likesDislikes={likesDislikes}
+                          deleteVideo={deleteVideo}
+                          editVideo={editVideo}
+                          getUserByEmail={getUserByEmail}
+                          updateVideoViews={updateVideoViews}
+                        />
+                      }
+                    />
                     <Route path="/search" element={<SearchResults videos={videoList} />} />
                     <Route path="/create" element={<CreateVideo addVideo={addVideo} user={user} />} />
                     <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />

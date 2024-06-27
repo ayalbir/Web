@@ -21,7 +21,7 @@ function VideoItem({ video, getUserByEmail }) {
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4"> 
       <div className="card video-card">
         <Link to={`/video/${video.id}`}>
-          <img src={video.pic} className="card-img-top" alt={video.title} /> {/* Ensure pic property exists */} 
+          <img src={video.pic} className="card-img-top" alt={video.title} /> 
         </Link>
         <div className="card-body"> 
           <h5 className="card-title">

@@ -3,7 +3,22 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo, getUserByEmail }) => {
+const VideoMain = ({
+  videos,
+  comments,
+  addComment,
+  deleteComment,
+  editComment,
+  user,
+  userInteractions,
+  handleLike,
+  handleDislike,
+  likesDislikes,
+  deleteVideo,
+  editVideo,
+  getUserByEmail,
+  updateVideoViews
+}) => {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -11,6 +26,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
   const [editedTitle, setEditedTitle] = useState('');
   const [editedDescription, setEditedDescription] = useState('');
   const [editedFile, setEditedFile] = useState(null);
+  const [viewsUpdated, setViewsUpdated] = useState(false); // State to track if views have been updated
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,11 +35,17 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
       setVideo(foundVideo);
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
+      console.log('viewsUpdated', viewsUpdated);
+      if (!viewsUpdated) {
+        updateVideoViews(foundVideo.id);
+        setViewsUpdated(true);
+      }
     } else {
       setVideo(null);
     }
-  }, [id, videos]);
+  }, [id, videos, updateVideoViews, viewsUpdated]);
 
+  
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
   }
