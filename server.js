@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/User.js');
 const videoRoutes = require('./routes/Video.js'); // Ensure this matches the exact file name
+const commentsRoutes = require('./routes/Comments.js'); // Add the comments router
 
 const app = express();
 const hostname = '127.0.0.1'; // Listen on all available network interfaces
@@ -25,6 +26,7 @@ app.set('views', './views');
 // Use the routes
 app.use('/', userRoutes);
 app.use('/', videoRoutes); // Ensure the video router is used
+app.use('/', commentsRoutes); // Ensure the comments router is used
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
