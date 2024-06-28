@@ -226,7 +226,7 @@ function App() {
                         />
                       }
                     />
-                    <Route path="/search" element={<SearchResults videos={videoList} />} />
+                    <Route path="/search" element={<SearchResults videos={videoList} getUserByEmail={getUserByEmail} />} />
                     <Route path="/create" element={<CreateVideo addVideo={addVideo} user={user} />} />
                     <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />
                     <Route
