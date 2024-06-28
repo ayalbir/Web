@@ -1,0 +1,80 @@
+.top-videos {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.top-videos h2 {
+    margin-bottom: 20px;
+}
+
+.top-videos .video-list {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.top-videos .video-item {
+    flex: 0 0 auto;
+    width: 200px;
+    /* Adjust width to make it appropriate */
+}
+
+.top-videos .video-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.top-videos .video-card img {
+    width: 100%;
+    height: auto;
+}
+
+.top-videos .video-card .card-body {
+    padding: 10px;
+}
+
+.top-videos .video-card .card-title {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.top-videos .video-card .author-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.top-videos .video-card .author-profile-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.top-videos .video-card .card-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.top-videos .video-card.top-video-card {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.top-videos .video-card.top-video-card .card-title {
+    font-size: 16px;
+}
+
+.top-videos .video-card.top-video-card .author-details,
+.top-videos .video-card.top-video-card .card-text {
+    font-size: 14px;
+}
+
+.dark-mode .top-videos .video-card.top-video-card .card-body {
+    background-color: #121212;
+    color: #fff;
+}

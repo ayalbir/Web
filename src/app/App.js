@@ -17,6 +17,7 @@ import UploadProfileImage from '../loginLogic/UploadProfileImage';
 import SignIn from '../loginLogic/SignIn';
 import UserPage from '../userPage/UserPage';
 import UpdateProfile from '../updateProfile/UpdateProfile';
+import TopVideos from '../topVideos/TopVideos';
 
 function App() {
   const [videoList, setVideoList] = useState([]);
@@ -27,9 +28,6 @@ function App() {
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [userInteractions, setUserInteractions] = useState({});
   const [likesDislikes, setLikesDislikes] = useState({});
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const demoUsers = [{
     firstName: 'John',
@@ -159,8 +157,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
-        <Route path="/signup" element={<SignUp setFirstName={setFirstName} />} />
-        <Route path="/signup-step-two" element={<SignUpStepTwo setEmail={setEmail} setPassword={setPassword} registerUser={handleRegisterUser} firstName={firstName} />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup-step-two" element={<SignUpStepTwo registerUser={handleRegisterUser} />} />
         <Route path="/upload-profile-image" element={<UploadProfileImage email={user?.email} registeredUsers={registeredUsers} />} />
         <Route
           path="*"
@@ -204,7 +202,15 @@ function App() {
                     )}
                   </div>
                   <Routes>
-                    <Route path="/" element={<VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />} />
+                    <Route path="/" element={
+                      <>
+                        <div className="top-videos-section">
+                          <TopVideos videos={videoList} getUserByEmail={getUserByEmail} />
+                        </div>
+                        <VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />
+                      </>
+                    } />
+
                     <Route
                       path="/video/:id"
                       element={
