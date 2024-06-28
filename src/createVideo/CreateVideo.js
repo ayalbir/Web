@@ -30,13 +30,14 @@ const CreateVideo = ({ addVideo, user }) => {
       title,
       pic: URL.createObjectURL(image),
       url: videoUrl,
-      author: user ? user.firstName : "Anonymous", // Use first name of the user
+      author: user ? user.email : "Anonymous", // Use email of the user
       views: 0,
       date: new Date().toLocaleDateString(),
       description: "",
       uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
       profileImage: user ? user.profileImage : null // Add the user's profile image
     };
+    
 
     addVideo(newVideo); 
     navigate("/");
