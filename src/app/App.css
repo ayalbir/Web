@@ -6,11 +6,10 @@
 
 .app-logo {
   height: 40px;
-  margin: 0 20px;
+  margin: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
 }
 
 .App-header {
@@ -49,11 +48,11 @@
 }
 
 .search-signin-container .search-bar {
-  flex: 1; /* Allow the search bar to take up the available space */
+  flex: 1;
 }
 
 .search-signin-container .app-logo-link {
-  flex-shrink: 0; /* Prevent the logo from shrinking */
+  flex-shrink: 0;
 }
 
 .search-signin-container .btn {
@@ -143,17 +142,41 @@ body:not(.dark-mode) .btn {
 .user-info {
   display: flex;
   align-items: center;
+  padding: 10px;
 }
 
-.profile-image {
+.user-info .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
 }
 
-.user-details {
+.user-info .user-details {
   margin-right: 10px;
+}
+
+.user-info .signin-link {
+  margin-left: auto; 
+  padding-right: 10%; 
+}
+
+.user-info .signin-link .btn {
+  white-space: nowrap; 
+}
+
+.user-info .signin-link .signin-text {
+  margin-left: 5px;
+}
+
+.user-info .update-profile-link {
+  color: #007bff; 
+  text-decoration: none; 
+}
+
+.user-info .update-profile-link:hover {
+  font-size: 1.01em;
+  font-weight: bold;
 }
 
 /* Additional styles for the upload profile image screen */

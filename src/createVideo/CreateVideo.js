@@ -1,8 +1,9 @@
+// src/createVideo/CreateVideo.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateVideo.css";
 
-const CreateVideo = ({ setVideoList, user }) => {
+const CreateVideo = ({ addVideo, user }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null); // State to store the video file
@@ -29,14 +30,16 @@ const CreateVideo = ({ setVideoList, user }) => {
       title,
       pic: URL.createObjectURL(image),
       url: videoUrl,
-      author: user ? user.firstName : "Anonymous", // Use first name of the user
+      author: user ? user.email : "Anonymous", // Use email of the user
       views: 0,
       date: new Date().toLocaleDateString(),
       description: "",
       uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
+      profileImage: user ? user.profileImage : null // Add the user's profile image
     };
+    
 
-    setVideoList((prevList) => [...prevList, newVideo]);
+    addVideo(newVideo); 
     navigate("/");
   };
 

@@ -170,3 +170,6 @@
   border-radius: 4px;
 }
 
+.author-details :hover {
+  color: #61dafb;
+}

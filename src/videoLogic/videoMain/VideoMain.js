@@ -1,9 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
 
-const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, user, userInteractions, handleLike, handleDislike, likesDislikes, deleteVideo, editVideo }) => {
+const VideoMain = ({
+  videos,
+  comments,
+  addComment,
+  deleteComment,
+  editComment,
+  user,
+  userInteractions,
+  handleLike,
+  handleDislike,
+  likesDislikes,
+  deleteVideo,
+  editVideo,
+  getUserByEmail,
+  updateVideoViews
+}) => {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -12,6 +27,7 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
   const [editedDescription, setEditedDescription] = useState('');
   const [editedFile, setEditedFile] = useState(null);
   const navigate = useNavigate();
+  const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
     const foundVideo = videos.find(v => v.id === parseInt(id));
@@ -19,10 +35,14 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
       setVideo(foundVideo);
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
+      if (!hasUpdatedViews.current) {
+        updateVideoViews(foundVideo.id);
+        hasUpdatedViews.current = true;
+      }
     } else {
       setVideo(null);
     }
-  }, [id, videos]);
+  }, [id, videos, updateVideoViews]);
 
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
@@ -82,6 +102,10 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
 
   const likesCount = likesDislikes[video.id]?.likes || 0;
   const dislikesCount = likesDislikes[video.id]?.dislikes || 0;
+
+  const handleVideoClick = (clickedVideoId) => {
+    updateVideoViews(clickedVideoId);
+  };
 
   return (
     <div className="video-details-container">
@@ -157,7 +181,14 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
                 </>
               ) : (
                 <>
-                  <p>Uploaded by: {video.uploaderName || video.author || 'Unknown'}</p>
+                  <div className="author-details">
+                    {getUserByEmail && video.author && (
+                      <Link to={`/user/${getUserByEmail(video.author)?.firstName}`} className="author-link">
+                        <img src={getUserByEmail(video.author)?.profileImage} alt={getUserByEmail(video.author)?.firstName} className="author-profile-image" />
+                        {getUserByEmail(video.author)?.firstName || video.uploaderName || 'Unknown'}
+                      </Link>
+                    )}
+                  </div>
                   <p>{video.description}</p>
                 </>
               )}
@@ -178,11 +209,22 @@ const VideoMain = ({ videos, comments, addComment, deleteComment, editComment, u
         <ul className="suggested-videos-list">
           {suggestedVideos.map(suggestedVideo => (
             <li key={suggestedVideo.id} className="suggested-video-item">
-              <Link to={`/video/${suggestedVideo.id}`} className="suggested-video-link">
+              <Link
+                to={`/video/${suggestedVideo.id}`}
+                className="suggested-video-link"
+                onClick={() => handleVideoClick(suggestedVideo.id)}
+              >
                 <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
                 <div className="suggested-video-info">
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
-                  <p className="suggested-video-author">{suggestedVideo.author}</p>
+                  <div className="author-details">
+                    {getUserByEmail && suggestedVideo.author && (
+                      <Link to={`/user/${getUserByEmail(suggestedVideo.author)?.firstName}`} className="author-link">
+                        <img src={getUserByEmail(suggestedVideo.author)?.profileImage} alt={getUserByEmail(suggestedVideo.author)?.firstName} className="author-profile-image" />
+                        {getUserByEmail(suggestedVideo.author)?.firstName || suggestedVideo.author || 'Unknown'}
+                      </Link>
+                    )}
+                  </div>
                   <p className="suggested-video-views">{suggestedVideo.views} views</p>
                 </div>
               </Link>

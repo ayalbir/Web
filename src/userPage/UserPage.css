@@ -1,0 +1,87 @@
+/* UserPage.css */
+
+/* Container for the user page */
+.user-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* User profile section */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-profile h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* User statistics section */
+.user-statistics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.user-statistics div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-statistics h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* User videos section */
+.user-videos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.user-videos .video-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-videos .video-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.user-videos .video-card h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.user-videos .video-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* User footer section */
+.user-footer {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}

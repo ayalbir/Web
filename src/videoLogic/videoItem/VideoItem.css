@@ -1,53 +1,182 @@
-/* src/videoItem/VideoItem.css */
+.video-item {
+  width: 100%;
+  max-width: 300px; /* Adjust width to make regular videos bigger */
+  margin-bottom: 20px; /* Adjust spacing between videos */
+}
+
 
 .video-card {
   text-decoration: none;
   color: inherit;
   transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
 .video-card:hover {
-  transform: scale(1.05);
-  .card-body {background-color: #ced4da;};
+  transform: scale(1.01);
 }
 
-.video-card img {
+.card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.author-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.card-title {
+  font-size: 16px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.video-title-link {
+  text-decoration: none;
+  font-weight: 500;
+  color: inherit;
+}
+
+.author-profile-image {
+  width: 24px; /* Adjust width to your preference */
+  height: 24px; /* Adjust height to your preference */
+  border-radius: 50%;
+  margin-right: 10px; /* Increase or decrease margin as needed */
+}
+
+.author-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.top-videos {
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.top-videos h2 {
+  margin-bottom: 20px;
+}
+
+.top-videos .video-list {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.top-videos .video-item {
+  flex: 0 0 auto;
+  width: 200px; /* Width for top videos */
+}
+
+.top-videos .video-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.top-videos .video-card img {
   width: 100%;
   height: auto;
 }
 
-.video-card .card-body {
+.top-videos .video-card .card-body {
   padding: 10px;
 }
 
-.card-body:hover {
-  border-radius: 0px 0px 5px 5px;
-}
-/* now for dark mode */
-.dark-mode .video-card .card-body {
-  background-color: #121212;
-  outline-color: white;
-  border-radius: 0px 0px 5px 5px;
+.top-videos .video-card .card-title {
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
-.dark-mode .video-card:hover {
-  .card-body {background-color: #202020e9;};
-} 
-
-.video-card .card-title {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
+.top-videos .video-card .author-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
-.video-card .card-text {
-  font-size: 0.9rem;
-  color: #555;
-  margin: 0;
-  padding: 0;
+.top-videos .video-card .author-profile-image {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
-.dark-mode .video-card .card-text {
-  color: #aaa;
+.top-videos .video-card .card-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.top-videos .video-card.top-video-card {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.top-videos .video-card.top-video-card .card-title {
+  font-size: 16px;
+}
+
+.top-videos .video-card.top-video-card .author-details,
+.top-videos .video-card.top-video-card .card-text {
+  font-size: 14px;
+}
+
+/* General dark mode adjustments */
+.dark-mode .video-card {
+  background-color: #333; /* Darker background for video cards */
+  color: #ccc; /* Lighter text color for better readability */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); /* Lighter shadow for contrast */
+}
+
+.dark-mode .card-title, .dark-mode .card-text {
+  color: #ddd; /* Lighter text color for titles and descriptions */
+}
+
+/* Adjustments for author details in dark mode */
+.dark-mode .author-details, .dark-mode .author-link {
+  color: #bbb; /* Slightly lighter text color for author details */
+}
+
+/* Dark mode adjustments for top videos */
+.dark-mode .top-videos .video-card {
+  background-color: #2a2a2a; /* Even darker background for top video cards */
+  color: #ccc;
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.12); /* Adjusted shadow for top videos */
+}
+
+.dark-mode .top-videos .video-card .card-title, 
+.dark-mode .top-videos .video-card .card-text {
+  color: #ddd;
+}
+
+/* Ensure links do not change color on hover in dark mode */
+.dark-mode .video-title-link:hover {
+  color: inherit;
 }

@@ -1,9 +1,8 @@
-// src/SearchResults.js
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 
-const SearchResults = ({ videos }) => {
+const SearchResults = ({ videos, getUserByEmail }) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search).get('q');
 
@@ -15,7 +14,7 @@ const SearchResults = ({ videos }) => {
   return (
     <div>
       <h2>Search Results for "{query}"</h2>
-      <VideoListResults videos={filteredVideos} />
+      <VideoListResults videos={filteredVideos} getUserByEmail={getUserByEmail} />
     </div>
   );
 };
