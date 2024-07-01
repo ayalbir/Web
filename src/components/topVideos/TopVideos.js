@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoItem from '../videoLogic/videoItem/VideoItem';
+import VideoItem from '../../videoLogic/videoItem/VideoItem';
 // import './TopVideos.css';
 
 const TopVideos = ({ videos, getUserByEmail }) => {

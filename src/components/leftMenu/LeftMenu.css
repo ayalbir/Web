@@ -87,7 +87,7 @@ body.dark-mode .toggle-menu-btn:hover{
 .collapsed .menu-link {
   flex-direction: column;
   /* Change flex direction to column */
-  align-items: center !important;
+  align-items: center;
   /* Center items horizontally */
   justify-content: center;
 }

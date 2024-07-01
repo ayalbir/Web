@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
+import VideoListResults from '../../videoLogic/videoListResults/VideoListResults';
 
 const UserPage = ({ videos, getUserByEmail }) => {
   const { name } = useParams(); // Get the uploader's name from the route parameters

@@ -27,16 +27,28 @@
   color: #61dafb;
 }
 
+.container-fluid {
+  padding: 0; /* Ensure no extra padding */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
 .main-content {
-  margin-left: 240px;
+  margin-left: 15%; /* change here later */
   padding: 10px;
   overflow-y: auto;
   height: 100vh;
-  transition: margin-left 0.3s;
+  transition: margin-left 0.3s, width 0.3s;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.main-content.collapsed {
+  margin-left: 10%; /* change here later */
+  width: calc(100% - 80px); 
 }
 
 .left-menu.collapsed + .main-content {
   margin-left: 80px;
+  width: calc(100% - 80px);
 }
 
 .search-signin-container {
@@ -113,7 +125,7 @@ body:not(.dark-mode) .btn {
   color: white;
   border-radius: 50%;
   font-size: 1.2em;
-  align-items: center !important;
+  align-items: center;
 }
 
 .create-button:hover {

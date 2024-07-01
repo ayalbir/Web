@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LeftMenu.css';
-import items from './menuItems/MenuItems.json';
 
 const LeftMenu = ({ expanded, setExpanded }) => {
   const handleToggle = () => {
     setExpanded(!expanded);
   };
+
+  const items = [{ "name": "home", "id": "home", "link": "/", "icon": "bi-house" }]
 
   return (
     <div className={`left-menu ${expanded ? 'expanded' : 'collapsed'}`}>

@@ -3,56 +3,36 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import LeftMenu from '../leftMenu/LeftMenu';
+import LeftMenu from '../components/leftMenu/LeftMenu';
 import videosData from '../videoLogic/videoItem/Videos.json';
-import Search from '../search/Search';
-import CreateVideo from '../createVideo/CreateVideo';
+import Search from '../components/search/Search';
+import CreateVideo from '../components/createVideo/CreateVideo';
 import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../videoLogic/videoMain/VideoMain';
-import SearchResults from '../search/SearchResults';
-import DarkModeButton from '../darkMode/DarkModeButton';
+import SearchResults from '../components/searchResults/SearchResults';
+import DarkModeButton from '../components/darkMode/DarkModeButton';
 import SignUp from '../loginLogic/SignUp';
 import SignUpStepTwo from '../loginLogic/SignUpStepTwo';
 import UploadProfileImage from '../loginLogic/UploadProfileImage';
 import SignIn from '../loginLogic/SignIn';
-import UserPage from '../userPage/UserPage';
-import UpdateProfile from '../updateProfile/UpdateProfile';
-import TopVideos from '../topVideos/TopVideos';
+import UserPage from '../components/userPage/UserPage';
+import UpdateProfile from '../components/updateProfile/UpdateProfile';
+import demoUsers from '../mock/DemoUsers.const';
+import useUser from '../hooks/UseUser';
 
 function App() {
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [comments, setComments] = useState({});
+  const [comments, setComments] = useState({}); //move this
   const [user, setUser] = useState(null);
-  const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [userInteractions, setUserInteractions] = useState({});
-  const [likesDislikes, setLikesDislikes] = useState({});
+  const [registeredUsers, setRegisteredUsers] = useState([]);//move this
+  const [userInteractions, setUserInteractions] = useState({});//move this
+  const [likesDislikes, setLikesDislikes] = useState({});//move this
+  const {getUserByEmail} = useUser(registeredUsers);
 
-  const demoUsers = [{
-    firstName: 'John',
-    email: 'john@example.com',
-    password: 'password123',
-    profileImage: '/images/img_avatar2.png',
-    signedIn: false
-  },
-  {
-    firstName: 'Jane',
-    email: 'jane@example.com',
-    password: 'password123',
-    profileImage: '/images/img_avatar3.png',
-    signedIn: false
-  },
-  {
-    firstName: 'Doe',
-    email: 'doe@example.com',
-    password: 'password123',
-    profileImage: '/images/FooTube_logo.jpg',
-    signedIn: false
-  }
-  ];
 
-  const updateUser = (updatedUserData) => {
+  const updateUser = (updatedUserData) => {  //move this
     // Assuming updateUser receives updatedUserData with profileImage
     const updatedUser = { ...user, ...updatedUserData };
     setUser(updatedUser);
@@ -61,9 +41,7 @@ function App() {
     setRegisteredUsers(updatedRegisteredUsers);
   };
 
-  const getUserByEmail = (email) => {
-    return registeredUsers.find(user => user.email === email);
-  };
+  
 
   const addVideo = (newVideo) => {
     setVideoList((prevList) => [...prevList, newVideo]);
@@ -166,7 +144,7 @@ function App() {
             <div className={`container-fluid ${isDarkMode ? 'dark-mode' : ''}`}>
               <div className="row">
                 <LeftMenu expanded={expanded} setExpanded={setExpanded} />
-                <div className={`col main-content ${expanded ? 'offset-md-3' : 'offset-md-1'}`}>
+                <div className={`col main-content ${expanded ? '' : 'collapsed'}`}>
                   <div className="search-signin-container">
                     <Link to="/create" className="btn create-button">
                       <i className="bi bi-patch-plus"></i>
@@ -204,9 +182,6 @@ function App() {
                   <Routes>
                     <Route path="/" element={
                       <>
-                        <div className="top-videos-section">
-                          <TopVideos videos={videoList} getUserByEmail={getUserByEmail} />
-                        </div>
                         <VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />
                       </>
                     } />

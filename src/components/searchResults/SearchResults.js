@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import VideoListResults from '../videoLogic/videoListResults/VideoListResults';
+import VideoListResults from '../../videoLogic/videoListResults/VideoListResults';
+import './SearchResults.css';
 
 const SearchResults = ({ videos, getUserByEmail }) => {
   const location = useLocation();
