@@ -1,5 +1,3 @@
-// hooks/UseVideos.js
-
 import { useState } from 'react';
 
 const useVideos = (initialVideos) => {
@@ -48,24 +46,38 @@ const useVideos = (initialVideos) => {
     };
 
     const handleLike = (videoId) => {
-        setUserInteractions(prev => ({
-            ...prev,
-            [videoId]: { ...prev[videoId], like: !prev[videoId]?.like }
-        }));
+        setUserInteractions(prev => {
+            const newState = { ...prev[videoId], like: !prev[videoId]?.like };
+            if (newState.like) {
+                newState.dislike = false;
+            }
+            return { ...prev, [videoId]: newState };
+        });
+
         setLikesDislikes(prev => ({
             ...prev,
-            [videoId]: { ...prev[videoId], likes: (prev[videoId]?.likes || 0) + (userInteractions[videoId]?.like ? -1 : 1) }
+            [videoId]: {
+                likes: (prev[videoId]?.likes || 0) + (userInteractions[videoId]?.like ? -1 : 1),
+                dislikes: userInteractions[videoId]?.dislike ? (prev[videoId]?.dislikes || 0) - 1 : (prev[videoId]?.dislikes || 0)
+            }
         }));
     };
 
     const handleDislike = (videoId) => {
-        setUserInteractions(prev => ({
-            ...prev,
-            [videoId]: { ...prev[videoId], dislike: !prev[videoId]?.dislike }
-        }));
+        setUserInteractions(prev => {
+            const newState = { ...prev[videoId], dislike: !prev[videoId]?.dislike };
+            if (newState.dislike) {
+                newState.like = false;
+            }
+            return { ...prev, [videoId]: newState };
+        });
+
         setLikesDislikes(prev => ({
             ...prev,
-            [videoId]: { ...prev[videoId], dislikes: (prev[videoId]?.dislikes || 0) + (userInteractions[videoId]?.dislike ? -1 : 1) }
+            [videoId]: {
+                likes: userInteractions[videoId]?.like ? (prev[videoId]?.likes || 0) - 1 : (prev[videoId]?.likes || 0),
+                dislikes: (prev[videoId]?.dislikes || 0) + (userInteractions[videoId]?.dislike ? -1 : 1)
+            }
         }));
     };
 

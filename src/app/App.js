@@ -10,7 +10,7 @@ import SearchSignInContainer from '../components/searchSignInContainer/SearchSig
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
 
 function App() {
-  const { getUserByEmail, registerUser, setFirstName } = useUser(demoUsers || []);
+  const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers} = useUser(demoUsers || []);
   const {
     videoList,
     addVideo,
@@ -28,14 +28,9 @@ function App() {
   } = useVideos(videosData);
 
 
-  const [registeredUsers, setRegisteredUsers] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Initialize any other app-wide data or effects here
-  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode(prevMode => !prevMode);
@@ -48,9 +43,7 @@ function App() {
 
   const handleRegisterUser = (userData) => {
     registerUser(userData);
-    setUser({ ...userData, signedIn: true });
-    setRegisteredUsers([...registeredUsers, userData]);
-    
+    setUser({ ...userData, signedIn: true });    
   };
 
   return (
@@ -83,6 +76,7 @@ function App() {
               handleRegisterUser={handleRegisterUser}
               setUser={setUser}
               registeredUsers={registeredUsers}
+              updateUser={updateUser}
             />
           </div>
         </div>

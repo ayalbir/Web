@@ -1,17 +1,14 @@
-// hooks/UseUser.js
 import { useState } from 'react';
 
 const useUser = (initialUsers = []) => {
-    const [registeredUsers, setRegisteredUsers] = useState(initialUsers || []);
+    const [registeredUsers, setRegisteredUsers] = useState(initialUsers);
 
     const getUserByEmail = (email) => {
         return registeredUsers.find(user => user.email === email);
     };
 
     const registerUser = (userData) => {
-        console.log('User registered:', userData);
         setRegisteredUsers([...registeredUsers, userData]);
-        console.log('registeredUsers:', registeredUsers);
     };
 
     const setFirstName = (email, newFirstName) => {
@@ -32,7 +29,6 @@ const useUser = (initialUsers = []) => {
         }));
     };
 
-    
     return { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers };
 };
 

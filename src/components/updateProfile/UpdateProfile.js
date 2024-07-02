@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import useUser from '../../hooks/UseUser';
 import './UpdateProfile.css';
 
-function UpdateProfile({ user }) {
+function UpdateProfile({ user, updateUser, setUser, registeredUsers }) {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const { updateUser } = useUser(); // Only need updateUser from useUser
 
     useEffect(() => {
         if (user) {
@@ -20,14 +18,37 @@ function UpdateProfile({ user }) {
         }
     }, [user]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        
-        if (user && user.email) {
-            await updateUser(user.email, { firstName, email, password, profileImage });
-            setIsSubmitted(true);
-        } else {
+        if (!user) {
             alert('User not found.');
+            return;
+        }
+        if (user.email) {
+            const updatedUserData = { firstName, email, password, profileImage };
+
+            // Handle profile image if a new one is uploaded
+            if (profileImage && profileImage instanceof File) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const updatedUser = {
+                        ...user,
+                        ...updatedUserData,
+                        profileImage: reader.result,
+                    };
+                    updateUser(user.email, updatedUser);
+                    setUser(updatedUser);
+                    setIsSubmitted(true);
+                };
+                reader.readAsDataURL(profileImage);
+            } else {
+                const updatedUser = { ...user, ...updatedUserData };
+                updateUser(user.email, updatedUser);
+                setUser(updatedUser);
+                setIsSubmitted(true);
+            }
+        } else {
+            alert('User email is missing.');
         }
     };
 
@@ -87,7 +108,6 @@ function UpdateProfile({ user }) {
                         <label htmlFor="showPasswordCheckbox" className="checkbox-label">Show Password</label>
                     </div>
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="profileImage">Profile Image:</label>
                     <input

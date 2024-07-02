@@ -29,6 +29,7 @@ const RoutesConfiguration = ({
   handleRegisterUser,
   setUser,
   registeredUsers,
+  updateUser
 }) => {
   return (
     <Routes>
@@ -66,7 +67,7 @@ const RoutesConfiguration = ({
       <Route path="/search" element={<SearchResults videos={videoList} getUserByEmail={getUserByEmail} />} />
       <Route path="/create" element={<CreateVideo />} />
       <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />
-      <Route path="/update-profile" element={<UpdateProfile />} />
+      <Route path="/update-profile" element={<UpdateProfile user={ user } updateUser={updateUser} setUser={setUser}  registeredUsers={registeredUsers} />} />
     </Routes>
   );
 };
