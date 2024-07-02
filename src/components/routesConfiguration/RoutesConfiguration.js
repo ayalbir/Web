@@ -2,13 +2,14 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from '../loginLogic/SignIn';
 import SignUp from '../loginLogic/SignUp';
-import SignUpTwo from '../loginLogic/SignUpTwo'; 
+import SignUpTwo from '../loginLogic/SignUpTwo';
 import VideoListResults from '../../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../../videoLogic/videoMain/VideoMain';
 import SearchResults from '../searchResults/SearchResults';
 import CreateVideo from '../createVideo/CreateVideo';
 import UserPage from '../userPage/UserPage';
 import UpdateProfile from '../updateProfile/UpdateProfile';
+import MainLayout from '../mainLayout/MainLayout';
 import './RoutesConfiguration.css';
 
 const RoutesConfiguration = ({
@@ -29,7 +30,12 @@ const RoutesConfiguration = ({
   handleRegisterUser,
   setUser,
   registeredUsers,
-  updateUser
+  updateUser,
+  isDarkMode,
+  toggleDarkMode,
+  expanded,
+  setExpanded,
+  handleSignOut
 }) => {
   return (
     <Routes>
@@ -41,33 +47,114 @@ const RoutesConfiguration = ({
       {/* Routes with application layout */}
       <Route
         path="/*"
-        element={<VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />}
+        element={
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            user={user}
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />
+          </MainLayout>
+        }
       />
       <Route
         path="/video/:id"
         element={
-          <VideoMain
-            videos={videoList}
-            comments={comments}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            editComment={editComment}
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
             user={user}
-            userInteractions={userInteractions}
-            handleLike={handleLike}
-            handleDislike={handleDislike}
-            likesDislikes={likesDislikes}
-            deleteVideo={deleteVideo}
-            editVideo={editVideo}
-            getUserByEmail={getUserByEmail}
-            updateVideoViews={updateVideoViews}
-          />
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <VideoMain
+              videos={videoList}
+              comments={comments}
+              addComment={addComment}
+              deleteComment={deleteComment}
+              editComment={editComment}
+              user={user}
+              userInteractions={userInteractions}
+              handleLike={handleLike}
+              handleDislike={handleDislike}
+              likesDislikes={likesDislikes}
+              deleteVideo={deleteVideo}
+              editVideo={editVideo}
+              getUserByEmail={getUserByEmail}
+              updateVideoViews={updateVideoViews}
+            />
+          </MainLayout>
         }
       />
-      <Route path="/search" element={<SearchResults videos={videoList} getUserByEmail={getUserByEmail} />} />
-      <Route path="/create" element={<CreateVideo />} />
-      <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />
-      <Route path="/update-profile" element={<UpdateProfile user={ user } updateUser={updateUser} setUser={setUser}  registeredUsers={registeredUsers} />} />
+      <Route
+        path="/search"
+        element={
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            user={user}
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <SearchResults videos={videoList} getUserByEmail={getUserByEmail} />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/create"
+        element={
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            user={user}
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <CreateVideo />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/user/:name"
+        element={
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            user={user}
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <UserPage videos={videoList} getUserByEmail={getUserByEmail} />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/update-profile"
+        element={
+          <MainLayout
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            user={user}
+            handleSignOut={handleSignOut}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          >
+            <UpdateProfile
+              user={user}
+              updateUser={updateUser}
+              setUser={setUser}
+              registeredUsers={registeredUsers}
+            />
+          </MainLayout>
+        }
+      />
     </Routes>
   );
 };
