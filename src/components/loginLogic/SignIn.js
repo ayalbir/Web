@@ -1,9 +1,11 @@
 // src/SignIn.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useUser from '../../hooks/UseUser';
 import './SignIn.css';
 
-const SignIn = ({ setUser, registeredUsers }) => {
+const SignIn = ({ setUser }) => {
+  const { registeredUsers } = useUser();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -13,6 +15,7 @@ const SignIn = ({ setUser, registeredUsers }) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+  
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -21,6 +24,11 @@ const SignIn = ({ setUser, registeredUsers }) => {
 
   const validateForm = () => {
     const newErrors = {};
+    // Ensure registeredUsers is defined and is an array before calling find
+    if (!Array.isArray(registeredUsers)) {
+      console.error('registeredUsers is undefined or not an array');
+      return false; // Prevent further execution
+    }
     const user = registeredUsers.find(user => user.email === formData.email);
     if (!user) {
       newErrors.email = 'Email not found';
@@ -33,6 +41,11 @@ const SignIn = ({ setUser, registeredUsers }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Ensure registeredUsers is defined and is an array before proceeding
+    if (!Array.isArray(registeredUsers)) {
+      console.error('registeredUsers is undefined or not an array');
+      return; // Prevent further execution
+    }
     if (validateForm()) {
       const user = registeredUsers.find(user => user.email === formData.email);
       setUser({ ...user, signedIn: true });

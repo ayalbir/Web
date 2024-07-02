@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom'; 
+import { Navigate } from 'react-router-dom';
+import useUser from '../../hooks/UseUser';
 import './UpdateProfile.css';
 
-function UpdateProfile({ user, updateUser }) {
+function UpdateProfile({ user }) {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { updateUser } = useUser(); // Only need updateUser from useUser
 
     useEffect(() => {
         if (user) {
@@ -20,20 +22,23 @@ function UpdateProfile({ user, updateUser }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await updateUser({ firstName, email, password, profileImage });
-        setIsSubmitted(true);
+        
+        if (user && user.email) {
+            await updateUser(user.email, { firstName, email, password, profileImage });
+            setIsSubmitted(true);
+        } else {
+            alert('User not found.');
+        }
     };
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    // If no user, navigate to sign in page
     if (!user) {
         return <Navigate to="/signin" />;
     }
 
-    // After form submission, navigate to home page
     if (isSubmitted) {
         return <Navigate to="/" />;
     }

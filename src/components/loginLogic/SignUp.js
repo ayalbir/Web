@@ -1,15 +1,14 @@
-// src/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
+import useUser from '../../hooks/UseUser'; // Import the useUser hook
 
-const SignUp = ({ setFirstName }) => {
+const SignUp = () => {
+  const { setFirstName } = useUser(); // Destructure the setFirstName function from useUser
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    month: '',
-    day: '',
-    year: '',
+    birthdate: '',
     gender: ''
   });
   const [errors, setErrors] = useState({});
@@ -25,9 +24,7 @@ const SignUp = ({ setFirstName }) => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) newErrors.firstName = 'First name is required';
-    if (!formData.month) newErrors.month = 'Month is required';
-    if (!formData.day) newErrors.day = 'Day is required';
-    if (!formData.year) newErrors.year = 'Year is required';
+    if (!formData.birthdate) newErrors.birthdate = 'Birthdate is required';
     if (!formData.gender) newErrors.gender = 'Gender is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -37,24 +34,9 @@ const SignUp = ({ setFirstName }) => {
     e.preventDefault();
     if (validateForm()) {
       setFirstName(formData.firstName);
-      navigate('/signup-step-two');
+      navigate('/sign-up-step-two', { state: { formData } });
     }
   };
-
-  const months = [
-    { value: '01', label: 'January' },
-    { value: '02', label: 'February' },
-    { value: '03', label: 'March' },
-    { value: '04', label: 'April' },
-    { value: '05', label: 'May' },
-    { value: '06', label: 'June' },
-    { value: '07', label: 'July' },
-    { value: '08', label: 'August' },
-    { value: '09', label: 'September' },
-    { value: '10', label: 'October' },
-    { value: '11', label: 'November' },
-    { value: '12', label: 'December' }
-  ];
 
   return (
     <div className="minimal-layout">
@@ -84,37 +66,22 @@ const SignUp = ({ setFirstName }) => {
           </div>
           <div>
             <label>Birthdate</label>
-            <div>
-              <select name="month" value={formData.month} onChange={handleChange}>
-                <option value="">Month</option>
-                {months.map((month) => (
-                  <option key={month.value} value={month.value}>
-                    {month.label}
-                  </option>
-                ))}
-              </select>
-              {errors.month && <span className="error">{errors.month}</span>}
-              <input
-                type="text"
-                name="day"
-                value={formData.day}
-                onChange={handleChange}
-                placeholder="Day"
-              />
-              {errors.day && <span className="error">{errors.day}</span>}
-              <input
-                type="text"
-                name="year"
-                value={formData.year}
-                onChange={handleChange}
-                placeholder="Year"
-              />
-              {errors.year && <span className="error">{errors.year}</span>}
-            </div>
+            <input
+              type="date"
+              id="birthdate"
+              name="birthdate"
+              value={formData.birthdate}
+              onChange={handleChange}
+            />
+            {errors.birthdate && <span className="error">{errors.birthdate}</span>}
           </div>
           <div>
             <label>Gender</label>
-            <select name="gender" value={formData.gender} onChange={handleChange}>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+            >
               <option value="">Select</option>
               <option value="male">Male</option>
               <option value="female">Female</option>

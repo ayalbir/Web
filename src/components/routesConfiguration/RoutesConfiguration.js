@@ -1,54 +1,44 @@
-// src/components/routesConfiguration/RoutesConfiguration.js
-
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import SignIn from '../../loginLogic/SignIn';
-import SignUp from '../../loginLogic/SignUp';
-import SignUpStepTwo from '../../loginLogic/SignUpStepTwo';
-import UploadProfileImage from '../../loginLogic/UploadProfileImage';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import SignIn from '../loginLogic/SignIn';
+import SignUp from '../loginLogic/SignUp';
+import SignUpTwo from '../loginLogic/SignUpTwo'; // Import SignUpTwo component
 import VideoListResults from '../../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../../videoLogic/videoMain/VideoMain';
 import SearchResults from '../searchResults/SearchResults';
 import CreateVideo from '../createVideo/CreateVideo';
 import UserPage from '../userPage/UserPage';
 import UpdateProfile from '../updateProfile/UpdateProfile';
-// import the css file, even if it's empty
 import './RoutesConfiguration.css';
 
-const RoutesConfiguration = ({ 
-  user, 
-  registeredUsers, 
-  setUser, 
-  handleRegisterUser, 
-  videoList, 
-  comments, 
-  addComment, 
-  deleteComment, 
-  editComment, 
-  userInteractions, 
-  handleLike, 
-  handleDislike, 
-  likesDislikes, 
-  deleteVideo, 
-  editVideo, 
-  getUserByEmail, 
-  updateVideoViews, 
-  updateUser,
-  addVideo 
+const RoutesConfiguration = ({
+  user,
+  videoList,
+  comments,
+  addComment,
+  deleteComment,
+  editComment,
+  userInteractions,
+  handleLike,
+  handleDislike,
+  likesDislikes,
+  deleteVideo,
+  editVideo,
+  getUserByEmail,
+  updateVideoViews,
+  handleRegisterUser,
 }) => {
   return (
     <Routes>
-      <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
+      {/* Routes without application layout */}
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/signup-step-two" element={<SignUpStepTwo registerUser={handleRegisterUser} />} />
-      <Route path="/upload-profile-image" element={<UploadProfileImage email={user?.email} registeredUsers={registeredUsers} />} />
+      <Route path="/sign-up-step-two" element={<SignUpTwo handleRegisterUser={handleRegisterUser} />} />
+
+      {/* Routes with application layout */}
       <Route
-        path="*"
-        element={
-          <>
-            <VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />
-          </>
-        }
+        path="/*"
+        element={<VideoListResults videos={videoList} getUserByEmail={getUserByEmail} />}
       />
       <Route
         path="/video/:id"
@@ -72,9 +62,9 @@ const RoutesConfiguration = ({
         }
       />
       <Route path="/search" element={<SearchResults videos={videoList} getUserByEmail={getUserByEmail} />} />
-      <Route path="/create" element={<CreateVideo addVideo={addVideo} user={user} />} />
+      <Route path="/create" element={<CreateVideo />} />
       <Route path="/user/:name" element={<UserPage videos={videoList} getUserByEmail={getUserByEmail} />} />
-      <Route path="/update-profile" element={<UpdateProfile user={user} updateUser={updateUser} />} />
+      <Route path="/update-profile" element={<UpdateProfile />} />
     </Routes>
   );
 };
