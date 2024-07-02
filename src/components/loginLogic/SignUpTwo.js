@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './SignUpTwo.css';
-import useUser from '../../hooks/UseUser';
+
 
 const SignUpTwo = ({ handleRegisterUser }) => {
     const location = useLocation();
@@ -17,8 +17,6 @@ const SignUpTwo = ({ handleRegisterUser }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-
-    const { registerUser } = useUser();
 
     const handleChange = (e) => {
         setFormData({
@@ -63,14 +61,6 @@ const SignUpTwo = ({ handleRegisterUser }) => {
                     firstName: userData.firstName,
                     profileImage
                 });
-
-                registerUser({
-                    email: userData.email,
-                    password: userData.password,
-                    firstName: userData.firstName,
-                    profileImage
-                });
-
                 
                 navigate('/signin'); // Navigate to the sign-in page
             };

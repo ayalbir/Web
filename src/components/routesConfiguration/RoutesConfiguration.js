@@ -1,8 +1,8 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import SignIn from '../loginLogic/SignIn';
 import SignUp from '../loginLogic/SignUp';
-import SignUpTwo from '../loginLogic/SignUpTwo'; // Import SignUpTwo component
+import SignUpTwo from '../loginLogic/SignUpTwo'; 
 import VideoListResults from '../../videoLogic/videoListResults/VideoListResults';
 import VideoMain from '../../videoLogic/videoMain/VideoMain';
 import SearchResults from '../searchResults/SearchResults';
@@ -27,12 +27,14 @@ const RoutesConfiguration = ({
   getUserByEmail,
   updateVideoViews,
   handleRegisterUser,
+  setUser,
+  registeredUsers,
 }) => {
   return (
     <Routes>
       {/* Routes without application layout */}
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/signin" element={<SignIn setUser={setUser} registeredUsers={registeredUsers} />} />
+      <Route path="/signup" element={<SignUp handleRegisterUser={handleRegisterUser} />} />
       <Route path="/sign-up-step-two" element={<SignUpTwo handleRegisterUser={handleRegisterUser} />} />
 
       {/* Routes with application layout */}

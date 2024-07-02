@@ -9,7 +9,9 @@ const useUser = (initialUsers = []) => {
     };
 
     const registerUser = (userData) => {
+        console.log('User registered:', userData);
         setRegisteredUsers([...registeredUsers, userData]);
+        console.log('registeredUsers:', registeredUsers);
     };
 
     const setFirstName = (email, newFirstName) => {
@@ -30,7 +32,7 @@ const useUser = (initialUsers = []) => {
         }));
     };
 
-    // Include registeredUsers in the return statement
+    
     return { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers };
 };
 

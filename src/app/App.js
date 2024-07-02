@@ -27,6 +27,8 @@ function App() {
     updateVideoViews
   } = useVideos(videosData);
 
+
+  const [registeredUsers, setRegisteredUsers] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState(null);
@@ -47,6 +49,8 @@ function App() {
   const handleRegisterUser = (userData) => {
     registerUser(userData);
     setUser({ ...userData, signedIn: true });
+    setRegisteredUsers([...registeredUsers, userData]);
+    
   };
 
   return (
@@ -77,6 +81,8 @@ function App() {
               getUserByEmail={getUserByEmail}
               updateVideoViews={updateVideoViews}
               handleRegisterUser={handleRegisterUser}
+              setUser={setUser}
+              registeredUsers={registeredUsers}
             />
           </div>
         </div>

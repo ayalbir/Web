@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/UseUser';
 import './SignIn.css';
 
-const SignIn = ({ setUser }) => {
-  const { registeredUsers } = useUser();
+const SignIn = ({ setUser , registeredUsers }) => {
+  
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -29,12 +29,14 @@ const SignIn = ({ setUser }) => {
       console.error('registeredUsers is undefined or not an array');
       return false; // Prevent further execution
     }
+    
     const user = registeredUsers.find(user => user.email === formData.email);
     if (!user) {
       newErrors.email = 'Email not found';
     } else if (user.password !== formData.password) {
       newErrors.password = 'Incorrect password';
     }
+    console.log('registeredUsers:', registeredUsers);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
