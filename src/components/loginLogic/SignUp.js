@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
-import useUser from '../../hooks/UseUser'; // Import the useUser hook
+import useUser from '../../hooks/UseUser'; 
 
 const SignUp = () => {
-  const { setFirstName } = useUser(); // Destructure the setFirstName function from useUser
+  const { setFirstName } = useUser(); 
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
