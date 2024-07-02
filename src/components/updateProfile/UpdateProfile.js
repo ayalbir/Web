@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import './UpdateProfile.css';
 
-function UpdateProfile({ user, updateUser, setUser, registeredUsers }) {
+function UpdateProfile({ user, updateUser, setUser }) {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

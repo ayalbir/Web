@@ -70,6 +70,7 @@ function App() {
           expanded={expanded}
           setExpanded={setExpanded}
           handleSignOut={handleSignOut}
+          addVideo={addVideo}
         />
       </div>
     </Router>

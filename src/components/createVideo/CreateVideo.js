@@ -6,7 +6,7 @@ import "./CreateVideo.css";
 const CreateVideo = ({ addVideo, user }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null); // State to store the video file
+  const [video, setVideo] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {

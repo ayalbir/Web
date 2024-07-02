@@ -35,7 +35,8 @@ const RoutesConfiguration = ({
   toggleDarkMode,
   expanded,
   setExpanded,
-  handleSignOut
+  handleSignOut,
+  addVideo
 }) => {
   return (
     <Routes>
@@ -116,7 +117,7 @@ const RoutesConfiguration = ({
             expanded={expanded}
             setExpanded={setExpanded}
           >
-            <CreateVideo />
+            <CreateVideo   addVideo={addVideo} user={user}/>
           </MainLayout>
         }
       />
