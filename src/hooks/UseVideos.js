@@ -91,7 +91,11 @@ const useVideos = (initialVideos) => {
         const videoId = comment.videoId;
         try {
             const token = getToken();
-            const res = await axios.post(`http://127.0.0.1:8080/api/videos/${comment.videoId}/comments`, comment.email, comment.text, comment.profilePicture, {
+            const res = await axios.post(`http://127.0.0.1:8080/api/videos/${videoId}/comments`,{
+                email: comment.email,
+                text: comment.text,
+                profilePicture: comment.profilePicture
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -126,7 +130,7 @@ const useVideos = (initialVideos) => {
     const editComment = async (videoId, commentId, newText) => {
         try {
             const token = getToken();
-            const res = await axios.patch(`http://127.0.0.1:8080/api/videos/comments/${commentId}`, { text: newText }, {
+            const res = await axios.patch(`http://127.0.0.1:8080/api/comments/${commentId}`, { text: newText }, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

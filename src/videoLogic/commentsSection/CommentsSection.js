@@ -26,17 +26,17 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
     setNewComment('');
   };
 
-  const handleDeleteComment = (index) => {
-    deleteComment(videoId, index);
+  const handleDeleteComment = (index, commentId) => {
+    deleteComment(videoId, commentId);
   };
 
-  const handleEditComment = (index) => {
+  const handleEditComment = (index, commentId) => {
     setEditingIndex(index);
     setEditedComment(comments[videoId][index].text);
   };
 
-  const handleSaveEdit = (index) => {
-    editComment(videoId, index, editedComment);
+  const handleSaveEdit = (index, commentId) => {
+    editComment(videoId, commentId, editedComment);
     setEditingIndex(null);
     setEditedComment('');
   };
@@ -59,14 +59,14 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
         <button className="comment-button" onClick={handleAddComment}>Comment</button>
       </div>
       <div className="comments-list">
-        {(comments[videoId] || []).map((comment, index) => (
+        {(comments[videoId] || []).map((comment, index) => ( 
           <div className="comment" key={index}>
             <div className="comment-header">
               <img src={comment.profilePicture} alt="Profile" className="profile-picture" />
               <div className="comment-user">{comment.email}</div>
               <div className="comment-actions">
-                <button onClick={() => handleEditComment(index)}><i className="bi bi-pencil icon"></i> Edit</button>
-                <button onClick={() => handleDeleteComment(index)}><i className="bi bi-trash icon"></i> Delete</button>
+              <button onClick={() => handleEditComment(index, comment._id)}><i className="bi bi-pencil icon"></i> Edit</button>
+              <button onClick={() => handleDeleteComment(index,  comment._id)}><i className="bi bi-trash icon"></i> Delete</button>
               </div>
             </div>
             <div className="comment-body">
@@ -77,7 +77,7 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
                     value={editedComment}
                     onChange={(e) => setEditedComment(e.target.value)}
                   />
-                  <button className="save-button" onClick={() => handleSaveEdit(index)}>Save</button>
+                  <button className="save-button" onClick={() => handleSaveEdit(index, comment._id)}>Save</button>
                   <button className="cancel-button" onClick={handleCancelEdit}>Cancel</button>
                 </div>
               ) : (
