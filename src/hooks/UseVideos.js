@@ -51,18 +51,21 @@ const useVideos = (initialVideos) => {
     };
     
     const deleteVideo = async (id, userEmail) => {
+        console.log('Deleting video:', id);
         try {
+            const token = getToken(); 
             await axios.delete(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-
+    
             setVideoList(prevList => prevList.filter(video => (video.id || video._id) !== id));
         } catch (error) {
             console.error('Error deleting video:', error);
         }
     };
+    
 
     const editVideo = async (id, newTitle, newDescription, newUrl, newPic, userEmail) => {
         try {
@@ -84,27 +87,60 @@ const useVideos = (initialVideos) => {
         }
     };
 
-    const addComment = (videoId, comment) => {
-        setComments(prevComments => ({
-            ...prevComments,
-            [videoId]: [...(prevComments[videoId] || []), comment],
-        }));
+    const addComment = async (comment) => {
+        const videoId = comment.videoId;
+        try {
+            const token = getToken();
+            const res = await axios.post(`http://127.0.0.1:8080/api/videos/${comment.videoId}/comments`, comment.email, comment.text, comment.profilePicture, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setComments(prevComments => ({
+                ...prevComments,
+                [videoId]: [...(prevComments[videoId] || []), res.data],
+            }));
+        } catch (error) {
+            console.error('Error adding comment:', error);
+        }
     };
 
-    const deleteComment = (videoId, index) => {
-        setComments(prevComments => ({
-            ...prevComments,
-            [videoId]: prevComments[videoId].filter((_, i) => i !== index),
-        }));
+    const deleteComment = async (videoId, commentId) => {
+        try {
+            const token = getToken();
+            await axios.delete(`http://127.0.0.1:8080/api/videos/${videoId}/comments/${commentId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setComments(prevComments => ({
+                ...prevComments,
+                [videoId]: prevComments[videoId].filter(comment => comment._id !== commentId),
+            }));
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
     };
 
-    const editComment = (videoId, index, newText) => {
-        setComments(prevComments => ({
-            ...prevComments,
-            [videoId]: prevComments[videoId].map((comment, i) =>
-                i === index ? { ...comment, text: newText } : comment
-            ),
-        }));
+    const editComment = async (videoId, commentId, newText) => {
+        try {
+            const token = getToken();
+            const res = await axios.patch(`http://127.0.0.1:8080/api/videos/comments/${commentId}`, { text: newText }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setComments(prevComments => ({
+                ...prevComments,
+                [videoId]: prevComments[videoId].map(comment =>
+                    comment._id === commentId ? { ...comment, text: res.data.text } : comment
+                ),
+            }));
+        } catch (error) {
+            console.error('Error editing comment:', error);
+        }
     };
 
     const handleLike = (videoId) => {

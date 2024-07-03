@@ -16,11 +16,12 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
 
     if (newComment.trim() === '') return;
 
-    addComment(videoId, { 
-      user: user.name, 
+    addComment({ 
+      videoId: videoId,
+      email: user.email, 
       text: newComment, 
       profilePicture: user.profileImage, 
-      firstName: user.firstName 
+      createdAt: new Date().toISOString()
     });
     setNewComment('');
   };
@@ -62,7 +63,7 @@ const CommentsSection = ({ videoId, comments, addComment, deleteComment, editCom
           <div className="comment" key={index}>
             <div className="comment-header">
               <img src={comment.profilePicture} alt="Profile" className="profile-picture" />
-              <div className="comment-user">{comment.firstName}</div>
+              <div className="comment-user">{comment.email}</div>
               <div className="comment-actions">
                 <button onClick={() => handleEditComment(index)}><i className="bi bi-pencil icon"></i> Edit</button>
                 <button onClick={() => handleDeleteComment(index)}><i className="bi bi-trash icon"></i> Delete</button>

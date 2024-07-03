@@ -86,17 +86,36 @@ const VideoMain = ({
     navigate('/');
   };
 
-  const handleEditVideo = () => {
+  const encodeFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+  
+  const handleEditVideo = async () => {
     if (editMode) {
-      const newUrl = editedFile ? URL.createObjectURL(editedFile) : video.url;
-      editVideo((video._id || video.id) , editedTitle, editedDescription, newUrl);
+      try {
+        let videoBase64 = video.url;
+        if (editedFile) {
+          videoBase64 = await encodeFileToBase64(editedFile);
+        }
+        editVideo((video._id || video.id), editedTitle, editedDescription, videoBase64);
+      } catch (error) {
+        console.error('Error editing video:', error);
+      }
     }
     setEditMode(!editMode);
   };
-
+  
   const handleFileChange = (e) => {
-    setEditedFile(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      setEditedFile(e.target.files[0]);
+    }
   };
+  
 
   const interaction = userInteractions[video._id || video.id] || {};
   const isLiked = interaction.like || false;
@@ -162,7 +181,7 @@ const VideoMain = ({
                 <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
               </button>
               <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
-              {user && (
+              {(user && user.email === video.email) &&(
                 <>
                   <button className="btn btn-warning" onClick={handleEditVideo}>
                     {editMode ? 'Save' : 'Edit'}
