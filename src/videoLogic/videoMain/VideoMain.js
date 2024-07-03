@@ -30,13 +30,13 @@ const VideoMain = ({
   const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
-    const foundVideo = videos.find(v => v.id === parseInt(id));
+    const foundVideo = videos.find(v => (v._id || v.id) === id);
     if (foundVideo) {
       setVideo(foundVideo);
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
       if (!hasUpdatedViews.current) {
-        updateVideoViews(foundVideo.id);
+        updateVideoViews(foundVideo._id || foundVideo.id);
         hasUpdatedViews.current = true;
       }
     } else {
@@ -48,7 +48,7 @@ const VideoMain = ({
     return <div className="video-not-found">Video not found</div>;
   }
 
-  const suggestedVideos = videos.filter(v => v.id !== parseInt(id)).slice(0, 10);
+  const suggestedVideos = videos.filter(v => (v._id || v.id) !== id).slice(0, 10);
 
   const handleShareClick = () => {
     setShowModal(true);
@@ -65,7 +65,7 @@ const VideoMain = ({
 
   const handleLikeClick = () => {
     if (user !== null && user.signedIn) {
-      handleLike(video.id);
+      handleLike(video._id || video.id);
     } else {
       navigate("/signin");
     }
@@ -73,21 +73,21 @@ const VideoMain = ({
 
   const handleDislikeClick = () => {
     if (user !== null && user.signedIn) {
-      handleDislike(video.id);
+      handleDislike(video._id || video.id);
     } else {
       navigate("/signin");
     }
   };
 
   const handleDeleteVideo = () => {
-    deleteVideo(video.id);
+    deleteVideo(video._id || video.id);
     navigate('/');
   };
 
   const handleEditVideo = () => {
     if (editMode) {
       const newUrl = editedFile ? URL.createObjectURL(editedFile) : video.url;
-      editVideo(video.id, editedTitle, editedDescription, newUrl);
+      editVideo((video._id || video.id) , editedTitle, editedDescription, newUrl);
     }
     setEditMode(!editMode);
   };
@@ -96,12 +96,12 @@ const VideoMain = ({
     setEditedFile(e.target.files[0]);
   };
 
-  const interaction = userInteractions[video.id] || {};
+  const interaction = userInteractions[video._id || video.id] || {};
   const isLiked = interaction.like || false;
   const isDisliked = interaction.dislike || false;
 
-  const likesCount = likesDislikes[video.id]?.likes || 0;
-  const dislikesCount = likesDislikes[video.id]?.dislikes || 0;
+  const likesCount = likesDislikes[video._id || video.id]?.likes || 0;
+  const dislikesCount = likesDislikes[video._id || video.id]?.dislikes || 0;
 
   const handleVideoClick = (clickedVideoId) => {
     updateVideoViews(clickedVideoId);
@@ -196,7 +196,7 @@ const VideoMain = ({
           </div>
         </div>
         <CommentsSection
-          videoId={video.id}
+          videoId={video._id || video.id}
           comments={comments}
           addComment={addComment}
           deleteComment={deleteComment}
@@ -208,11 +208,11 @@ const VideoMain = ({
         <h3>Up Next</h3>
         <ul className="suggested-videos-list">
           {suggestedVideos.map(suggestedVideo => (
-            <li key={suggestedVideo.id} className="suggested-video-item">
+            <li key={suggestedVideo._id || suggestedVideo.id} className="suggested-video-item">
               <Link
-                to={`/video/${suggestedVideo.id}`}
+                to={`/video/${suggestedVideo._id || suggestedVideo.id}`}
                 className="suggested-video-link"
-                onClick={() => handleVideoClick(suggestedVideo.id)}
+                onClick={() => handleVideoClick(suggestedVideo._id || suggestedVideo.id)}
               >
                 <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
                 <div className="suggested-video-info">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getToken } from '../utils/tokenService'; // Import your token service
 
@@ -8,23 +8,48 @@ const useVideos = (initialVideos) => {
     const [userInteractions, setUserInteractions] = useState({});
     const [likesDislikes, setLikesDislikes] = useState({});
 
+    const fetchVideosFromDB = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/api/videos');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            if (response.status === 204) {
+                console.log('No content in response');
+                return; // Exit if there's no content
+            }
+    
+            const data = await response.json();
+            console.log('Data:', data);
+            setVideoList(prevList => [...prevList, ...data]); // Initialize with the fetched data
+        } catch (error) {
+            console.error('Error fetching videos from DB:', error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchVideosFromDB();
+    }, []);
+    
+
     const token = getToken(); 
 
     const addVideo = async (newVideo, userEmail) => {
+        const token = getToken(); 
         try {
             const res = await axios.post(`http://127.0.0.1:8080/api/users/${userEmail}/videos`, newVideo, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}` 
                 }
             });
-
             setVideoList(prevList => [...prevList, res.data]);
         } catch (error) {
             console.error('Error adding video:', error);
         }
     };
-
+    
     const deleteVideo = async (id, userEmail) => {
         try {
             await axios.delete(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, {
@@ -33,15 +58,15 @@ const useVideos = (initialVideos) => {
                 }
             });
 
-            setVideoList(prevList => prevList.filter(video => video.id !== id));
+            setVideoList(prevList => prevList.filter(video => (video.id || video._id) !== id));
         } catch (error) {
             console.error('Error deleting video:', error);
         }
     };
 
-    const editVideo = async (id, newTitle, newDescription, newUrl, userEmail) => {
+    const editVideo = async (id, newTitle, newDescription, newUrl, newPic, userEmail) => {
         try {
-            const updatedVideo = { title: newTitle, description: newDescription, url: newUrl };
+            const updatedVideo = { title: newTitle, description: newDescription, url: newUrl , pic:newPic};
             const res = await axios.patch(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, updatedVideo, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +76,7 @@ const useVideos = (initialVideos) => {
 
             setVideoList(prevList =>
                 prevList.map(video =>
-                    video.id === id ? { ...video, ...res.data } : video
+                    (video.id || video._id) === id ? { ...video, ...res.data } : video
                 )
             );
         } catch (error) {
@@ -121,7 +146,7 @@ const useVideos = (initialVideos) => {
     const updateVideoViews = (id) => {
         setVideoList(prevList =>
             prevList.map(video =>
-                video.id === id ? { ...video, views: video.views + 1 } : video
+                (video.id || video._id) === id ? { ...video, views: video.views + 1 } : video
             )
         );
     };
@@ -129,6 +154,7 @@ const useVideos = (initialVideos) => {
     return {
         videoList,
         addVideo,
+        setVideoList,
         deleteVideo,
         editVideo,
         comments,

@@ -12,7 +12,7 @@ const TopVideos = ({ videos, getUserByEmail }) => {
       <h2>Top 20 Most Viewed Videos</h2>
       <div className="video-list">
         {topVideos.map(video => (
-          <VideoItem key={video.id} video={video} getUserByEmail={getUserByEmail} isTopVideo={true} />
+          <VideoItem key={(video.id || video._id)} video={video} getUserByEmail={getUserByEmail} isTopVideo={true} />
         ))}
       </div>
     </div>

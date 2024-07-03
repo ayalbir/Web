@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import videosData from '../videoLogic/videoItem/Videos.json';
+// Removed the import of videosData as we are fetching them from the database
 import demoUsers from '../mock/DemoUsers.const';
 import useUser from '../hooks/UseUser';
 import useVideos from '../hooks/UseVideos';
@@ -12,6 +12,7 @@ function App() {
   const {
     videoList,
     addVideo,
+    setVideoList,
     deleteVideo,
     editVideo,
     comments,
@@ -23,11 +24,12 @@ function App() {
     handleDislike,
     likesDislikes,
     updateVideoViews
-  } = useVideos(videosData);
+  } = useVideos([]);
 
   const [expanded, setExpanded] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   const toggleDarkMode = () => {
     setIsDarkMode(prevMode => !prevMode);
@@ -36,12 +38,28 @@ function App() {
 
   const handleSignOut = () => {
     setUser(null);
+    setToken(null); 
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('user'); 
   };
 
   const handleRegisterUser = (userData) => {
     registerUser(userData);
     setUser({ ...userData, signedIn: true });
   };
+
+  useEffect(() => {
+    // Retrieve token and user from local storage
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+  
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
+
 
   return (
     <Router>
@@ -71,6 +89,8 @@ function App() {
           setExpanded={setExpanded}
           handleSignOut={handleSignOut}
           addVideo={addVideo}
+          token={token} 
+          setToken={setToken} 
         />
       </div>
     </Router>

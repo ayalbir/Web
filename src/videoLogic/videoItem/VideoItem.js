@@ -19,12 +19,12 @@ function VideoItem({ video, getUserByEmail, isTopVideo }) {
   return (
     <div className={`video-item ${isTopVideo ? 'top-video-item' : 'regular-video-item'}`}>
       <div className={`card video-card ${isTopVideo ? 'top-video-card' : 'regular-video-card'}`}>
-        <Link to={`/video/${video.id}`}>
+        <Link to={`/video/${video._id}`}>
           <img src={video.pic} className="card-img-top" alt={video.title} />
         </Link>
         <div className="card-body">
           <h5 className="card-title">
-            <Link to={`/video/${video.id}`} className="video-title-link">
+            <Link to={`/video/${video._id}`} className="video-title-link">
               {video.title}
             </Link>
           </h5>

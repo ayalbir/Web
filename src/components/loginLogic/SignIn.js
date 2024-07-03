@@ -38,17 +38,20 @@ const SignIn = ({ setUser }) => {
         const res = await fetch('http://127.0.0.1:8080/api/tokens', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formData),
         });
   
         if (res.ok) {
           const data = await res.json();
-          console.log('Data:', data);
-          setToken(data.token); 
-          setUser({ ...data.user, signedIn: true }); 
-          console.log('User signed in:', data.user);
+          setToken(data.token);
+          setUser(data.user);
+  
+          // Store token and user in local storage
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+  
           navigate('/');
         } else {
           const error = await res.text();
