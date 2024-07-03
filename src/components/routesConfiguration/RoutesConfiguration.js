@@ -117,7 +117,7 @@ const RoutesConfiguration = ({
             expanded={expanded}
             setExpanded={setExpanded}
           >
-            <CreateVideo   addVideo={addVideo} user={user}/>
+            <CreateVideo addVideo={addVideo} user={user}/>
           </MainLayout>
         }
       />

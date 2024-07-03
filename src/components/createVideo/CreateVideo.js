@@ -1,4 +1,3 @@
-// src/createVideo/CreateVideo.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateVideo.css";
@@ -8,8 +7,6 @@ const CreateVideo = ({ addVideo, user }) => {
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
 
-
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,36 +15,59 @@ const CreateVideo = ({ addVideo, user }) => {
     }
   }, [navigate, user]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleFileRead = (file, callback) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
     if (!image || !video) {
       alert("Please upload both an image and a video.");
       return;
     }
-
-    const videoUrl = URL.createObjectURL(video); // Convert video file to URL
-
-    const newVideo = {
-      title,
-      pic: URL.createObjectURL(image),
-      url: videoUrl,
-      email: user ? user.email : "Anonymous", // Use email of the user
-      views: 0,
-      createdAt : new Date().toISOString(),
-      description: "",
-      uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
-      profileImage: user ? user.profileImage : null, // Add the user's profile image
-      likes : 0,
-      likedBy : [],
-      dislikes : 0,
-      dislikedBy : [],
-      comments : [],
+  
+    const encodeFileToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
     };
-    
-    addVideo(newVideo); 
-    navigate("/");
+  
+    try {
+      const imageBase64 = await encodeFileToBase64(image);
+      const videoBase64 = await encodeFileToBase64(video);
+  
+      const newVideo = {
+        title,
+        pic: imageBase64,
+        url: videoBase64,
+        email: user ? user.email : "Anonymous",
+        views: 0,
+        createdAt: new Date().toISOString(),
+        description: "",
+        uploaderName: user ? user.firstName : "Anonymous",
+        profileImage: user ? user.profileImage : null,
+        likes: 0,
+        likedBy: [],
+        dislikes: 0,
+        dislikedBy: [],
+        comments: [],
+      };
+  
+      addVideo(newVideo, user.email);
+      navigate("/");
+    } catch (error) {
+      console.error("Error encoding files:", error);
+    }
   };
+  
 
   return (
     <form className="create-video-form" onSubmit={handleSubmit}>
