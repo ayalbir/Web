@@ -20,7 +20,7 @@ const UserPage = ({ videos, getUserByEmail }) => {
 
   return (
     <div className="user-page">
-      <h2>Videos uploaded by {getUserByEmail(name).firstName}</h2>
+      <h2>Videos uploaded by {name}</h2>
       <VideoListResults videos={userVideos} getUserByEmail={getUserByEmail} /> {/* Pass getUserByEmail to VideoListResults */}
     </div>
   );
