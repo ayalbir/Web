@@ -8,7 +8,7 @@ function SuggestedVideos({ videos, getUserByEmail }) {
   const handleEmailClick = (emailEmail) => {
     const user = getUserByEmail(emailEmail);
     if (user) {
-      navigate(`/user/${user.firstName}`);
+      navigate(`/user/${user.email}`);
     }
   };
 

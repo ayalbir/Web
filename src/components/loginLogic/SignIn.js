@@ -46,7 +46,7 @@ const SignIn = ({ setUser }) => {
         if (res.ok) {
           const data = await res.json();
           setToken(data.token);
-          setUser(data.user);
+          setUser({ ...data.user, signedIn: true }); 
   
           // Store token and user in local storage
           localStorage.setItem('token', data.token);

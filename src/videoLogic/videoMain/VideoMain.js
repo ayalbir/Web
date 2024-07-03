@@ -30,6 +30,7 @@ const VideoMain = ({
   const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
+   
     const foundVideo = videos.find(v => (v._id || v.id) === id);
     if (foundVideo) {
       setVideo(foundVideo);
@@ -44,6 +45,7 @@ const VideoMain = ({
     }
   }, [id, videos, updateVideoViews]);
 
+ 
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
   }
@@ -183,9 +185,9 @@ const VideoMain = ({
                 <>
                   <div className="email-details">
                     {getUserByEmail && video.email && (
-                      <Link to={`/user/${getUserByEmail(video.email)?.firstName}`} className="email-link">
+                      <Link to={`/user/${(video.email)}`} className="email-link">
                         <img src={getUserByEmail(video.email)?.profileImage} alt={getUserByEmail(video.email)?.firstName} className="email-profile-image" />
-                        {getUserByEmail(video.email)?.firstName || video.uploaderName || 'Unknown'}
+                        {getUserByEmail(video.email)?.firstName || 'Unknown'}
                       </Link>
                     )}
                   </div>
@@ -219,7 +221,7 @@ const VideoMain = ({
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
                   <div className="email-details">
                     {getUserByEmail && suggestedVideo.email && (
-                      <Link to={`/user/${getUserByEmail(suggestedVideo.email)?.firstName}`} className="email-link">
+                      <Link to={`/user/${suggestedVideo.email}`} className="email-link">
                         <img src={getUserByEmail(suggestedVideo.email)?.profileImage} alt={getUserByEmail(suggestedVideo.email)?.firstName} className="email-profile-image" />
                         {getUserByEmail(suggestedVideo.email)?.firstName || suggestedVideo.email || 'Unknown'}
                       </Link>

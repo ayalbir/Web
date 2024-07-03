@@ -1,9 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import axios from 'axios';
 import { getToken } from '../utils/tokenService';
 
 const useUser = (initialUsers = []) => {
     const [registeredUsers, setRegisteredUsers] = useState(initialUsers);
+
+    useEffect(() => {
+        const fetchUsersFromDB = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/users');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                if (response.status === 204) {
+                    console.log('No content in response');
+                    return;
+                }
+                const data = await response.json();
+                console.log('Fetched users:', data);
+                setRegisteredUsers(data);
+            } catch (error) {
+                console.error('Error fetching users from DB:', error);
+            }
+        };
+        fetchUsersFromDB();
+    }, []);
 
     const getUserByEmail = (email) => {
         return registeredUsers.find(user => user.email === email);
@@ -24,7 +45,7 @@ const useUser = (initialUsers = []) => {
 
 const updateUser = async (email, updatedUserData) => {
     try {
-        const token = getToken(); // Retrieve the token
+        const token = getToken();
         const response = await axios.patch(`http://127.0.0.1:8080/api/users/${email}`, updatedUserData, {
             headers: {
                 'Authorization': `Bearer ${token}`,

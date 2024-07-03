@@ -37,10 +37,10 @@ function VideoItem({ video, getUserByEmail, isTopVideo }) {
               />
             )}
             <Link
-              to={`/user/${userDetails ? userDetails.firstName : video.email}`}
+              to={`/user/${userDetails ? userDetails.email : video.email}`}
               className="email-link"
             >
-              {userDetails ? userDetails.firstName : video.email}
+              {userDetails ? userDetails.firstName : video.firstName}
             </Link>
           </div>
           <p className="card-text">

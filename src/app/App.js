@@ -8,7 +8,7 @@ import useVideos from '../hooks/UseVideos';
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
 
 function App() {
-  const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser(demoUsers || []);
+  const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser([]);
   const {
     videoList,
     addVideo,
@@ -52,6 +52,7 @@ function App() {
     // Retrieve token and user from local storage
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
+    
   
     if (storedToken && storedUser) {
       setToken(storedToken);
