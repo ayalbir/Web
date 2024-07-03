@@ -9,7 +9,7 @@ const VideoListResults = ({ videos, getUserByEmail }) => {
   return (
     <div className="row">
       {videos.map((video, index) => (
-        <VideoItem key={video._id || (video.id || video._id) || index} video={video} getUserByEmail={getUserByEmail} />
+        <VideoItem key={(video.id || video._id) || index} video={video} getUserByEmail={getUserByEmail} />
       ))}
     </div>
   );
