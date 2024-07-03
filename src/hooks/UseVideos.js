@@ -14,15 +14,26 @@ const useVideos = (initialVideos) => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-    
+
             if (response.status === 204) {
                 console.log('No content in response');
                 return; // Exit if there's no content
             }
-    
+
             const data = await response.json();
             console.log('Data:', data);
-            setVideoList(prevList => [...prevList, ...data]); // Initialize with the fetched data
+
+            // Initialize likesDislikes with the fetched data
+            const likesDislikesData = {};
+            data.forEach(video => {
+                likesDislikesData[video._id || video.id] = {
+                    likes: video.likes,
+                    dislikes: video.dislikes
+                };
+            });
+
+            setVideoList(data); // Initialize with the fetched data
+            setLikesDislikes(likesDislikesData); // Initialize likesDislikes with fetched data
         } catch (error) {
             console.error('Error fetching videos from DB:', error);
         }
@@ -66,7 +77,6 @@ const useVideos = (initialVideos) => {
         }
     };
     
-
     const editVideo = async (id, newTitle, newDescription, newUrl, newPic, userEmail) => {
         try {
             const updatedVideo = { title: newTitle, description: newDescription, url: newUrl , pic:newPic};
@@ -147,49 +157,105 @@ const useVideos = (initialVideos) => {
         }
     };
 
-    const handleLike = (videoId) => {
-        setUserInteractions(prev => {
+    const handleLike = async (videoId, email) => {
+        try {
+          const token = getToken();
+          const response = await fetch(`http://127.0.0.1:8080/api/users/${email}/videos/${videoId}/likes`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+      
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+      
+          const updatedVideo = await response.json();
+      
+          setUserInteractions(prev => {
             const newState = { ...prev[videoId], like: !prev[videoId]?.like };
             if (newState.like) {
-                newState.dislike = false;
+              newState.dislike = false;
             }
             return { ...prev, [videoId]: newState };
-        });
-
-        setLikesDislikes(prev => ({
+          });
+      
+          setLikesDislikes(prev => ({
             ...prev,
             [videoId]: {
-                likes: (prev[videoId]?.likes || 0) + (userInteractions[videoId]?.like ? -1 : 1),
-                dislikes: userInteractions[videoId]?.dislike ? (prev[videoId]?.dislikes || 0) - 1 : (prev[videoId]?.dislikes || 0)
+              likes: updatedVideo.likes,
+              dislikes: updatedVideo.dislikes
             }
-        }));
-    };
-
-    const handleDislike = (videoId) => {
-        setUserInteractions(prev => {
+          }));
+        } catch (error) {
+          console.error('Error liking video:', error);
+        }
+      };
+      
+      const handleDislike = async (videoId, email) => {
+        try {
+          const token = getToken();
+          const response = await fetch(`http://127.0.0.1:8080/api/users/${email}/videos/${videoId}/dislikes`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+      
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+      
+          const updatedVideo = await response.json();
+      
+          setUserInteractions(prev => {
             const newState = { ...prev[videoId], dislike: !prev[videoId]?.dislike };
             if (newState.dislike) {
-                newState.like = false;
+              newState.like = false;
             }
             return { ...prev, [videoId]: newState };
-        });
-
-        setLikesDislikes(prev => ({
+          });
+      
+          setLikesDislikes(prev => ({
             ...prev,
             [videoId]: {
-                likes: userInteractions[videoId]?.like ? (prev[videoId]?.likes || 0) - 1 : (prev[videoId]?.likes || 0),
-                dislikes: (prev[videoId]?.dislikes || 0) + (userInteractions[videoId]?.dislike ? -1 : 1)
+              likes: updatedVideo.likes,
+              dislikes: updatedVideo.dislikes
             }
-        }));
-    };
+          }));
+        } catch (error) {
+          console.error('Error disliking video:', error);
+        }
+      };
+      
 
-    const updateVideoViews = (id) => {
-        setVideoList(prevList =>
-            prevList.map(video =>
-                (video.id || video._id) === id ? { ...video, views: video.views + 1 } : video
-            )
-        );
+    const updateVideoViews = async (id) => {
+        try {
+            setVideoList(prevList =>
+                prevList.map(video =>
+                    (video.id || video._id) === id ? { ...video, views: video.views + 1 } : video
+                )
+            );
+                const response = await fetch(`http://127.0.0.1:8080/api/videos/${id}/views`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ views: 1 }) 
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error updating video views:', error);
+        }
     };
+    
+    
 
     return {
         videoList,

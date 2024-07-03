@@ -67,19 +67,20 @@ const VideoMain = ({
 
   const handleLikeClick = () => {
     if (user !== null && user.signedIn) {
-      handleLike(video._id || video.id);
+      handleLike(video._id || video.id, user.email);
     } else {
       navigate("/signin");
     }
   };
-
+  
   const handleDislikeClick = () => {
     if (user !== null && user.signedIn) {
-      handleDislike(video._id || video.id);
+      handleDislike(video._id || video.id, user.email);
     } else {
       navigate("/signin");
     }
   };
+  
 
   const handleDeleteVideo = () => {
     deleteVideo(video._id || video.id);
