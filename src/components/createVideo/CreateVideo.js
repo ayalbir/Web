@@ -6,7 +6,10 @@ import "./CreateVideo.css";
 const CreateVideo = ({ addVideo, user }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null); 
+  const [video, setVideo] = useState(null);
+
+
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,16 +29,20 @@ const CreateVideo = ({ addVideo, user }) => {
     const videoUrl = URL.createObjectURL(video); // Convert video file to URL
 
     const newVideo = {
-      id: Date.now(),
       title,
       pic: URL.createObjectURL(image),
       url: videoUrl,
-      author: user ? user.email : "Anonymous", // Use email of the user
+      email: user ? user.email : "Anonymous", // Use email of the user
       views: 0,
-      date: new Date().toLocaleDateString(),
+      createdAt : new Date().toISOString(),
       description: "",
       uploaderName: user ? user.firstName : "Anonymous", // Store the uploader's first name
-      profileImage: user ? user.profileImage : null // Add the user's profile image
+      profileImage: user ? user.profileImage : null, // Add the user's profile image
+      likes : 0,
+      likedBy : [],
+      dislikes : 0,
+      dislikedBy : [],
+      comments : [],
     };
     
     addVideo(newVideo); 

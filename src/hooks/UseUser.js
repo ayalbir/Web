@@ -22,8 +22,6 @@ const useUser = (initialUsers = []) => {
         }));
     };
 
-
-
 const updateUser = async (email, updatedUserData) => {
     try {
         const token = getToken(); // Retrieve the token

@@ -43,6 +43,6 @@
   "description": "https://github.com/ayalbir/Web\r In this project, we worked as a team of three people, each responsible for a different area. One team member was in charge of the movie list screen, the movie viewing screen, and the new movie addition screen for the web version. Another team member was responsible for the same screens in the Android version. The third team member was responsible for login and registration on both platforms.",
   "main": "index.js",
   "keywords": [],
-  "author": "",
+  "email": "",
   "license": "ISC"
 }

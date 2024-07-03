@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { getToken } from '../utils/tokenService'; // Import your token service
 
 const useVideos = (initialVideos) => {
     const [videoList, setVideoList] = useState(initialVideos);
@@ -6,20 +8,55 @@ const useVideos = (initialVideos) => {
     const [userInteractions, setUserInteractions] = useState({});
     const [likesDislikes, setLikesDislikes] = useState({});
 
-    const addVideo = (newVideo) => {
-        setVideoList(prevList => [...prevList, newVideo]);
+    const token = getToken(); 
+
+    const addVideo = async (newVideo, userEmail) => {
+        try {
+            const res = await axios.post(`http://127.0.0.1:8080/api/users/${userEmail}/videos`, newVideo, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            setVideoList(prevList => [...prevList, res.data]);
+        } catch (error) {
+            console.error('Error adding video:', error);
+        }
     };
 
-    const deleteVideo = (id) => {
-        setVideoList(prevList => prevList.filter(video => video.id !== id));
+    const deleteVideo = async (id, userEmail) => {
+        try {
+            await axios.delete(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            setVideoList(prevList => prevList.filter(video => video.id !== id));
+        } catch (error) {
+            console.error('Error deleting video:', error);
+        }
     };
 
-    const editVideo = (id, newTitle, newDescription, newUrl) => {
-        setVideoList(prevList =>
-            prevList.map(video =>
-                video.id === id ? { ...video, title: newTitle, description: newDescription, url: newUrl } : video
-            )
-        );
+    const editVideo = async (id, newTitle, newDescription, newUrl, userEmail) => {
+        try {
+            const updatedVideo = { title: newTitle, description: newDescription, url: newUrl };
+            const res = await axios.patch(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, updatedVideo, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            setVideoList(prevList =>
+                prevList.map(video =>
+                    video.id === id ? { ...video, ...res.data } : video
+                )
+            );
+        } catch (error) {
+            console.error('Error editing video:', error);
+        }
     };
 
     const addComment = (videoId, comment) => {

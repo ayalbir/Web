@@ -7,7 +7,7 @@ function VideoItem({ video, getUserByEmail, isTopVideo }) {
 
   useEffect(() => {
     if (video && getUserByEmail) {
-      const user = getUserByEmail(video.author);
+      const user = getUserByEmail(video.email);
       setUserDetails(user);
     }
   }, [video, getUserByEmail]);
@@ -28,19 +28,19 @@ function VideoItem({ video, getUserByEmail, isTopVideo }) {
               {video.title}
             </Link>
           </h5>
-          <div className="author-details">
+          <div className="email-details">
             {userDetails && userDetails.profileImage && (
               <img
                 src={userDetails.profileImage}
-                alt={video.author}
-                className="author-profile-image"
+                alt={video.email}
+                className="email-profile-image"
               />
             )}
             <Link
-              to={`/user/${userDetails ? userDetails.firstName : video.author}`}
-              className="author-link"
+              to={`/user/${userDetails ? userDetails.firstName : video.email}`}
+              className="email-link"
             >
-              {userDetails ? userDetails.firstName : video.author}
+              {userDetails ? userDetails.firstName : video.email}
             </Link>
           </div>
           <p className="card-text">

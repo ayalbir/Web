@@ -10,7 +10,7 @@ const UserPage = ({ videos, getUserByEmail }) => {
     if (name && videos) {
       // Filter videos based on the uploader's name using getUserByEmail
       const filteredVideos = videos.filter(video => {
-        const uploader = getUserByEmail(video.author); // `author` is now email
+        const uploader = getUserByEmail(video.email); // `email` is now email
         return uploader && uploader.firstName === name;
       });
       setUserVideos(filteredVideos);

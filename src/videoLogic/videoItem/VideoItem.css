@@ -33,7 +33,7 @@
   padding: 10px;
 }
 
-.author-details {
+.email-details {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
@@ -59,14 +59,14 @@
   color: inherit;
 }
 
-.author-profile-image {
+.email-profile-image {
   width: 24px; /* Adjust width to your preference */
   height: 24px; /* Adjust height to your preference */
   border-radius: 50%;
   margin-right: 10px; /* Increase or decrease margin as needed */
 }
 
-.author-link {
+.email-link {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
@@ -116,14 +116,14 @@
   margin-bottom: 5px;
 }
 
-.top-videos .video-card .author-details {
+.top-videos .video-card .email-details {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
 }
 
-.top-videos .video-card .author-profile-image {
+.top-videos .video-card .email-profile-image {
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -143,7 +143,7 @@
   font-size: 16px;
 }
 
-.top-videos .video-card.top-video-card .author-details,
+.top-videos .video-card.top-video-card .email-details,
 .top-videos .video-card.top-video-card .card-text {
   font-size: 14px;
 }
@@ -159,9 +159,9 @@
   color: #ddd; /* Lighter text color for titles and descriptions */
 }
 
-/* Adjustments for author details in dark mode */
-.dark-mode .author-details, .dark-mode .author-link {
-  color: #bbb; /* Slightly lighter text color for author details */
+/* Adjustments for email details in dark mode */
+.dark-mode .email-details, .dark-mode .email-link {
+  color: #bbb; /* Slightly lighter text color for email details */
 }
 
 /* Dark mode adjustments for top videos */

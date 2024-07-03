@@ -181,11 +181,11 @@ const VideoMain = ({
                 </>
               ) : (
                 <>
-                  <div className="author-details">
-                    {getUserByEmail && video.author && (
-                      <Link to={`/user/${getUserByEmail(video.author)?.firstName}`} className="author-link">
-                        <img src={getUserByEmail(video.author)?.profileImage} alt={getUserByEmail(video.author)?.firstName} className="author-profile-image" />
-                        {getUserByEmail(video.author)?.firstName || video.uploaderName || 'Unknown'}
+                  <div className="email-details">
+                    {getUserByEmail && video.email && (
+                      <Link to={`/user/${getUserByEmail(video.email)?.firstName}`} className="email-link">
+                        <img src={getUserByEmail(video.email)?.profileImage} alt={getUserByEmail(video.email)?.firstName} className="email-profile-image" />
+                        {getUserByEmail(video.email)?.firstName || video.uploaderName || 'Unknown'}
                       </Link>
                     )}
                   </div>
@@ -217,11 +217,11 @@ const VideoMain = ({
                 <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
                 <div className="suggested-video-info">
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
-                  <div className="author-details">
-                    {getUserByEmail && suggestedVideo.author && (
-                      <Link to={`/user/${getUserByEmail(suggestedVideo.author)?.firstName}`} className="author-link">
-                        <img src={getUserByEmail(suggestedVideo.author)?.profileImage} alt={getUserByEmail(suggestedVideo.author)?.firstName} className="author-profile-image" />
-                        {getUserByEmail(suggestedVideo.author)?.firstName || suggestedVideo.author || 'Unknown'}
+                  <div className="email-details">
+                    {getUserByEmail && suggestedVideo.email && (
+                      <Link to={`/user/${getUserByEmail(suggestedVideo.email)?.firstName}`} className="email-link">
+                        <img src={getUserByEmail(suggestedVideo.email)?.profileImage} alt={getUserByEmail(suggestedVideo.email)?.firstName} className="email-profile-image" />
+                        {getUserByEmail(suggestedVideo.email)?.firstName || suggestedVideo.email || 'Unknown'}
                       </Link>
                     )}
                   </div>

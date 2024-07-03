@@ -155,7 +155,7 @@
   margin: 0;
 }
 
-.suggested-video-author,
+.suggested-video-email,
 .suggested-video-views {
   font-size: 14px;
   margin: 0;
@@ -170,6 +170,6 @@
   border-radius: 4px;
 }
 
-.author-details :hover {
+.email-details :hover {
   color: #61dafb;
 }

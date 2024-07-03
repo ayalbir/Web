@@ -5,8 +5,8 @@ import './SuggestedVideos.css';
 function SuggestedVideos({ videos, getUserByEmail }) {
   const navigate = useNavigate();
 
-  const handleAuthorClick = (authorEmail) => {
-    const user = getUserByEmail(authorEmail);
+  const handleAuthorClick = (emailEmail) => {
+    const user = getUserByEmail(emailEmail);
     if (user) {
       navigate(`/user/${user.firstName}`);
     }
@@ -22,11 +22,11 @@ function SuggestedVideos({ videos, getUserByEmail }) {
               <img src={video.pic} alt={video.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
               <div className="suggested-video-info">
                 <h4 className="suggested-video-title">{video.title}</h4>
-                <div className="author-details">
-                  {getUserByEmail && video.author && (
-                    <span className="author-link" onClick={() => handleAuthorClick(video.author)} style={{ cursor: 'pointer' }}>
-                      <img src={getUserByEmail(video.author)?.profileImage} alt={video.author} className="author-profile-image" />
-                      {getUserByEmail(video.author)?.firstName || video.author || 'Unknown'}
+                <div className="email-details">
+                  {getUserByEmail && video.email && (
+                    <span className="email-link" onClick={() => handleAuthorClick(video.email)} style={{ cursor: 'pointer' }}>
+                      <img src={getUserByEmail(video.email)?.profileImage} alt={video.email} className="email-profile-image" />
+                      {getUserByEmail(video.email)?.firstName || video.email || 'Unknown'}
                     </span>
                   )}
                 </div>

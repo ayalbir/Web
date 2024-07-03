@@ -9,7 +9,7 @@ const SearchResults = ({ videos, getUserByEmail }) => {
 
   const filteredVideos = videos.filter(video => 
     video.title.toLowerCase().includes(query.toLowerCase()) || 
-    video.author.toLowerCase().includes(query.toLowerCase())
+    video.email.toLowerCase().includes(query.toLowerCase())
   );
 
   return (

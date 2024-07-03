@@ -42,14 +42,14 @@
     margin-bottom: 5px;
 }
 
-.top-videos .video-card .author-details {
+.top-videos .video-card .email-details {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
 }
 
-.top-videos .video-card .author-profile-image {
+.top-videos .video-card .email-profile-image {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -69,7 +69,7 @@
     font-size: 16px;
 }
 
-.top-videos .video-card.top-video-card .author-details,
+.top-videos .video-card.top-video-card .email-details,
 .top-videos .video-card.top-video-card .card-text {
     font-size: 14px;
 }

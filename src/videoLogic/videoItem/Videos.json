@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "cool",
-    "author": "john@example.com",
+    "email": "john@example.com",
     "views": 200,
     "date": "2 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -13,7 +13,7 @@
   {
     "id": 2,
     "title": "yay",
-    "author": "john@example.com",
+    "email": "john@example.com",
     "views": 300,
     "date": "3 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -24,7 +24,7 @@
   {
     "id": 3,
     "title": "wow",
-    "author": "john@example.com",
+    "email": "john@example.com",
     "views": 400,
     "date": "4 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -35,7 +35,7 @@
   {
     "id": 4,
     "title": "neat",
-    "author": "john@example.com",
+    "email": "john@example.com",
     "views": 500,
     "date": "5 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "title": "awesome",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 600,
     "date": "6 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -57,7 +57,7 @@
   {
     "id": 6,
     "title": "Linear Algebra",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 700,
     "date": "7 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "title": "Calculus",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 800,
     "date": "8 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -79,7 +79,7 @@
   {
     "id": 8,
     "title": "Physics",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 900,
     "date": "9 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -90,7 +90,7 @@
   {
     "id": 9,
     "title": "Chemistry",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 1000,
     "date": "10 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -101,7 +101,7 @@
   {
     "id": 10,
     "title": "Biology",
-    "author": "jane@example.com",
+    "email": "jane@example.com",
     "views": 1100,
     "date": "11 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -112,7 +112,7 @@
   {
     "id": 11,
     "title": "History of the World War 2",
-    "author": "doe@example.com",
+    "email": "doe@example.com",
     "views": 1200,
     "date": "12 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -123,7 +123,7 @@
   {
     "id": 12,
     "title": "Geography",
-    "author": "doe@example.com",
+    "email": "doe@example.com",
     "views": 1300,
     "date": "13 days ago",
     "pic": "/images/temp_pic.jpg",
@@ -134,7 +134,7 @@
   {
     "id": 13,
     "title": "Economics",
-    "author": "doe@example.com",
+    "email": "doe@example.com",
     "views": 1400,
     "date": "14 days ago",
     "pic": "/images/temp_pic.jpg",
