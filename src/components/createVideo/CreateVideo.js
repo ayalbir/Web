@@ -38,7 +38,6 @@ const CreateVideo = ({ addVideo, user }) => {
       profileImage: user ? user.profileImage : null // Add the user's profile image
     };
     
-
     addVideo(newVideo); 
     navigate("/");
   };

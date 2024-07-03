@@ -74,10 +74,12 @@ const SignUpTwo = ({ handleRegisterUser }) => {
             handleRegisterUser(registeredUser); // Register user locally
             navigate('/signin'); // Navigate to the sign-in page
           } else {
-            console.error('Error registering user:', res.statusText);
+            const error = await res.text();
+            setErrors({ general: error });
           }
         } catch (error) {
           console.error('Error registering user:', error);
+          setErrors({ general: 'Error registering user' });
         }
       };
       reader.readAsDataURL(selectedImage);
@@ -140,6 +142,7 @@ const SignUpTwo = ({ handleRegisterUser }) => {
             />
             {errors.profileImage && <span className="error">{errors.profileImage}</span>}
           </div>
+          {errors.general && <span className="error">{errors.general}</span>}
           <button type="submit" className="button">Complete Signup</button>
         </form>
       </div>

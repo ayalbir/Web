@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { getToken } from '../utils/tokenService';
 
 const useUser = (initialUsers = []) => {
     const [registeredUsers, setRegisteredUsers] = useState(initialUsers);
@@ -20,14 +22,28 @@ const useUser = (initialUsers = []) => {
         }));
     };
 
-    const updateUser = (email, updatedUserData) => {
+
+
+const updateUser = async (email, updatedUserData) => {
+    try {
+        const token = getToken(); // Retrieve the token
+        const response = await axios.patch(`http://127.0.0.1:8080/api/users/${email}`, updatedUserData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
         setRegisteredUsers(registeredUsers.map(user => {
             if (user.email === email) {
-                return { ...user, ...updatedUserData };
+                return { ...user, ...response.data };
             }
             return user;
         }));
-    };
+    } catch (error) {
+        console.error('Error updating user:', error);
+    }
+};
 
     return { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers };
 };

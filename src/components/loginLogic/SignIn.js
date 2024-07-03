@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../utils/tokenService'; // Import token service
+import { setToken } from '../../utils/tokenService'; 
 import './SignIn.css';
 
 const SignIn = ({ setUser }) => {
@@ -42,11 +42,13 @@ const SignIn = ({ setUser }) => {
           },
           body: JSON.stringify(formData)
         });
-
+  
         if (res.ok) {
           const data = await res.json();
-          setToken(data.token); // Store the token in local storage
-          setUser(data.user); // Set the user data
+          console.log('Data:', data);
+          setToken(data.token); 
+          setUser({ ...data.user, signedIn: true }); 
+          console.log('User signed in:', data.user);
           navigate('/');
         } else {
           const error = await res.text();
@@ -58,6 +60,7 @@ const SignIn = ({ setUser }) => {
       }
     }
   };
+  
 
   return (
     <div className="minimal-layout">
