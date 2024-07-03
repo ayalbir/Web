@@ -1,8 +1,21 @@
-https://github.com/ayalbir/Web
-In this project, we worked as a team of three people, each responsible for a different area. One team member was in charge of the movie list screen, the movie viewing screen, and the new movie addition screen for the web version. Another team member was responsible for the same screens in the Android version. The third team member was responsible for login and registration on both platforms.
+# Web Project
 
-We used the Jira management tool for task allocation and project management, which enabled effective teamwork, with each member contributing their part to the project.
+## Introduction
+This project is a collaborative effort by a team of three, focusing on creating a web application with a React-based client-side and a server-side backend. The purpose of the project is to continue to work on the FooTube project, in this part, with a Server.
 
-How to run the project:
+## Project Structure
+- **Client-Side**: Developed using React.
+- **Server-Side**: Hosted in a separate repository [Server Repo](https://github.com/ayalbir/Server).
 
-Start the server using npm start, which will open the video list screen. After that, there will be an option to log in at the top, and if there is no user, to register.
+## Team Contributions
+- One team member was responsible for the server-side development.
+- Two team members focused on the client-side development using React.
+- After completing the server-side, the team member joined the client-side efforts, ensuring seamless integration between the client and server.
+
+## Project Management
+- We utilized the Jira management tool for task allocation and project management, enabling effective teamwork and contribution from each member.
+
+## How to Run the Project
+
+- Node.js installed on your system, from the Server Repo (after cloning it). more details in the Server Repo.
+

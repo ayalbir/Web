@@ -83,7 +83,7 @@ const VideoMain = ({
   
 
   const handleDeleteVideo = () => {
-    deleteVideo(video._id || video.id);
+    deleteVideo(video._id || video.id, user.email);
     navigate('/');
   };
 

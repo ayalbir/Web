@@ -38,9 +38,9 @@ function App() {
 
   const handleSignOut = () => {
     setUser(null);
-    setToken(null); 
-    localStorage.removeItem('token'); 
-    localStorage.removeItem('user'); 
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
   const handleRegisterUser = (userData) => {
@@ -49,16 +49,15 @@ function App() {
   };
 
   useEffect(() => {
-    // Retrieve token and user from local storage
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
   }, []);
-  
+
   return (
     <Router>
       <div className={`container-fluid ${isDarkMode ? 'dark-mode' : ''}`}>
@@ -87,8 +86,8 @@ function App() {
           setExpanded={setExpanded}
           handleSignOut={handleSignOut}
           addVideo={addVideo}
-          token={token} 
-          setToken={setToken} 
+          token={token}
+          setToken={setToken}
         />
       </div>
     </Router>
