@@ -1,0 +1,30 @@
+.SearchResults {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.SearchResults-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.SearchResults-item:last-child {
+    border-bottom: none;
+}
+
+.SearchResults-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.SearchResults-description {
+    font-size: 14px;
+    color: #666;
+}

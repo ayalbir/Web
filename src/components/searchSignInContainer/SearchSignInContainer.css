@@ -1,0 +1,26 @@
+/* src/components/searchSignInContainer/SearchSignInContainer.css */
+
+.search-signin-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.search-signin-container .search-bar {
+  flex: 1;
+}
+
+.search-signin-container .app-logo-link {
+  flex-shrink: 0;
+}
+
+.search-signin-container .btn {
+  border: none;
+  margin-left: 10px;
+}
+
+.bi-person-circle {
+  margin-right: 5px;
+}

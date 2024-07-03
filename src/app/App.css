@@ -27,16 +27,28 @@
   color: #61dafb;
 }
 
+.container-fluid {
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .main-content {
-  margin-left: 240px;
+  margin-left: 15%;
   padding: 10px;
   overflow-y: auto;
   height: 100vh;
-  transition: margin-left 0.3s;
+  transition: margin-left 0.3s, width 0.3s;
+  overflow-x: hidden;
+}
+
+.main-content.collapsed {
+  margin-left: 10%;
+  width: calc(100% - 80px);
 }
 
 .left-menu.collapsed + .main-content {
   margin-left: 80px;
+  width: calc(100% - 80px);
 }
 
 .search-signin-container {
@@ -113,14 +125,17 @@ body:not(.dark-mode) .btn {
   color: white;
   border-radius: 50%;
   font-size: 1.2em;
-  align-items: center !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
 }
 
 .create-button:hover {
   background-color: #0056b3;
 }
 
-/* Minimal layout for sign in and sign up screens */
 .minimal-layout {
   display: flex;
   justify-content: center;
@@ -129,7 +144,8 @@ body:not(.dark-mode) .btn {
   background-color: white;
 }
 
-.signin-container, .signup-container {
+.signin-container,
+.signup-container {
   max-width: 400px;
   width: 100%;
   padding: 20px;
@@ -138,7 +154,6 @@ body:not(.dark-mode) .btn {
   background-color: white;
 }
 
-/* Styles for user info display */
 .user-info {
   display: flex;
   align-items: center;
@@ -157,12 +172,12 @@ body:not(.dark-mode) .btn {
 }
 
 .user-info .signin-link {
-  margin-left: auto; 
-  padding-right: 10%; 
+  margin-left: auto;
+  padding-right: 10%;
 }
 
 .user-info .signin-link .btn {
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .user-info .signin-link .signin-text {
@@ -170,8 +185,8 @@ body:not(.dark-mode) .btn {
 }
 
 .user-info .update-profile-link {
-  color: #007bff; 
-  text-decoration: none; 
+  color: #007bff;
+  text-decoration: none;
 }
 
 .user-info .update-profile-link:hover {
@@ -179,7 +194,6 @@ body:not(.dark-mode) .btn {
   font-weight: bold;
 }
 
-/* Additional styles for the upload profile image screen */
 .upload-container {
   max-width: 400px;
   width: 100%;
@@ -210,7 +224,7 @@ body:not(.dark-mode) .btn {
 .upload-container button {
   width: 100%;
   padding: 10px;
-  background-color: #4285F4;
+  background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 5px;
