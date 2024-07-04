@@ -4,8 +4,6 @@ import './App.css';
 import useUser from '../hooks/UseUser';
 import useVideos from '../hooks/UseVideos';
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
-import initializeDemoData from '../utils/initializeDemoData'; 
-
 
 function App() {
   const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser([]);
@@ -47,16 +45,6 @@ function App() {
     registerUser(userData);
     setUser({ ...userData, signedIn: true });
   };
-
-  useEffect(() => {
-    const initialize = async () => {
-        const demoDataInitialized = localStorage.getItem('demoDataInitialized');
-        console.log('Demo data initialized:', demoDataInitialized);
-            await initializeDemoData();
-        }
-    console.log('App component mounted');
-    initialize();
-}, []);
 
   return (
     <Router>
