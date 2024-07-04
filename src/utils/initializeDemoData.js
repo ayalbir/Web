@@ -75,16 +75,19 @@ const initializeDemoData = async () => {
                 .catch(error => reject(error));
         });
     };
+    
     try {
         for (const user of demoUsers) {
-            const encodedProfileImage = await encodeFileToBase64(user.profileImage);
-            user.profileImage = encodedProfileImage;
+            console.log('user', user);
+            const profileImage = await encodeFileToBase64(user.profileImage);
+            const completeUserData = { ...user, profileImage };
+            console.log('completeUserData', completeUserData);
             const res = await fetch('http://127.0.0.1:8080/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(user),
+                body: JSON.stringify(completeUserData),
             });
     
             if (res.ok) {
@@ -98,7 +101,7 @@ const initializeDemoData = async () => {
     
                 if (tokenRes.ok) {
                     const data = await tokenRes.json();
-                    console.log(`Token for ${user.email}:`, data.token); // Add this line for debugging
+                  
                     localStorage.setItem(`${user.email}_token`, data.token);
                 } else {
                     console.error(`Failed to get token for ${user.email}:`, await tokenRes.text());
@@ -113,7 +116,6 @@ const initializeDemoData = async () => {
             const encodedPic = await encodeFileToBase64(video.pic);
             const encodedUrl = await encodeFileToBase64(video.url);
             const token = localStorage.getItem(`${user.email}_token`);
-            console.log(`Using token for ${user.email}:`, token); // Add this line for debugging
             await fetch(`http://127.0.0.1:8080/api/users/${user.email}/videos`, {
                 method: 'POST',
                 headers: {
@@ -128,7 +130,6 @@ const initializeDemoData = async () => {
     } catch (error) {
         console.error('Error initializing demo data:', error);
     }
-    
     
 };
 
