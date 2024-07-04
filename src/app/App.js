@@ -49,6 +49,7 @@ function App() {
   };
 
   useEffect(() => {
+    /*
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
 
@@ -56,6 +57,7 @@ function App() {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
+      */
   }, []);
 
   return (

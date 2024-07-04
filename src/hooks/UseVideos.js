@@ -32,10 +32,27 @@ const useVideos = (initialVideos) => {
                 };
             });
 
-            setVideoList(data); // Initialize with the fetched data
-            setLikesDislikes(likesDislikesData); // Initialize likesDislikes with fetched data
+            setVideoList(data); 
+            setLikesDislikes(likesDislikesData); 
+            await fetchCommentsForVideos(data);
         } catch (error) {
             console.error('Error fetching videos from DB:', error);
+        }
+    };
+    
+    const fetchCommentsForVideos = async (videos) => {
+        try {
+            const commentsData = {};
+            for (const video of videos) {
+                const response = await fetch(`http://127.0.0.1:8080/api/videos/${video._id || video.id}/comments`);
+                if (response.ok) {
+                    const data = await response.json();
+                    commentsData[video._id || video.id] = data;
+                }
+            }
+            setComments(commentsData);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
         }
     };
     

@@ -49,8 +49,8 @@ const SignIn = ({ setUser }) => {
           setUser({ ...data.user, signedIn: true }); 
   
           // Store token and user in local storage
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
+        //  localStorage.setItem('token', data.token);
+        //  localStorage.setItem('user', JSON.stringify(data.user));
   
           navigate('/');
         } else {
