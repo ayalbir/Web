@@ -21,7 +21,6 @@ const useVideos = (initialVideos) => {
             }
 
             const data = await response.json();
-            console.log('Data:', data);
 
             // Initialize likesDislikes with the fetched data
             const likesDislikesData = {};
@@ -79,7 +78,6 @@ const useVideos = (initialVideos) => {
     };
     
     const deleteVideo = async (id, userEmail) => {
-        console.log('Deleting video:', id);
         try {
             const token = getToken(); 
             await axios.delete(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, {

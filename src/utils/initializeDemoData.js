@@ -78,10 +78,8 @@ const initializeDemoData = async () => {
     
     try {
         for (const user of demoUsers) {
-            console.log('user', user);
             const profileImage = await encodeFileToBase64(user.profileImage);
             const completeUserData = { ...user, profileImage };
-            console.log('completeUserData', completeUserData);
             const res = await fetch('http://127.0.0.1:8080/api/users', {
                 method: 'POST',
                 headers: {

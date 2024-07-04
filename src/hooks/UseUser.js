@@ -20,7 +20,6 @@ const useUser = (initialUsers = []) => {
                 return;
             }
             const data = await response.json();
-            console.log('Fetched users:', data);
             setRegisteredUsers(data);
         } catch (error) {
             console.error('Error fetching users from DB:', error);

@@ -18,4 +18,5 @@ This project is a collaborative effort by a team of three, focusing on creating 
 ## How to Run the Project
 
 - Node.js installed on your system, from the Server Repo (after cloning it). more details in the Server Repo.
+- When the App is initialized, there no videos/users in the DB, so the client needs to create them.
 
