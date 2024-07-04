@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-// Removed the import of videosData as we are fetching them from the database
-import demoUsers from '../mock/DemoUsers.const';
 import useUser from '../hooks/UseUser';
 import useVideos from '../hooks/UseVideos';
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
+import initializeDemoData from '../utils/initializeDemoData'; 
+
 
 function App() {
   const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser([]);
@@ -49,16 +49,14 @@ function App() {
   };
 
   useEffect(() => {
-    /*
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-      */
-  }, []);
+    const initialize = async () => {
+        const demoDataInitialized = localStorage.getItem('demoDataInitialized');
+        console.log('Demo data initialized:', demoDataInitialized);
+            await initializeDemoData();
+        }
+    console.log('App component mounted');
+    initialize();
+}, []);
 
   return (
     <Router>

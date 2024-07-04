@@ -121,13 +121,9 @@
     "url": "/videos/subscribe.mp4"
   },
   {
-    "_id": 12,
     "title": "Geography",
     "email": "doe@example.com",
-    "views": 1300,
-    "date": "13 days ago",
     "pic": "/images/temp_pic.jpg",
-    "profileImage": "/images/img_avatar3.png",
     "description": "Description for video 12",
     "url": "/videos/subscribe.mp4"
   },
