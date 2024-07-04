@@ -21,10 +21,19 @@ const SignUp = () => {
     });
   };
 
+  const validateBirthdate = (birthdate) => {
+    const selectedDate = new Date(birthdate);
+    const today = new Date();
+    return selectedDate <= today;
+  };
+  
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) newErrors.firstName = 'First name is required';
     if (!formData.birthdate) newErrors.birthdate = 'Birthdate is required';
+    if (formData.birthdate && !validateBirthdate(formData.birthdate)) {
+      newErrors.birthdate = 'Birthdate cannot be in the future';
+    }
     if (!formData.gender) newErrors.gender = 'Gender is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
