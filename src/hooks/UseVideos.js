@@ -29,6 +29,9 @@ const useVideos = (initialVideos) => {
                     likes: video.likes,
                     dislikes: video.dislikes
                 };
+                // Add the prefix to the video URL
+            video.url = `data:video/mp4;base64,${video.url}`;
+            video.pic = `data:image/png;base64,${video.pic}`;
             });
 
             setVideoList(data); 

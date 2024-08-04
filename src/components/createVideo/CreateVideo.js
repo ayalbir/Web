@@ -33,12 +33,18 @@ const CreateVideo = ({ addVideo, user }) => {
   
     const encodeFileToBase64 = (file) => {
       return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+              const result = reader.result;
+              // Remove the first 21 characters of the base64 string
+              const encodedString = result.substring(21);
+              resolve(encodedString);
+          };
+          reader.onerror = (error) => reject(error);
       });
-    };
+  };
+  
   
     try {
       const imageBase64 = await encodeFileToBase64(image);

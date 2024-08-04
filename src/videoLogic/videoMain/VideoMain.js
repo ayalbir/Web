@@ -89,12 +89,18 @@ const VideoMain = ({
 
   const encodeFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const result = reader.result;
+            // Remove the first 10 characters of the base64 string
+            const encodedString = result.substring(10);
+            resolve(encodedString);
+        };
+        reader.onerror = (error) => reject(error);
     });
-  };
+};
+
   
   const handleEditVideo = async () => {
     if (editMode) {
