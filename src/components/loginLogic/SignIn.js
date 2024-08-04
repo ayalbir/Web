@@ -45,13 +45,15 @@ const SignIn = ({ setUser }) => {
   
         if (res.ok) {
           const data = await res.json();
+
+          // Add the prefix to the profile image URL
+          if (data.user && data.user.profileImage) {
+            data.user.profileImage = `data:image/jpeg;base64,${data.user.profileImage}`;
+          }
+
           setToken(data.token);
-          setUser({ ...data.user, signedIn: true }); 
-  
-          // Store token and user in local storage
-        //  localStorage.setItem('token', data.token);
-        //  localStorage.setItem('user', JSON.stringify(data.user));
-  
+          setUser({ ...data.user, signedIn: true });
+
           navigate('/');
         } else {
           const error = await res.text();
@@ -63,6 +65,7 @@ const SignIn = ({ setUser }) => {
       }
     }
   };
+
   
 
   return (

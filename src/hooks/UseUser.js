@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getToken } from '../utils/tokenService';
 
@@ -20,11 +20,18 @@ const useUser = (initialUsers = []) => {
                 return;
             }
             const data = await response.json();
-            setRegisteredUsers(data);
+            // Add the prefix to the profile image URL for each user
+            const updatedData = data.map(user => ({
+                ...user,
+                profileImage: `data:image/png;base64,${user.profileImage}`
+            }));
+
+            setRegisteredUsers(updatedData);
         } catch (error) {
             console.error('Error fetching users from DB:', error);
         }
     };
+
     const getUserByEmail = (email) => {
         return registeredUsers.find(user => user.email === email);
     };
@@ -42,26 +49,26 @@ const useUser = (initialUsers = []) => {
         }));
     };
 
-const updateUser = async (email, updatedUserData) => {
-    try {
-        const token = getToken();
-        const response = await axios.patch(`http://127.0.0.1:8080/api/users/${email}`, updatedUserData, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        
-        setRegisteredUsers(registeredUsers.map(user => {
-            if (user.email === email) {
-                return { ...user, ...response.data };
-            }
-            return user;
-        }));
-    } catch (error) {
-        console.error('Error updating user:', error);
-    }
-};
+    const updateUser = async (email, updatedUserData) => {
+        try {
+            const token = getToken();
+            const response = await axios.patch(`http://127.0.0.1:8080/api/users/${email}`, updatedUserData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setRegisteredUsers(registeredUsers.map(user => {
+                if (user.email === email) {
+                    return { ...user, ...response.data };
+                }
+                return user;
+            }));
+        } catch (error) {
+            console.error('Error updating user:', error);
+        }
+    };
 
     return { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers };
 };

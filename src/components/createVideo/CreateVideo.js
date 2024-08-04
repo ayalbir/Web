@@ -15,14 +15,6 @@ const CreateVideo = ({ addVideo, user }) => {
     }
   }, [navigate, user]);
 
-  const handleFileRead = (file, callback) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      callback(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -33,12 +25,18 @@ const CreateVideo = ({ addVideo, user }) => {
   
     const encodeFileToBase64 = (file) => {
       return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+              const result = reader.result;
+              // Remove the first 22 characters of the base64 string
+              const encodedString = result.substring(22);
+              resolve(encodedString);
+          };
+          reader.onerror = (error) => reject(error);
       });
-    };
+  };
+  
   
     try {
       const imageBase64 = await encodeFileToBase64(image);

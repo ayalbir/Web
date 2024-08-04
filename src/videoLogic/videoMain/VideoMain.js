@@ -30,7 +30,6 @@ const VideoMain = ({
   const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
-   
     const foundVideo = videos.find(v => (v._id || v.id) === id);
     if (foundVideo) {
       setVideo(foundVideo);
@@ -45,10 +44,13 @@ const VideoMain = ({
     }
   }, [id, videos, updateVideoViews]);
 
- 
   if (!video) {
     return <div className="video-not-found">Video not found</div>;
   }
+
+  const videoUrl = video.url.startsWith('data:video/mp4;base64,')
+    ? video.url
+    : `data:video/mp4;base64,${video.url}`;
 
   const suggestedVideos = videos.filter(v => (v._id || v.id) !== id).slice(0, 10);
 
@@ -72,7 +74,7 @@ const VideoMain = ({
       navigate("/signin");
     }
   };
-  
+
   const handleDislikeClick = () => {
     if (user !== null && user.signedIn) {
       handleDislike(video._id || video.id, user.email);
@@ -80,7 +82,6 @@ const VideoMain = ({
       navigate("/signin");
     }
   };
-  
 
   const handleDeleteVideo = () => {
     deleteVideo(video._id || video.id, user.email);
@@ -91,11 +92,15 @@ const VideoMain = ({
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => {
+        const result = reader.result;
+        const encodedString = result.substring(22);
+        resolve(encodedString);
+      };
       reader.onerror = (error) => reject(error);
     });
   };
-  
+
   const handleEditVideo = async () => {
     if (editMode) {
       try {
@@ -110,13 +115,12 @@ const VideoMain = ({
     }
     setEditMode(!editMode);
   };
-  
+
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setEditedFile(e.target.files[0]);
     }
   };
-  
 
   const interaction = userInteractions[video._id || video.id] || {};
   const isLiked = interaction.like || false;
@@ -142,8 +146,8 @@ const VideoMain = ({
                 className="edit-file-input"
               />
             ) : (
-              <video key={video.url} className="video-player" controls>
-                <source src={video.url} type="video/mp4" />
+              <video key={videoUrl} className="video-player" controls>
+                <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
@@ -155,7 +159,7 @@ const VideoMain = ({
                   <input
                     type="text"
                     value={editedTitle}
-                    placeholder='Title'
+                    placeholder="Title"
                     onChange={(e) => setEditedTitle(e.target.value)}
                     className="edit-title-input"
                   />
@@ -181,13 +185,17 @@ const VideoMain = ({
               >
                 <i className="bi bi-hand-thumbs-down"></i> {dislikesCount}
               </button>
-              <button className="btn btn-light" onClick={handleShareClick}><i className="bi bi-share"></i> Share</button>
-              {(user && user.email === video.email) &&(
+              <button className="btn btn-light" onClick={handleShareClick}>
+                <i className="bi bi-share"></i> Share
+              </button>
+              {user && user.email === video.email && (
                 <>
                   <button className="btn btn-warning" onClick={handleEditVideo}>
                     {editMode ? 'Save' : 'Edit'}
                   </button>
-                  <button className="btn btn-danger" onClick={handleDeleteVideo}>Delete</button>
+                  <button className="btn btn-danger" onClick={handleDeleteVideo}>
+                    Delete
+                  </button>
                 </>
               )}
             </div>
@@ -196,7 +204,7 @@ const VideoMain = ({
                 <>
                   <textarea
                     value={editedDescription}
-                    placeholder='Description'
+                    placeholder="Description"
                     onChange={(e) => setEditedDescription(e.target.value)}
                     className="edit-description-input"
                   />
@@ -205,8 +213,12 @@ const VideoMain = ({
                 <>
                   <div className="email-details">
                     {getUserByEmail && video.email && (
-                      <Link to={`/user/${(video.email)}`} className="email-link">
-                        <img src={getUserByEmail(video.email)?.profileImage} alt={getUserByEmail(video.email)?.firstName} className="email-profile-image" />
+                      <Link to={`/user/${video.email}`} className="email-link">
+                        <img
+                          src={getUserByEmail(video.email)?.profileImage}
+                          alt={getUserByEmail(video.email)?.firstName}
+                          className="email-profile-image"
+                        />
                         {getUserByEmail(video.email)?.firstName || 'Unknown'}
                       </Link>
                     )}
@@ -229,21 +241,34 @@ const VideoMain = ({
       <div className="suggested-videos-section">
         <h3>Up Next</h3>
         <ul className="suggested-videos-list">
-          {suggestedVideos.map(suggestedVideo => (
+          {suggestedVideos.map((suggestedVideo) => (
             <li key={suggestedVideo._id || suggestedVideo.id} className="suggested-video-item">
               <Link
                 to={`/video/${suggestedVideo._id || suggestedVideo.id}`}
                 className="suggested-video-link"
                 onClick={() => handleVideoClick(suggestedVideo._id || suggestedVideo.id)}
               >
-                <img src={suggestedVideo.pic} alt={suggestedVideo.title} className="suggested-video-thumbnail" onError={(e) => { e.target.src = '/path/to/default/image.jpg'; }} />
+                <img
+                  src={suggestedVideo.pic}
+                  alt={suggestedVideo.title}
+                  className="suggested-video-thumbnail"
+                  onError={(e) => {
+                    e.target.src = '/path/to/default/image.jpg';
+                  }}
+                />
                 <div className="suggested-video-info">
                   <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
                   <div className="email-details">
                     {getUserByEmail && suggestedVideo.email && (
                       <Link to={`/user/${suggestedVideo.email}`} className="email-link">
-                        <img src={getUserByEmail(suggestedVideo.email)?.profileImage} alt={getUserByEmail(suggestedVideo.email)?.firstName} className="email-profile-image" />
-                        {getUserByEmail(suggestedVideo.email)?.firstName || suggestedVideo.email || 'Unknown'}
+                        <img
+                          src={getUserByEmail(suggestedVideo.email)?.profileImage}
+                          alt={getUserByEmail(suggestedVideo.email)?.firstName}
+                          className="email-profile-image"
+                        />
+                        {getUserByEmail(suggestedVideo.email)?.firstName ||
+                          suggestedVideo.email ||
+                          'Unknown'}
                       </Link>
                     )}
                   </div>
@@ -267,13 +292,21 @@ const VideoMain = ({
             <div className="share-modal-body">
               <div className="input-group">
                 <input type="text" className="form-control" value={window.location.href} readOnly />
-                <button className="btn btn-outline-secondary" type="button" onClick={handleCopyLink}>Copy</button>
+                <button className="btn btn-outline-secondary" type="button" onClick={handleCopyLink}>
+                  Copy
+                </button>
               </div>
               <p>Share on social media:</p>
               <div className="social-buttons">
-                <button className="btn btn-primary"><i className="bi bi-facebook"></i> Facebook</button>
-                <button className="btn btn-info"><i className="bi bi-twitter"></i> Twitter</button>
-                <button className="btn btn-danger"><i className="bi bi-pinterest"></i> Pinterest</button>
+                <button className="btn btn-primary">
+                  <i className="bi bi-facebook"></i> Facebook
+                </button>
+                <button className="btn btn-info">
+                  <i className="bi bi-twitter"></i> Twitter
+                </button>
+                <button className="btn btn-danger">
+                  <i className="bi bi-pinterest"></i> Pinterest
+                </button>
               </div>
             </div>
           </div>

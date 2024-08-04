@@ -16,11 +16,15 @@ function VideoItem({ video, getUserByEmail, isTopVideo }) {
     return null;
   }
 
+  const videoPic = video.pic.startsWith('data:image/png;base64,')
+    ? video.pic
+    : `data:image/png;base64,${video.pic}`;
+
   return (
     <div className={`video-item ${isTopVideo ? 'top-video-item' : 'regular-video-item'}`}>
       <div className={`card video-card ${isTopVideo ? 'top-video-card' : 'regular-video-card'}`}>
         <Link to={`/video/${video._id}`}>
-          <img src={video.pic} className="card-img-top" alt={video.title} />
+          <img src={videoPic} className="card-img-top" alt={video.title} />
         </Link>
         <div className="card-body">
           <h5 className="card-title">
