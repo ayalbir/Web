@@ -249,20 +249,22 @@ const useVideos = (initialVideos) => {
         }
       };
       
-
-    const updateVideoViews = async (id) => {
+      const updateVideoViews = async (id, email) => {
         try {
+            // Increment the view count locally
             setVideoList(prevList =>
                 prevList.map(video =>
                     (video.id || video._id) === id ? { ...video, views: video.views + 1 } : video
                 )
             );
-                const response = await fetch(`http://127.0.0.1:8080/api/videos/${id}/views`, {
+    
+            // Send the view update to the server with the email
+            const response = await fetch(`http://127.0.0.1:8080/api/videos/${id}/views`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ views: 1 }) 
+                body: JSON.stringify({ views: 1, email: email })  // Include the email in the request body
             });
     
             if (!response.ok) {
@@ -272,6 +274,7 @@ const useVideos = (initialVideos) => {
             console.error('Error updating video views:', error);
         }
     };
+    
     
     
 

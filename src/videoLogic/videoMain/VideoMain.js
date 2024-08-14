@@ -36,7 +36,7 @@ const VideoMain = ({
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
       if (!hasUpdatedViews.current) {
-        updateVideoViews(foundVideo._id || foundVideo.id);
+        updateVideoViews(foundVideo._id || foundVideo.id, user.email);
         hasUpdatedViews.current = true;
       }
     } else {
@@ -130,7 +130,7 @@ const VideoMain = ({
   const dislikesCount = likesDislikes[video._id || video.id]?.dislikes || 0;
 
   const handleVideoClick = (clickedVideoId) => {
-    updateVideoViews(clickedVideoId);
+    updateVideoViews(clickedVideoId, user.email);
   };
 
   return (
