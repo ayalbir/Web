@@ -51,7 +51,10 @@ const SignUpTwo = ({ handleRegisterUser }) => {
     if (validateForm()) {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const profileImage = reader.result;
+        // Get the base64 encoded image string
+        let profileImage = reader.result;
+        // Remove the first 22 characters of the base64 string
+        profileImage = profileImage.substring(22);
         const { confirmPassword, ...userData } = formData;
 
         const completeUserData = {

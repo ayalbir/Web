@@ -4,6 +4,8 @@ import './App.css';
 import useUser from '../hooks/UseUser';
 import useVideos from '../hooks/UseVideos';
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
+import initializeDemoData from '../utils/initializeDemoData';
+
 
 function App() {
   const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser([]);
@@ -45,6 +47,30 @@ function App() {
     registerUser(userData);
     setUser({ ...userData, signedIn: true });
   };
+
+  useEffect(() => {
+    const initialize = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/api/videos');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            if (data.length === 0) {
+                console.log('No videos found, initializing demo data.');
+                await initializeDemoData();
+            } else {
+                console.log('Videos found, no need to initialize demo data.');
+            }
+        } catch (error) {
+            console.error('Error checking videos from DB:', error);
+        }
+    };
+
+    initialize();
+}, []);
 
   return (
     <Router>
