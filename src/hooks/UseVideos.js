@@ -10,15 +10,11 @@ const useVideos = (initialVideos) => {
 
     const fetchVideosFromDB = async () => {
         try {
-            const email = localStorage.getItem('currentEmail');
-            const response = await fetch('http://127.0.0.1:8080/api/videos?email={email}', {
+            let email = localStorage.getItem('currentEmail');
+            const response = await fetch(`http://127.0.0.1:8080/api/videos?email=${email}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-
-            );
+            });            
+            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -68,6 +64,7 @@ const useVideos = (initialVideos) => {
 
     useEffect(() => {
         fetchVideosFromDB();
+        localStorage.removeItem('currentEmail');
     }, []);
 
 

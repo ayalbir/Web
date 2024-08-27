@@ -36,7 +36,10 @@ const VideoMain = ({
       setEditedTitle(foundVideo.title);
       setEditedDescription(foundVideo.description);
       if (!hasUpdatedViews.current) {
-        updateVideoViews(foundVideo._id || foundVideo.id, user.email);
+        if (localStorage.getItem('currentEmail') == null) {
+          localStorage.setItem('currentEmail', 'noConnectedUser');
+        }
+        updateVideoViews(foundVideo._id || foundVideo.id, localStorage.getItem('currentEmail'));
         hasUpdatedViews.current = true;
       }
     } else {
