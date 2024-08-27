@@ -53,6 +53,7 @@ const SignIn = ({ setUser }) => {
 
           setToken(data.token);
           setUser({ ...data.user, signedIn: true });
+          localStorage.setItem('currentEmail', data.user.email);
 
           navigate('/');
         } else {

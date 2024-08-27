@@ -41,6 +41,7 @@ function App() {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('currentEmail');
   };
 
   const handleRegisterUser = (userData) => {
