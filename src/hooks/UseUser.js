@@ -20,7 +20,6 @@ const useUser = (initialUsers = []) => {
                 return;
             }
             const data = await response.json();
-            // Add the prefix to the profile image URL for each user
             const updatedData = data.map(user => ({
                 ...user,
                 profileImage: `data:image/png;base64,${user.profileImage}`

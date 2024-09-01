@@ -1,3 +1,5 @@
+// RoutesConfiguration.js
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from '../loginLogic/SignIn';
@@ -31,6 +33,7 @@ const RoutesConfiguration = ({
   setUser,
   registeredUsers,
   updateUser,
+  deleteUser, // Add deleteUser here
   isDarkMode,
   toggleDarkMode,
   expanded,
@@ -152,6 +155,7 @@ const RoutesConfiguration = ({
               updateUser={updateUser}
               setUser={setUser}
               registeredUsers={registeredUsers}
+              deleteUser={deleteUser} // Pass deleteUser to the component
             />
           </MainLayout>
         }

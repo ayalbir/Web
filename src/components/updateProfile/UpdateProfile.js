@@ -19,7 +19,7 @@ function UpdateProfile({ user, updateUser, setUser, deleteUser }) {
         }
     }, [user]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
             alert('User not found.');
@@ -44,7 +44,7 @@ function UpdateProfile({ user, updateUser, setUser, deleteUser }) {
                 reader.readAsDataURL(profileImage);
             } else {
                 const updatedUser = { ...user, ...updatedUserData };
-                updateUser(user.email, updatedUser);
+                await updateUser(user.email, updatedUser);
                 setUser(updatedUser);
                 setIsSubmitted(true);
             }
