@@ -59,7 +59,7 @@ const VideoMain = ({
 
         // Fetch suggested videos from the server
         const email = localStorage.getItem('currentEmail') || 'noConnectedUser';
-        const response = await fetch(`http://127.0.0.1:8080/api/suggestedvideos?email=${email}`, {
+        const response = await fetch(`http://127.0.0.1:8080/api/suggestedVideos/${email}/${id}`, {
           method: 'GET',
         });
 
