@@ -65,7 +65,7 @@ function UpdateProfile({ user, updateUser, setUser, deleteUser }) {
     };
 
     if (!user || isDeleted) {
-        return <Navigate to="/signin" />;
+        return <Navigate to="/" />;
     }
 
     if (isSubmitted) {
