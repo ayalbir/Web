@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import './UpdateProfile.css';
 
-function UpdateProfile({ user, updateUser, setUser }) {
+function UpdateProfile({ user, updateUser, setUser, deleteUser }) {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -52,11 +53,18 @@ function UpdateProfile({ user, updateUser, setUser }) {
         }
     };
 
+    const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete your account? This action is irreversible.')) {
+            await deleteUser(user.email);
+            setIsDeleted(true);
+        }
+    };
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    if (!user) {
+    if (!user || isDeleted) {
         return <Navigate to="/signin" />;
     }
 
@@ -118,6 +126,9 @@ function UpdateProfile({ user, updateUser, setUser }) {
                 </div>
                 <button type="submit" className="btn btn-primary">
                     Update Profile
+                </button>
+                <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                    Delete Account
                 </button>
             </form>
         </div>
