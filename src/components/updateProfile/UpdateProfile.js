@@ -122,6 +122,7 @@ function UpdateProfile({ user, updateUser, setUser, deleteUser }) {
                         type="file"
                         id="profileImage"
                         onChange={(e) => setProfileImage(e.target.files[0])}
+                        required
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">
