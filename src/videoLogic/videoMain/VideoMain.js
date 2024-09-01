@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommentsSection from '../commentsSection/CommentsSection';
 import './VideoMain.css';
+import initializeDemoData from '../../utils/initializeDemoData';
 
 const VideoMain = ({
   videos,
@@ -21,6 +22,7 @@ const VideoMain = ({
 }) => {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
+  const [suggestedVideos, setSuggestedVideos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState('');
@@ -30,21 +32,51 @@ const VideoMain = ({
   const hasUpdatedViews = useRef(false);
 
   useEffect(() => {
-    const foundVideo = videos.find(v => (v._id || v.id) === id);
-    if (foundVideo) {
-      setVideo(foundVideo);
-      setEditedTitle(foundVideo.title);
-      setEditedDescription(foundVideo.description);
-      if (!hasUpdatedViews.current) {
-        if (localStorage.getItem('currentEmail') == null) {
-          localStorage.setItem('currentEmail', 'noConnectedUser');
+    const initializeDataAndFetchSuggestions = async () => {
+      try {
+        // Initialize demo data if not already initialized
+        const demoDataInitialized = localStorage.getItem('demoDataInitialized');
+        if (!demoDataInitialized) {
+          await initializeDemoData();
         }
-        updateVideoViews(foundVideo._id || foundVideo.id, localStorage.getItem('currentEmail'));
-        hasUpdatedViews.current = true;
+
+        // Find the current video from the provided `videos` prop
+        const foundVideo = videos.find(v => (v._id || v.id) === id);
+        if (foundVideo) {
+          setVideo(foundVideo);
+          setEditedTitle(foundVideo.title);
+          setEditedDescription(foundVideo.description);
+          if (!hasUpdatedViews.current) {
+            if (localStorage.getItem('currentEmail') == null) {
+              localStorage.setItem('currentEmail', 'noConnectedUser');
+            }
+            updateVideoViews(foundVideo._id || foundVideo.id, localStorage.getItem('currentEmail'));
+            hasUpdatedViews.current = true;
+          }
+        } else {
+          setVideo(null);
+        }
+
+        // Fetch suggested videos from the server
+        const email = localStorage.getItem('currentEmail') || 'noConnectedUser';
+        const response = await fetch(`http://127.0.0.1:8080/api/suggestedVideos/${email}/${id}`, {
+          method: 'GET',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch suggested videos');
+        }
+
+        const data = await response.json();
+
+       
+        setSuggestedVideos(data);
+      } catch (error) {
+        console.error('Error fetching video or suggested videos:', error);
       }
-    } else {
-      setVideo(null);
-    }
+    };
+
+    initializeDataAndFetchSuggestions();
   }, [id, videos, updateVideoViews]);
 
   if (!video) {
@@ -54,8 +86,6 @@ const VideoMain = ({
   const videoUrl = video.url.startsWith('data:video/mp4;base64,')
     ? video.url
     : `data:video/mp4;base64,${video.url}`;
-
-  const suggestedVideos = videos.filter(v => (v._id || v.id) !== id).slice(0, 10);
 
   const handleShareClick = () => {
     setShowModal(true);
@@ -244,42 +274,46 @@ const VideoMain = ({
       <div className="suggested-videos-section">
         <h3>Up Next</h3>
         <ul className="suggested-videos-list">
-          {suggestedVideos.map((suggestedVideo) => (
-            <li key={suggestedVideo._id || suggestedVideo.id} className="suggested-video-item">
-              <Link
-                to={`/video/${suggestedVideo._id || suggestedVideo.id}`}
-                className="suggested-video-link"
-                onClick={() => handleVideoClick(suggestedVideo._id || suggestedVideo.id)}
-              >
-                <img
-                  src={suggestedVideo.pic}
-                  alt={suggestedVideo.title}
-                  className="suggested-video-thumbnail"
-                  onError={(e) => {
-                    e.target.src = '/path/to/default/image.jpg';
-                  }}
-                />
-                <div className="suggested-video-info">
-                  <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
-                  <div className="email-details">
-                    {getUserByEmail && suggestedVideo.email && (
-                      <Link to={`/user/${suggestedVideo.email}`} className="email-link">
-                        <img
-                          src={getUserByEmail(suggestedVideo.email)?.profileImage}
-                          alt={getUserByEmail(suggestedVideo.email)?.firstName}
-                          className="email-profile-image"
-                        />
-                        {getUserByEmail(suggestedVideo.email)?.firstName ||
-                          suggestedVideo.email ||
-                          'Unknown'}
-                      </Link>
-                    )}
+          {suggestedVideos.length > 0 ? (
+            suggestedVideos.map((suggestedVideo) => (
+              <li key={suggestedVideo._id || suggestedVideo.id} className="suggested-video-item">
+                <Link
+                  to={`/video/${suggestedVideo._id || suggestedVideo.id}`}
+                  className="suggested-video-link"
+                  onClick={() => handleVideoClick(suggestedVideo._id || suggestedVideo.id)}
+                >
+                  <img
+                    src={`data:image/jpeg;base64,${suggestedVideo.pic}`}
+                    alt={suggestedVideo.title}
+                    className="suggested-video-thumbnail"
+                    onError={(e) => {
+                      e.target.src = '/path/to/default/image.jpg';
+                    }}
+                  />
+                  <div className="suggested-video-info">
+                    <h4 className="suggested-video-title">{suggestedVideo.title}</h4>
+                    <div className="email-details">
+                      {getUserByEmail && suggestedVideo.email && (
+                        <Link to={`/user/${suggestedVideo.email}`} className="email-link">
+                          <img
+                            src={getUserByEmail(suggestedVideo.email)?.profileImage}
+                            alt={getUserByEmail(suggestedVideo.email)?.firstName}
+                            className="email-profile-image"
+                          />
+                          {getUserByEmail(suggestedVideo.email)?.firstName ||
+                            suggestedVideo.email ||
+                            'Unknown'}
+                        </Link>
+                      )}
+                    </div>
+                    <p className="suggested-video-views">{suggestedVideo.views} views</p>
                   </div>
-                  <p className="suggested-video-views">{suggestedVideo.views} views</p>
-                </div>
-              </Link>
-            </li>
-          ))}
+                </Link>
+              </li>
+            ))
+          ) : (
+            <p>No suggested videos available</p>
+          )}
         </ul>
       </div>
 
