@@ -51,6 +51,9 @@ const useUser = (initialUsers = []) => {
 
     const updateUser = async (email, updatedUserData) => {
         try {
+            if (updatedUserData.profileImage && updatedUserData.profileImage.startsWith('data:')) {
+                updatedUserData.profileImage = updatedUserData.profileImage.substring(23);
+            }
             const token = getToken();
             const response = await axios.patch(`http://127.0.0.1:8080/api/users/${email}`, updatedUserData, {
                 headers: {
