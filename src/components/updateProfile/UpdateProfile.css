@@ -82,6 +82,7 @@
     border: 1px solid transparent;
     border-radius: 4px;
     transition: all 0.15s ease-in-out;
+    margin: 5px;
 }
 
 .btn-primary {
@@ -93,7 +94,16 @@
     background-color: #0069d9;
 }
 
-/* now style for the dark mode */
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Dark mode styles */
 
 .dark-mode .update-profile-container {
     background-color: #333;
@@ -129,6 +139,13 @@
     background-color: #0069d9;
 }
 
+.dark-mode .btn-danger {
+    color: #fff;
+}
+
+.dark-mode .btn-danger:hover {
+    background-color: #c82333;
+}
 
 /* Responsive adjustments */
 @media (max-width: 480px) {

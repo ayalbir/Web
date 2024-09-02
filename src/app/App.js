@@ -1,3 +1,5 @@
+// App.js
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
@@ -6,9 +8,8 @@ import useVideos from '../hooks/UseVideos';
 import RoutesConfiguration from '../components/routesConfiguration/RoutesConfiguration';
 import initializeDemoData from '../utils/initializeDemoData';
 
-
 function App() {
-  const { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers } = useUser([]);
+  const { getUserByEmail, registerUser, setFirstName, updateUser, deleteUser, registeredUsers } = useUser([]);
   const {
     videoList,
     addVideo,
@@ -23,7 +24,8 @@ function App() {
     handleLike,
     handleDislike,
     likesDislikes,
-    updateVideoViews
+    updateVideoViews,
+    fetchVideosFromDB // Ensure fetchVideosFromDB is defined and imported correctly
   } = useVideos([]);
 
   const [expanded, setExpanded] = useState(true);
@@ -32,7 +34,7 @@ function App() {
   const [token, setToken] = useState(null);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode);
+    setIsDarkMode((prevMode) => !prevMode);
     document.body.classList.toggle('dark-mode');
   };
 
@@ -49,29 +51,35 @@ function App() {
     setUser({ ...userData, signedIn: true });
   };
 
+  const handleDeleteUser = async (email) => {
+    await deleteUser(email);
+    fetchVideosFromDB(); // Correct function call to refresh videos
+    handleSignOut(); // Sign out the user after deletion
+  };
+
   useEffect(() => {
     const initialize = async () => {
-        try {
-            const response = await fetch('http://127.0.0.1:8080/api/videos');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-
-            if (data.length === 0) {
-                console.log('No videos found, initializing demo data.');
-                await initializeDemoData();
-            } else {
-                console.log('Videos found, no need to initialize demo data.');
-            }
-        } catch (error) {
-            console.error('Error checking videos from DB:', error);
+      try {
+        const response = await fetch('http://127.0.0.1:8080/api/videos');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+
+        const data = await response.json();
+
+        if (data.length === 0) {
+          console.log('No videos found, initializing demo data.');
+          await initializeDemoData();
+        } else {
+          console.log('Videos found, no need to initialize demo data.');
+        }
+      } catch (error) {
+        console.error('Error checking videos from DB:', error);
+      }
     };
 
     initialize();
-}, []);
+  }, []);
 
   return (
     <Router>
@@ -95,6 +103,7 @@ function App() {
           handleRegisterUser={handleRegisterUser}
           registeredUsers={registeredUsers}
           updateUser={updateUser}
+          deleteUser={handleDeleteUser} // Pass the delete user function
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
           expanded={expanded}

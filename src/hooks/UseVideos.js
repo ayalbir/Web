@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getToken } from '../utils/tokenService'; // Import your token service
+import { getToken } from '../utils/tokenService';
 
 const useVideos = (initialVideos) => {
     const [videoList, setVideoList] = useState(initialVideos);
@@ -10,37 +10,37 @@ const useVideos = (initialVideos) => {
 
     const fetchVideosFromDB = async () => {
         try {
-            let email = localStorage.getItem('currentEmail');
+            const email = localStorage.getItem('currentEmail');
             const response = await fetch(`http://127.0.0.1:8080/api/videos?email=${email}`, {
                 method: 'GET',
-            });            
-            
+            });
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             if (response.status === 204) {
                 console.log('No content in response');
-                return; // Exit if there's no content
+                return;
             }
 
             const data = await response.json();
 
-            // Initialize likesDislikes with the fetched data
             const likesDislikesData = {};
-            data.forEach(video => {
+            data.forEach((video) => {
                 likesDislikesData[video._id || video.id] = {
                     likes: video.likes,
-                    dislikes: video.dislikes
+                    dislikes: video.dislikes,
                 };
-                // Add the prefix to the video URL
                 video.url = `data:video/mp4;base64,${video.url}`;
                 video.pic = `data:image/png;base64,${video.pic}`;
             });
 
-            setVideoList(data);
+            const filteredVideos = data.filter((video) => video.email);
+
+            setVideoList(filteredVideos);
             setLikesDislikes(likesDislikesData);
-            await fetchCommentsForVideos(data);
+            await fetchCommentsForVideos(filteredVideos);
         } catch (error) {
             console.error('Error fetching videos from DB:', error);
         }
@@ -67,19 +67,17 @@ const useVideos = (initialVideos) => {
         localStorage.removeItem('currentEmail');
     }, []);
 
-
     const token = getToken();
 
     const addVideo = async (newVideo, userEmail) => {
-        const token = getToken();
         try {
             const res = await axios.post(`http://127.0.0.1:8080/api/users/${userEmail}/videos`, newVideo, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
-            setVideoList(prevList => [...prevList, res.data]);
+            setVideoList((prevList) => [...prevList, res.data]);
         } catch (error) {
             console.error('Error adding video:', error);
         }
@@ -87,14 +85,13 @@ const useVideos = (initialVideos) => {
 
     const deleteVideo = async (id, userEmail) => {
         try {
-            const token = getToken();
             await axios.delete(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
-            setVideoList(prevList => prevList.filter(video => (video.id || video._id) !== id));
+            setVideoList((prevList) => prevList.filter((video) => (video.id || video._id) !== id));
         } catch (error) {
             console.error('Error deleting video:', error);
         }
@@ -106,14 +103,12 @@ const useVideos = (initialVideos) => {
             const res = await axios.patch(`http://127.0.0.1:8080/api/users/${userEmail}/videos/${id}`, updatedVideo, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
-            setVideoList(prevList =>
-                prevList.map(video =>
-                    (video.id || video._id) === id ? { ...video, ...res.data } : video
-                )
+            setVideoList((prevList) =>
+                prevList.map((video) => (video.id || video._id) === id ? { ...video, ...res.data } : video)
             );
         } catch (error) {
             console.error('Error editing video:', error);
@@ -123,18 +118,21 @@ const useVideos = (initialVideos) => {
     const addComment = async (comment) => {
         const videoId = comment.videoId;
         try {
-            const token = getToken();
-            const res = await axios.post(`http://127.0.0.1:8080/api/videos/${videoId}/comments`, {
-                email: comment.email,
-                text: comment.text,
-                profilePicture: comment.profilePicture
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+            const res = await axios.post(
+                `http://127.0.0.1:8080/api/videos/${videoId}/comments`,
+                {
+                    email: comment.email,
+                    text: comment.text,
+                    profilePicture: comment.profilePicture,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            });
-            setComments(prevComments => ({
+            );
+            setComments((prevComments) => ({
                 ...prevComments,
                 [videoId]: [...(prevComments[videoId] || []), res.data],
             }));
@@ -145,15 +143,14 @@ const useVideos = (initialVideos) => {
 
     const deleteComment = async (videoId, commentId) => {
         try {
-            const token = getToken();
             await axios.delete(`http://127.0.0.1:8080/api/videos/${videoId}/comments/${commentId}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
-            setComments(prevComments => ({
+            setComments((prevComments) => ({
                 ...prevComments,
-                [videoId]: prevComments[videoId].filter(comment => comment._id !== commentId),
+                [videoId]: prevComments[videoId].filter((comment) => comment._id !== commentId),
             }));
         } catch (error) {
             console.error('Error deleting comment:', error);
@@ -162,16 +159,19 @@ const useVideos = (initialVideos) => {
 
     const editComment = async (videoId, commentId, newText) => {
         try {
-            const token = getToken();
-            const res = await axios.patch(`http://127.0.0.1:8080/api/comments/${commentId}`, { text: newText }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+            const res = await axios.patch(
+                `http://127.0.0.1:8080/api/comments/${commentId}`,
+                { text: newText },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            });
-            setComments(prevComments => ({
+            );
+            setComments((prevComments) => ({
                 ...prevComments,
-                [videoId]: prevComments[videoId].map(comment =>
+                [videoId]: prevComments[videoId].map((comment) =>
                     comment._id === commentId ? { ...comment, text: res.data.text } : comment
                 ),
             }));
@@ -182,13 +182,12 @@ const useVideos = (initialVideos) => {
 
     const handleLike = async (videoId, email) => {
         try {
-            const token = getToken();
             const response = await fetch(`http://127.0.0.1:8080/api/users/${email}/videos/${videoId}/likes`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             if (!response.ok) {
@@ -197,7 +196,7 @@ const useVideos = (initialVideos) => {
 
             const updatedVideo = await response.json();
 
-            setUserInteractions(prev => {
+            setUserInteractions((prev) => {
                 const newState = { ...prev[videoId], like: !prev[videoId]?.like };
                 if (newState.like) {
                     newState.dislike = false;
@@ -205,12 +204,12 @@ const useVideos = (initialVideos) => {
                 return { ...prev, [videoId]: newState };
             });
 
-            setLikesDislikes(prev => ({
+            setLikesDislikes((prev) => ({
                 ...prev,
                 [videoId]: {
                     likes: updatedVideo.likes,
-                    dislikes: updatedVideo.dislikes
-                }
+                    dislikes: updatedVideo.dislikes,
+                },
             }));
         } catch (error) {
             console.error('Error liking video:', error);
@@ -219,13 +218,12 @@ const useVideos = (initialVideos) => {
 
     const handleDislike = async (videoId, email) => {
         try {
-            const token = getToken();
             const response = await fetch(`http://127.0.0.1:8080/api/users/${email}/videos/${videoId}/dislikes`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             if (!response.ok) {
@@ -234,7 +232,7 @@ const useVideos = (initialVideos) => {
 
             const updatedVideo = await response.json();
 
-            setUserInteractions(prev => {
+            setUserInteractions((prev) => {
                 const newState = { ...prev[videoId], dislike: !prev[videoId]?.dislike };
                 if (newState.dislike) {
                     newState.like = false;
@@ -242,12 +240,12 @@ const useVideos = (initialVideos) => {
                 return { ...prev, [videoId]: newState };
             });
 
-            setLikesDislikes(prev => ({
+            setLikesDislikes((prev) => ({
                 ...prev,
                 [videoId]: {
                     likes: updatedVideo.likes,
-                    dislikes: updatedVideo.dislikes
-                }
+                    dislikes: updatedVideo.dislikes,
+                },
             }));
         } catch (error) {
             console.error('Error disliking video:', error);
@@ -256,20 +254,18 @@ const useVideos = (initialVideos) => {
 
     const updateVideoViews = async (id, email) => {
         try {
-            // Increment the view count locally
-            setVideoList(prevList =>
-                prevList.map(video =>
+            setVideoList((prevList) =>
+                prevList.map((video) =>
                     (video.id || video._id) === id ? { ...video, views: video.views + 1 } : video
                 )
             );
 
-            // Send the view update to the server with the email
             const response = await fetch(`http://127.0.0.1:8080/api/videos/${id}/views`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ views: 1, email: email })  // Include the email in the request body
+                body: JSON.stringify({ views: 1, email: email }),
             });
 
             if (!response.ok) {
@@ -279,9 +275,6 @@ const useVideos = (initialVideos) => {
             console.error('Error updating video views:', error);
         }
     };
-
-
-
 
     return {
         videoList,
@@ -297,7 +290,8 @@ const useVideos = (initialVideos) => {
         handleLike,
         handleDislike,
         likesDislikes,
-        updateVideoViews
+        updateVideoViews,
+        fetchVideosFromDB // Ensure this is returned for external use
     };
 };
 

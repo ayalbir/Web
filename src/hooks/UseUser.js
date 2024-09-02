@@ -20,7 +20,6 @@ const useUser = (initialUsers = []) => {
                 return;
             }
             const data = await response.json();
-            // Add the prefix to the profile image URL for each user
             const updatedData = data.map(user => ({
                 ...user,
                 profileImage: `data:image/png;base64,${user.profileImage}`
@@ -70,7 +69,22 @@ const useUser = (initialUsers = []) => {
         }
     };
 
-    return { getUserByEmail, registerUser, setFirstName, updateUser, registeredUsers };
+    const deleteUser = async (email) => {
+        try {
+            const token = getToken();
+            await axios.delete(`http://127.0.0.1:8080/api/users/${email}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            setRegisteredUsers(registeredUsers.filter(user => user.email !== email));
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+
+    return { getUserByEmail, registerUser, setFirstName, updateUser, deleteUser, registeredUsers };
 };
 
 export default useUser;
